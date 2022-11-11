@@ -26,6 +26,12 @@
     <ProjectReference Include="..\Shared\BlazorApp.Shared.csproj" />
   </ItemGroup>
 
+  <!-- DI -->
+  <ItemGroup>
+    <Using Include="BlazorApp.Server.Services.AuthService"/>
+  </ItemGroup>
+  <!-- DI -->
+
 
   <ItemGroup>
     <Using Include="Microsoft.EntityFrameworkCore" />

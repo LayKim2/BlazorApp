@@ -1,4 +1,3 @@
-
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -13,8 +12,13 @@ builder.Services.AddDbContext<DataContext>(options =>
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
+// swagerUI
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// DI
+builder.Services.AddScoped<IAuthService, AuthService>();
+
 
 var app = builder.Build();
 
