@@ -1,10 +1,11 @@
-﻿namespace BlazorApp.Server.Services.AuthService;
+﻿using BlazorApp.Shared.User;
+
+namespace BlazorApp.Server.Services.AuthService;
 
 public interface IAuthService
 {
-    public Task<ServiceResponse<int>> Register(User user, string password);
-
-    public Task<bool> UserExists(string email);
-
+    Task<ServiceResponse<int>> Register(User user, string password);
+    Task<bool> UserExists(string email);
+    Task<ServiceResponse<string>> Login(string email, string password);
 
 }

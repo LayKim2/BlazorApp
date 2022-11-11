@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BlazorApp.Shared.User;
+using Microsoft.EntityFrameworkCore;
 
 namespace BlazorApp.Server.Data;
 

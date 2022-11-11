@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using BlazorApp.Shared.User;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BlazorApp.Server.Controllers
@@ -31,5 +32,19 @@ namespace BlazorApp.Server.Controllers
             return Ok(response);
 
         }
+
+        [HttpPost("login")]
+        public async Task<ActionResult> Login(UserLogin request)
+        {
+            var response = await _authService.Login(request.Email, request.Password);
+
+            if (!response.Success)
+            {
+                return BadRequest(response);
+            }
+
+            return Ok(response);
+        }
+
     }
 }

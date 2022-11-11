@@ -7,8 +7,11 @@
   </PropertyGroup>
   
   <ItemGroup>
+    <PackageReference Include="Blazored.LocalStorage" Version="4.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="6.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.6" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
   </ItemGroup>
   
   <ItemGroup>
@@ -17,17 +20,24 @@
   
   <ItemGroup>
   	<Using Include="BlazorApp.Shared" />
+  	<Using Include="BlazorApp.Shared.User" />
+  </ItemGroup>
+  
+  <!-- Auth -->
+  <ItemGroup>
+    <Using Include="Microsoft.AspNetCore.Components.Authorization" />
   </ItemGroup>
   
   <!-- ID -->
   <ItemGroup>
-    <Using Include="BlazorApp.Client.Services.AuthService"/>
+    <Using Include="BlazorApp.Client.Services.AuthService" />
   </ItemGroup>
   <!-- ID -->
   
   <!-- nuget -->
   <ItemGroup>
-		<Using Include="System.Net.Http.Json" />
+    <Using Include="System.Net.Http.Json" />
+    <Using Include="Blazored.LocalStorage" />
   </ItemGroup>
   
   

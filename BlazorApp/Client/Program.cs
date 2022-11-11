@@ -11,5 +11,14 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 // DI
 builder.Services.AddScoped<IAuthService, AuthService>();
 
+
+// Local Storage
+builder.Services.AddBlazoredLocalStorage();
+
+// Authentication
+builder.Services.AddOptions();
+builder.Services.AddAuthorizationCore();
+builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
+
 await builder.Build().RunAsync();
     
