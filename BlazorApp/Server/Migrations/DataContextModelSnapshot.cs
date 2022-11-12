@@ -22,7 +22,7 @@ namespace BlazorApp.Server.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("BlazorApp.Shared.User", b =>
+            modelBuilder.Entity("BlazorApp.Shared.User.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

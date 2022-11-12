@@ -1,6 +1,8 @@
 ﻿using BlazorApp.Shared.User;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace BlazorApp.Server.Controllers
 {
@@ -37,6 +39,21 @@ namespace BlazorApp.Server.Controllers
         public async Task<ActionResult> Login(UserLogin request)
         {
             var response = await _authService.Login(request.Email, request.Password);
+
+            if (!response.Success)
+            {
+                return BadRequest(response);
+            }
+
+            return Ok(response);
+        }
+
+        [HttpPost("change-password"), Authorize]
+        public async Task<ActionResult<ServiceResponse<bool>>> ChangePassword([FromBody] string newPasword)
+        {
+            // basecontroller의 User class( Identity ) - not db user table
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var response = await _authService.ChangePassword(int.Parse(userId), newPasword);
 
             if (!response.Success)
             {

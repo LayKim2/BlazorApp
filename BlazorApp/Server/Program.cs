@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -19,6 +22,20 @@ builder.Services.AddSwaggerGen();
 // DI
 builder.Services.AddScoped<IAuthService, AuthService>();
 
+// auth (Middleware)
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey =
+                new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(builder.Configuration.GetSection("AppSettings:Token").Value)),
+            ValidateIssuer = false,
+            ValidateAudience = false
+        };
+    });
+// auth (Middleware)
 
 var app = builder.Build();
 
@@ -44,6 +61,10 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+// auth (Middleware)
+app.UseAuthentication();
+app.UseAuthorization();
+// auth (Middleware)
 
 app.MapRazorPages();
 app.MapControllers();
