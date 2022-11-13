@@ -1,0 +1,28 @@
+﻿@inject IJSRuntime JSRuntime
+
+<h3>Javascript</h3>
+
+<button class="btn btn-primary" onclick="@HandleClick" >
+    Start to make portfolio
+</button>
+
+@code {
+
+    // call js function and alert
+    private async void HandleClick()
+    {
+        var message = await Message("Lay");
+
+        Alert(message);
+    }
+
+    private void Alert(string message)
+    {
+        JSRuntime.InvokeVoidAsync("alert", message);
+    }
+
+    private ValueTask<string> Message(string name)
+    {
+        return JSRuntime.InvokeAsync<string>("Message", name);
+    }
+}
