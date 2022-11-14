@@ -1,13 +1,26 @@
-﻿<section id="home" class="home">
-    <div class="container">
-        <div class="section-title" style="margin-bottom:100px;">
-            <h2>HELLO, MY NAME IS</h2>
-            <p>
-                <h1><strong>청슬</strong>입니다.</h1>
-                <h3>Chung Seul</h3>
-            </p>
-        </div>
+﻿@inject IJSRuntime JSRuntime
+@inject NavigationManager NavigationManager
 
+<section id="home" class="home">
+    <div class="container">
+        
+        <div class="row">
+            <div class="section-title col-lg-10 col-md-6" style="margin-bottom:100px;">
+                <h2>HELLO, MY NAME IS</h2>
+                <p>
+                    <h1><strong>청슬</strong>입니다.</h1>
+                    <h3>Chung Seul</h3>
+                </p>
+            </div>
+        
+            <div class="col-lg-2 col-md-6 d-md-flex">
+                <div>
+                    <button class="btn btn-danger" @onclick="btnBack">back</button>
+                    <button class="btn btn-primary" @onclick="btnSave">save</button>
+                </div>
+            </div>
+        </div>
+        
         <div class="row no-gutters">
 
             <div class="col-lg-6 col-md-6 d-md-flex align-items-md-stretch aos-init aos-animate" data-aos="fade-up">
@@ -39,3 +52,20 @@
 
     </div>
 </section>
+
+
+@code {
+    private void btnBack()
+    {
+        JSRuntime.InvokeVoidAsync("Expand");
+        NavigationManager.NavigateTo("/");
+    }
+
+    private void btnSave()
+    {
+        JSRuntime.InvokeVoidAsync("Expand");
+        NavigationManager.NavigateTo("/");
+    }
+
+    protected override bool OnBack
+}

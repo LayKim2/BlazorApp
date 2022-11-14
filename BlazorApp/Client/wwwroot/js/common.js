@@ -1,8 +1,13 @@
 ﻿
 
 function Collapse() {
-    $('.sidebar').css('display', 'none');
-    $('#top').css('display', 'none');
+    $('.sidebar').hide();
+    $('#top').hide();
+}
+
+function Expand() {
+    $('.sidebar').show();
+    $('#top').show();
 }
 
 function ScrollIntoView(target) {

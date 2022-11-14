@@ -40,9 +40,6 @@
     <Using Include="System.Net.Http.Json" />
     <Using Include="Blazored.LocalStorage" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Components\Dashboard\" />
-  </ItemGroup>
   
   
 
