@@ -8,28 +8,14 @@ function Collapse() {
 function ScrollIntoView(target) {
     const element = document.getElementById(target);
 
+    $('#navbar ul li a').each(function () {
+
+        if ($(this).attr('id') == 'nav' + target) {
+            $(this).addClass('active');
+        } else {
+            $(this).removeClass('active');
+        }
+    });
+
     element.scrollIntoView();
 }
-
-const onscroll = (el, listener) => {
-    el.addEventListener('scroll', listener)
-}
-
-(function () {
-    let navbarlinks = select('#navbar .scrollto', true)
-    const navbarlinksActive = () => {
-        let position = window.scrollY + 200
-        navbarlinks.forEach(navbarlink => {
-            if (!navbarlink.hash) return
-            let section = select(navbarlink.hash)
-            if (!section) return
-            if (position >= section.offsetTop && position <= (section.offsetTop + section.offsetHeight)) {
-                navbarlink.classList.add('active')
-            } else {
-                navbarlink.classList.remove('active')
-            }
-        })
-    }
-    window.addEventListener('load', navbarlinksActive)
-    onscroll(document, navbarlinksActive)
-});

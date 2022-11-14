@@ -18,12 +18,14 @@
         <nav id="navbar" class="nav-menu navbar">
             <ul>
                 <li>
-                    <a href="" @onclick="@(e => ScrollIntoView("home"))" class="nav-link scrollto active" @onclick:preventDefault><i class='bx bxs-home'></i> <span>Home</span></a>
+                    <a id="navhome" href="" @onclick="@(e => ScrollIntoView("home"))" class="nav-link scrollto active" @onclick:preventDefault><i class='bx bxs-home'></i> <span>Home</span></a>
                 </li>
                 <li>
-                    <a href="" @onclick="@(e => ScrollIntoView("about"))" class="nav-link scrollto" @onclick:preventDefault><i class="bx bx-user"></i> <span>About</span></a>
+                    <a id="navabout" href="" @onclick="@(e => ScrollIntoView("about"))" class="nav-link scrollto" @onclick:preventDefault><i class="bx bx-user"></i> <span>About</span></a>
                 </li>
-                
+                <li>
+                    <a id="navconcept" href="" @onclick="@(e => ScrollIntoView("concept"))" class="nav-link scrollto" @onclick:preventDefault><i class="bx bxs-layer"></i> <span>Concept</span></a>
+                </li>
             </ul>
         </nav>
         <!-- .nav-menu -->
