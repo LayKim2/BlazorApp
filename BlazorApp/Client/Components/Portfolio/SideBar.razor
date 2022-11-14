@@ -1,0 +1,38 @@
+﻿
+@inject IJSRuntime JSRuntime
+
+<header id="header">
+    <div class="d-flex flex-column">
+        <div class="profile">
+            <img src="/images/sample/profile-img.jpg" alt="" class="img-fluid rounded-circle">
+            <h1 class="text-light"><a href="index.html">Alex Smith</a></h1>
+            <div class="social-links mt-3 text-center">
+                <a class="twitter"><i class="bx bxl-twitter"></i></a>
+                <a class="facebook"><i class="bx bxl-facebook"></i></a>
+                <a class="instagram"><i class="bx bxl-instagram"></i></a>
+                <a class="google-plus"><i class="bx bxl-skype"></i></a>
+                <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+            </div>
+        </div>
+
+        <nav id="navbar" class="nav-menu navbar">
+            <ul>
+                <li>
+                    <a href="" @onclick="@(e => ScrollIntoView("home"))" class="nav-link scrollto active" @onclick:preventDefault><i class='bx bxs-home'></i> <span>Home</span></a>
+                </li>
+                <li>
+                    <a href="" @onclick="@(e => ScrollIntoView("about"))" class="nav-link scrollto" @onclick:preventDefault><i class="bx bx-user"></i> <span>About</span></a>
+                </li>
+                
+            </ul>
+        </nav>
+        <!-- .nav-menu -->
+    </div>
+</header>
+
+@code {
+    private void ScrollIntoView(string target)
+    {
+        JSRuntime.InvokeVoidAsync("ScrollIntoView",target);
+    }
+}

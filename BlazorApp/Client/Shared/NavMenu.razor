@@ -1,4 +1,6 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@inject IJSRuntime JSRuntime
+
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">HIGHLIGHT</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
@@ -15,7 +17,7 @@
             </NavLink>
         </div>
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="portfolio">
+            <NavLink class="nav-link" href="portfolio" onclick="@Collapse">
                 <span class="oi oi-calendar" aria-hidden="true"></span> Portfolio
             </NavLink>
         </div>
@@ -45,5 +47,10 @@
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
+    }
+
+    private void Collapse()
+    {
+        JSRuntime.InvokeVoidAsync("Collapse");
     }
 }

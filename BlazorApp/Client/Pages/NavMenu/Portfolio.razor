@@ -1,8 +1,10 @@
 ﻿@page "/portfolio"
+@using BlazorApp.Client.Components.Portfolio
 @attribute [Authorize]
 
-<h3>Portfolio</h3>
+<SideBar/>
+<main id="main">
+    <Home/>
+    <About/>
+</main>
 
-@code {
-
-}

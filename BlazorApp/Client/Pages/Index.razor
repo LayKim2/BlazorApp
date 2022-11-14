@@ -1,6 +1,23 @@
 ﻿@page "/"
 @inject IJSRuntime JSRuntime
+@*@inject IBlazorStrap BlazorStrap*@
 
 <PageTitle>HIGHLIGHT - Dashboard</PageTitle>
 
-<h1 class="page-title">Dashboard</h1>
+
+<div id="top" class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0">Dashboard</h1>
+    <a href="/" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Portfolio</a>
+</div>
+
+@*<BSCollapse DataId="collapse1">
+    <BSCard CardType="CardType.Card">
+        Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+    </BSCard>
+</BSCollapse>*@
+
+@code {
+
+}
+
+
