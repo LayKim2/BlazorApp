@@ -10,6 +10,7 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 
 // DI
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IPortfolioService, PortfolioService>();
 
 
 // Local Storage

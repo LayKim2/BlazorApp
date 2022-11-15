@@ -1,11 +1,15 @@
-﻿
-@inject IJSRuntime JSRuntime
+﻿@inject IJSRuntime JSRuntime
 
 <header id="header">
     <div class="d-flex flex-column">
         <div class="profile">
             <img src="/images/sample/profile-img.jpg" alt="" class="img-fluid rounded-circle">
-            <h1 class="text-light"><a>Chung Seul</a></h1>
+
+            @if (IsEdit) {
+                <input type="text" class="editText" maxlength="10" value="Chung Seul" />
+            } else {
+                <h1 class="text-light"><a>Chung Seul</a></h1>
+            }
             <div class="social-links mt-3 text-center">
                 <a class="twitter"><i class="bx bxl-twitter"></i></a>
                 <a class="facebook"><i class="bx bxl-facebook"></i></a>
@@ -24,10 +28,22 @@
                     <a id="navabout" href="" @onclick="@(e => ScrollIntoView("about"))" class="nav-link scrollto" @onclick:preventDefault><i class="bx bx-user"></i> <span>About</span></a>
                 </li>
                 <li>
-                    <a id="navconcept1" href="" @onclick="@(e => ScrollIntoView("concept1"))" class="nav-link scrollto" @onclick:preventDefault><i class="bx bxs-layer"></i> <span>Concept1</span></a>
+                    <a id="navconcept1" href="" @onclick="@(e => ScrollIntoView("concept1"))" class="nav-link scrollto" @onclick:preventDefault><i class="bx bxs-layer"></i> 
+                        @if (IsEdit) {
+                            <input type="text" class="editText2" maxlength="6" value="Concept1" />
+                        } else {
+                            <span>Concept1</span>
+                        }
+                    </a>
                 </li>
                 <li>
-                    <a id="navconcept2" href="" @onclick="@(e => ScrollIntoView("concept2"))" class="nav-link scrollto" @onclick:preventDefault><i class="bx bxs-layer"></i> <span>Concept2</span></a>
+                    <a id="navconcept2" href="" @onclick="@(e => ScrollIntoView("concept2"))" class="nav-link scrollto" @onclick:preventDefault><i class="bx bxs-layer"></i> 
+                        @if (IsEdit) {
+                            <input type="text" class="editText2" maxlength="6" value="Concept2" />
+                        } else {
+                            <span>Concept2</span>
+                        }
+                    </a>
                 </li>
             </ul>
         </nav>
@@ -36,6 +52,9 @@
 </header>
 
 @code {
+    [Parameter]
+    public bool IsEdit { get; set; }
+
     private void ScrollIntoView(string target)
     {
         JSRuntime.InvokeVoidAsync("ScrollIntoView",target);

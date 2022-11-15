@@ -1,12 +1,44 @@
 ﻿@page "/portfolio"
 @using BlazorApp.Client.Components.Portfolio
+@inject IJSRuntime JSRuntime
+@inject NavigationManager NavigationManager
+@inject IPortfolioService PortfolioService
 @attribute [Authorize]
 
-<SideBar/>
+<SideBar IsEdit="@PortfolioService.IsEdit" />
 <main id="main">
-    <Home/>
-    <About/>
-    <Concept1/>
-    <Concept2/>
+    <div class="row">
+        <div class="section-title col-lg-10 col-md-6">
+        </div>
+
+        <div class="col-lg-2 col-md-6 d-md-flex">
+            <div>
+                <button class="btn btn-success" @onclick="btnEdit">Edit</button>
+                <button class="btn btn-primary" @onclick="btnSave">Save</button>
+                <button class="btn btn-danger" @onclick="btnBack">Back</button>
+            </div>
+        </div>
+    </div>
+    <Home />
+    <About />
+    <Concept1 />
+    <Concept2 />
 </main>
 
+@code {
+
+    private void btnBack()
+    {
+        JSRuntime.InvokeVoidAsync("Expand");
+        NavigationManager.NavigateTo("/");
+    }
+
+    private void btnSave()
+    {
+        PortfolioService.IsEdit = false;
+    }
+
+    private void btnEdit() {
+        PortfolioService.IsEdit = true;
+    }
+}

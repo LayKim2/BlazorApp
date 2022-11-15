@@ -32,6 +32,7 @@
   <!-- ID -->
   <ItemGroup>
     <Using Include="BlazorApp.Client.Services.AuthService" />
+	<Using Include="BlazorApp.Client.Services.PortfolioService" />
   </ItemGroup>
   <!-- ID -->
   
