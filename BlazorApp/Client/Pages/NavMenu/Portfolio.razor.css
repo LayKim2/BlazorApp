@@ -1126,3 +1126,8 @@ section {
 textarea:focus, input:focus {
     /*color: #ff0000;*/
 }
+
+/*added*/
+.home, .concept {
+    height: 100vh;
+}
