@@ -12,7 +12,9 @@ public class PortfolioService : IPortfolioService
     }
 
     public bool IsEdit { get; set; } = false;
+    public Portfolio Portfolio { get; set; } = new Portfolio();
 
+    public event Action OnChange;
     public async Task<Portfolio> GetPortfolio()
     {
         var response = await _http.GetFromJsonAsync<ServiceResponse<Portfolio>>("api/portfolio");
@@ -26,4 +28,5 @@ public class PortfolioService : IPortfolioService
 
         return response.Content.ReadFromJsonAsync<ServiceResponse<Portfolio>>().Result.Data;
     }
+
 }

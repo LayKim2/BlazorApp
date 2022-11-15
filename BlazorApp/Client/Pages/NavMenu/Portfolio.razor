@@ -4,6 +4,7 @@
 @inject NavigationManager NavigationManager
 @inject IPortfolioService PortfolioService
 @inject IAuthService AuthService
+@implements IDisposable
 @attribute [Authorize]
 
 @*<SideBar IsEdit="@PortfolioService.IsEdit" />*@
@@ -16,11 +17,14 @@
 
             @if (PortfolioService.IsEdit)
             {
-                <input type="text" class="editText" maxlength="10" value="Chung Seul" />
+                <EditForm Model="edtingPortfolio" OnValidSubmit="SavePortfolio">
+                         <InputText @bind-Value="edtingPortfolio.SideName" class="form-control">Test</InputText>
+                </EditForm>
+                @*<input type="text" class="editText" maxlength="10" value="Chung Seul" />*@
             }
             else
             {
-                <h1 class="text-light"><a>Chung Seul</a></h1>
+                <h1 class="text-light"><a>@edtingPortfolio.SideName</a></h1>
             }
             <div class="social-links mt-3 text-center">
                 <a class="twitter"><i class="bx bxl-twitter"></i></a>
@@ -79,8 +83,8 @@
 
         <div class="col-lg-2 col-md-6 d-md-flex">
             <div>
-                <button class="btn btn-success" @onclick="btnEdit">Edit</button>
-                <button class="btn btn-primary" @onclick="btnSave">Save</button>
+                <button class="btn btn-success" @onclick="(() => EditPortfolio())">Edit</button>
+                <button class="btn btn-primary" @onclick="(() => SavePortfolio())">Save</button>
                 <button class="btn btn-danger" @onclick="btnBack">Back</button>
             </div>
         </div>
@@ -92,36 +96,38 @@
 </main>
 
 @code {
+    BlazorApp.Shared.Portfolio edtingPortfolio = new BlazorApp.Shared.Portfolio();
+    //bool isAuthenticated = false;
 
-    BlazorApp.Shared.Portfolio portfolio = null;
-    bool isAuthenticated = false;
-
-    protected override async Task OnInitializedAsync() {
-
-        //portfolio = await PortfolioService.GetPortfolio();
-        isAuthenticated = await AuthService.IsUserAuthenticated();
-
+    protected override async Task OnInitializedAsync()
+    {
+        edtingPortfolio = await PortfolioService.GetPortfolio();
+        PortfolioService.OnChange += StateHasChanged;
+        //isAuthenticated = await AuthService.IsUserAuthenticated();
     }
+
+    public void Dispose()
+    {
+        PortfolioService.OnChange -= StateHasChanged;
+    }
+
     private void btnBack()
     {
         JSRuntime.InvokeVoidAsync("Expand");
         NavigationManager.NavigateTo("/");
     }
 
-    private async Task btnSave()
+    private async Task SavePortfolio()
     {
         PortfolioService.IsEdit = false;
-
-        //portfolio = await PortfolioService.AddOrUpdatePortfolio(portfolio);
+        edtingPortfolio = await PortfolioService.AddOrUpdatePortfolio(edtingPortfolio);
     }
 
-    private void btnEdit() {
+    private void EditPortfolio() {
+
         PortfolioService.IsEdit = true;
-    }
 
-    private void InitPortfolio()
-    {
-        portfolio = new BlazorApp.Shared.Portfolio();
+        //edtingPortfolio = 
     }
 
     private void ScrollIntoView(string target)
