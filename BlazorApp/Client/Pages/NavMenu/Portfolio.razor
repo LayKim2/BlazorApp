@@ -380,8 +380,8 @@ else
                     <div class="section-title col-lg-10 col-md-6" style="margin-bottom:100px;">
                         <h2>HELLO, MY NAME IS</h2>
                         <p>
-                            <h1><strong>청슬</strong>입니다.</h1>
-                            <h3>Chung Seul</h3>
+                            <h1><strong>@edtingPortfolio.RightName</strong>입니다.</h1>
+                            <h3>@edtingPortfolio.RightEnglishName</h3>
                         </p>
                     </div>
                 </div>
@@ -391,7 +391,7 @@ else
                     <div class="col-lg-6 col-md-6 d-md-flex align-items-md-stretch aos-init aos-animate" data-aos="fade-up">
                         <div class="count-box">
                             <i class="bi bi-emoji-smile"></i>
-                            <p class="align-center" style="font-size:32px; font-weight:bold; color:#173b6c;">Camera Test ( Updated : 11/14/2022 )</p>
+                            <p class="align-center" style="font-size:32px; font-weight:bold; color:#173b6c;">Camera Test ( Updated : @edtingPortfolio.CameraTestDateUpdated.ToShortDateString() )</p>
                             <iframe width="600"
                                 height="350"
                                 src="https://www.youtube.com/embed/m8e-FF8MsqU"
@@ -404,7 +404,7 @@ else
                     <div class="col-lg-6 col-md-6 d-md-flex align-items-md-stretch aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
                         <div class="count-box">
                             <i class="bi bi-journal-richtext"></i>
-                            <p style="font-size:32px; font-weight:bold; color:#173b6c">Highlight ( Updated : 11/01/2022 )</p>
+                            <p style="font-size:32px; font-weight:bold; color:#173b6c">Highlight ( Updated : @edtingPortfolio.HighlightDateUpdated.ToShortDateString() )</p>
                             <iframe width="600"
                                 height="350"
                                 src="https://www.youtube.com/embed/m8e-FF8MsqU"
@@ -430,21 +430,26 @@ else
                         <img src="/images/sample/profile-img.jpg" class="img-fluid" alt="" />
                     </div>
                     <div class="col-lg-8 pt-4 pt-lg-0 content" data-aos="fade-left">
-                        <h3>Introduce yourself in one line.</h3>
+                        <h3>@edtingPortfolio.AboutIntroduce</h3>
+                        @*<h3>Introduce yourself in one line.</h3>*@
+                        
                         <div class="row">
                             <div class="col-lg-6">
                                 <ul>
                                     <li>
                                         <i class="bi bi-chevron-right"></i>
-                                        <strong>Birthday:</strong> <span>1 May 1994</span>
+                                        <strong>Birthday:</strong> <span>@edtingPortfolio.AboutBirthday</span>
+                                        @*<span>1 May 1994</span>*@
                                     </li>
                                     <li>
                                         <i class="bi bi-chevron-right"></i>
-                                        <strong>Phone:</strong> <span>+123 456 7890</span>
+                                        <strong>Phone:</strong> <span>@edtingPortfolio.AboutPhone</span>
+                                        @*<span>+123 456 7890</span>*@
                                     </li>
                                     <li>
                                         <i class="bi bi-chevron-right"></i> <strong>Size:</strong>
-                                        <span>181cm 74kg 👕105👖32👞270</span>
+                                        <span>@edtingPortfolio.AboutSize</span>
+                                        @*<span>181cm 74kg 👕105👖32👞270</span>*@
                                     </li>
                                 </ul>
                             </div>
@@ -452,12 +457,12 @@ else
                                 <ul>
                                     <li>
                                         <i class="bi bi-chevron-right"></i> <strong>Age:</strong>
-                                        <span>31</span>
+                                        <span>@edtingPortfolio.AboutAge</span>
                                     </li>
                                     <li>
                                         <i class="bi bi-chevron-right"></i>
                                         <strong>Email:</strong>
-                                        <span>email@example.com</span>
+                                        <span>@edtingPortfolio.AboutEmail</span>
                                     </li>
                                 </ul>
                             </div>
@@ -466,16 +471,20 @@ else
                                 <h3>Main Filmography</h3>
                                 <ul>
                                     <li>
-                                        <strong>드라마 - </strong> <span>SBS 치얼업 단역</span>
+                                        @edtingPortfolio.AboutMainFilmograpy1
+                                        @*<strong>드라마 - </strong> <span>SBS 치얼업 단역</span>*@
                                     </li>
                                     <li>
-                                        <strong>광고 - </strong> <span>신세계 ‘JAJU’ 디즈니 메인페이지</span>
+                                        @edtingPortfolio.AboutMainFilmograpy2
+                                        @*<strong>광고 - </strong> <span>신세계 ‘JAJU’ 디즈니 메인페이지</span>*@
                                     </li>
                                     <li>
-                                        <strong>광고 - </strong> <span>PlayStation Korea 공식 유튜브</span>
+                                        @edtingPortfolio.AboutMainFilmograpy3
+                                        @*<strong>광고 - </strong> <span>PlayStation Korea 공식 유튜브</span>*@
                                     </li>
                                     <li>
-                                        <strong>방송 - </strong> <span>나는 솔로</span>
+                                        @edtingPortfolio.AboutMainFilmograpy4
+                                        @*<strong>방송 - </strong> <span>나는 솔로</span>*@
                                     </li>
                                 </ul>
                             </div>
@@ -490,7 +499,7 @@ else
             <div class="container">
 
                 <div class="section-title">
-                    <h2>Concept1</h2>
+                    <h2>@edtingPortfolio.Concept1</h2>
                 </div>
 
                 @*<div class="row" data-aos="fade-up">
@@ -556,7 +565,7 @@ else
             <div class="container">
 
                 <div class="section-title">
-                    <h2>Concept2</h2>
+                    <h2>@edtingPortfolio.Concept2</h2>
                 </div>
 
                 @*<div class="row" data-aos="fade-up">
