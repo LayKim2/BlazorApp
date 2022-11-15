@@ -1,4 +1,5 @@
-﻿using BlazorApp.Shared.User;
+﻿using BlazorApp.Shared;
+using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -10,11 +11,21 @@ public class AuthService : IAuthService
 {
     private readonly DataContext _context;
     private readonly IConfiguration _configuration;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public AuthService(DataContext context, IConfiguration configuration)
+    public AuthService(DataContext context, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
     {
         _context = context;
         _configuration = configuration;
+        _httpContextAccessor = httpContextAccessor;
+    }
+
+    public int GetUserId() => int.Parse(_httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+    public string GetUserEmail() => _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Name);
+
+    public Task<User> GetUserByEmail(string email)
+    {
+        return _context.Users.FirstOrDefaultAsync(u => u.Email.Equals(email));
     }
 
     public async Task<ServiceResponse<string>> Login(string email, string password)

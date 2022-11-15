@@ -21,6 +21,7 @@ builder.Services.AddSwaggerGen();
 
 // DI
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IPortfolioService, PortfolioService>();
 
 // auth (Middleware)
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -36,6 +37,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 // auth (Middleware)
+
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 

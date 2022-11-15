@@ -1,4 +1,4 @@
-﻿using BlazorApp.Shared.User;
+﻿using BlazorApp.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

@@ -27,18 +27,27 @@
 
 @code {
 
+    BlazorApp.Shared.Portfolio portfolio = null;
+
     private void btnBack()
     {
         JSRuntime.InvokeVoidAsync("Expand");
         NavigationManager.NavigateTo("/");
     }
 
-    private void btnSave()
+    private async Task btnSave()
     {
         PortfolioService.IsEdit = false;
+
+        //portfolio = await PortfolioService.AddOrUpdatePortfolio(portfolio);
     }
 
     private void btnEdit() {
         PortfolioService.IsEdit = true;
+    }
+
+    private void InitPortfolio()
+    {
+        portfolio = new BlazorApp.Shared.Portfolio();
     }
 }

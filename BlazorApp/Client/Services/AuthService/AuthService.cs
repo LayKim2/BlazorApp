@@ -1,4 +1,4 @@
-﻿using BlazorApp.Shared.User;
+﻿using BlazorApp.Shared;
 
 namespace BlazorApp.Client.Services.AuthService;
 

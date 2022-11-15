@@ -21,7 +21,6 @@
   
   <ItemGroup>
   	<Using Include="BlazorApp.Shared" />
-  	<Using Include="BlazorApp.Shared.User" />
   </ItemGroup>
   
   <!-- Auth -->

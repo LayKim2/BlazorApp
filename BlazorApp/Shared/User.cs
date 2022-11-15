@@ -1,4 +1,4 @@
-﻿namespace BlazorApp.Shared.User;
+﻿namespace BlazorApp.Shared;
 
 public class User
 {

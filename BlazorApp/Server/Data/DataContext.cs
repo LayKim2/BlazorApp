@@ -1,5 +1,4 @@
-﻿using BlazorApp.Shared.User;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace BlazorApp.Server.Data;
 
@@ -11,4 +10,6 @@ public class DataContext : DbContext
     }
 
     public DbSet<User> Users { get; set; }
+    public DbSet<Portfolio> Portfolios { get; set; }
+
 }

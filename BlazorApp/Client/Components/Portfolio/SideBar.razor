@@ -5,7 +5,8 @@
         <div class="profile">
             <img src="/images/sample/profile-img.jpg" alt="" class="img-fluid rounded-circle">
 
-            @if (IsEdit) {
+            @if (IsEdit)
+            {
                 <input type="text" class="editText" maxlength="10" value="Chung Seul" />
             } else {
                 <h1 class="text-light"><a>Chung Seul</a></h1>
@@ -29,7 +30,8 @@
                 </li>
                 <li>
                     <a id="navconcept1" href="" @onclick="@(e => ScrollIntoView("concept1"))" class="nav-link scrollto" @onclick:preventDefault><i class="bx bxs-layer"></i> 
-                        @if (IsEdit) {
+                        @if (IsEdit)
+                        {
                             <input type="text" class="editText2" maxlength="6" value="Concept1" />
                         } else {
                             <span>Concept1</span>
