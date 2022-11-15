@@ -14,15 +14,23 @@ public class PortfolioService : IPortfolioService
         _authService = authService;
     }
 
+    public async Task<ServiceResponse<Portfolio>> GetPortfolio()
+    {
+        int userId = _authService.GetUserId();
+        string email = _authService.GetUserEmail();
+        var portfolio = await _context.Portfolios
+            .FirstOrDefaultAsync(a => a.UserId == userId && a.Email == email);
+
+        return new ServiceResponse<Portfolio> { Data = portfolio };
+    }
+
     public async Task<ServiceResponse<Portfolio>> AddOrUpdatePortfolio(Portfolio portfolio)
     {
         var response = new ServiceResponse<Portfolio>();
 
-        var dbPortfolio = await _context.Portfolios
-                    .Where(o => o.UserId == _authService.GetUserId() && o.Email == _authService.GetUserEmail())
-                    .FirstOrDefaultAsync();
+        var dbPortfolio = (await GetPortfolio()).Data;
 
-        if(dbPortfolio == null) {
+        if (dbPortfolio == null) {
 
             portfolio.UserId = _authService.GetUserId();
             portfolio.Email = _authService.GetUserEmail();
@@ -42,4 +50,5 @@ public class PortfolioService : IPortfolioService
 
         return response;
     }
+
 }

@@ -17,6 +17,12 @@ namespace BlazorApp.Server.Controllers
             _portfolioService = portfolioService;
         }
 
+        [HttpGet]
+        public async Task<ActionResult<ServiceResponse<Portfolio>>> GetPortfolio()
+        {
+            return await _portfolioService.GetPortfolio();
+        }
+
         [HttpPost]
         public async Task<ActionResult<ServiceResponse<Portfolio>>> AddorUpdatePortfolio(Portfolio portfolio)
         {

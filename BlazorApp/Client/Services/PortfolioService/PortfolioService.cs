@@ -13,6 +13,13 @@ public class PortfolioService : IPortfolioService
 
     public bool IsEdit { get; set; } = false;
 
+    public async Task<Portfolio> GetPortfolio()
+    {
+        var response = await _http.GetFromJsonAsync<ServiceResponse<Portfolio>>("api/portfolio");
+
+        return response.Data;
+    }
+
     public async Task<Portfolio> AddOrUpdatePortfolio(Portfolio portfolio)
     {
         var response = await _http.PostAsJsonAsync("api/portfolio", portfolio);
