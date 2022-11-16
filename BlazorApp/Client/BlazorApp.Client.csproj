@@ -12,6 +12,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.6" PrivateAssets="all" />
     <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
+    <PackageReference Include="MudBlazor" Version="6.1.2" />
     <PackageReference Include="TabBlazor.FluentValidation" Version="0.2.8" />
   </ItemGroup>
   
@@ -41,6 +42,10 @@
     <Using Include="Blazored.LocalStorage" />
   </ItemGroup>
   
+	<!-- MudBlazor -->
+	<ItemGroup>
+		<Using Include="MudBlazor.Services" />
+	</ItemGroup>
   
 
 </Project>

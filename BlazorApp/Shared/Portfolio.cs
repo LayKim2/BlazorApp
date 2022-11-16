@@ -25,7 +25,8 @@ public class Portfolio
     public string AboutMainFilmograpy4 { get; set; } = string.Empty;
     public string Concept1 { get; set; } = string.Empty;
     public string Concept2 { get; set; } = string.Empty;
-
+    public string SideImageUrl { get; set; } = string.Empty;
+    public string SideImageData { get; set; } = string.Empty;
 
     public DateTime DateUpdated { get; set; } = DateTime.Now;
 }
