@@ -14,7 +14,29 @@
         <header id="header">
             <div class="d-flex flex-column">
                 <div class="profile">
-                    <img src="/images/sample/profile-img.jpg" alt="" class="img-fluid rounded-circle">
+                    <MudCard Class="ma-2" Style="background-color:#040b14;">
+
+                        <MudCardContent>
+                            @*@if (!string.IsNullOrEmpty(edtingPortfolio.SideImageUrl))
+                            {
+                                <img src="@edtingPortfolio.SideImageUrl" alt="" class="img-fluid rounded-circle">
+                            } else *@
+                            @if (!string.IsNullOrEmpty(edtingPortfolio.SideImageData))
+                            {
+                                <img src="@edtingPortfolio.SideImageData" alt="" class="img-fluid rounded-circle">
+                            } else
+                            {
+                                @*<MudImage Src="/images/sample/profile-img.jpg" />*@
+                                <img src="/images/sample/profile-img.jpg" alt="" class="img-fluid rounded-circle">
+                            }
+                            <MudCardActions Style="justify-content: center;">
+                                <MudFab HtmlTag="label" Size="Size.Small" Color="Color.Primary" StartIcon="@Icons.Filled.CloudUpload" for="fileInput" />
+                                <MudButton Color="Color.Error" OnClick="@(() =>RemoveImage())" StartIcon="@Icons.Filled.Delete"></MudButton>
+                                <InputFile id="fileInput" OnChange="OnFileChange" hidden multiple accept=".jpg, .jpeg, .png" />
+                            </MudCardActions>
+                        </MudCardContent>
+                    </MudCard>
+
                     <InputText @bind-Value="edtingPortfolio.SideName" class="form-control"></InputText>
                     <div class="social-links mt-3 text-center">
                         <a class="twitter"><i class="bx bxl-twitter"></i></a>
@@ -320,7 +342,13 @@ else
     <header id="header">
         <div class="d-flex flex-column">
             <div class="profile">
-                <img src="/images/sample/profile-img.jpg" alt="" class="img-fluid rounded-circle">
+                @if (!string.IsNullOrEmpty(edtingPortfolio.SideImageData))
+                {
+                    <img src="@edtingPortfolio.SideImageData" alt="" class="img-fluid rounded-circle">
+                } else
+                {
+                    <img src="/images/sample/profile-img.jpg" alt="" class="img-fluid rounded-circle">
+                }
                 <h1 class="text-light"><a>@edtingPortfolio.SideName</a></h1>
                 <div class="social-links mt-3 text-center">
                     <a class="twitter"><i class="bx bxl-twitter"></i></a>
@@ -432,7 +460,7 @@ else
                     <div class="col-lg-8 pt-4 pt-lg-0 content" data-aos="fade-left">
                         <h3>@edtingPortfolio.AboutIntroduce</h3>
                         @*<h3>Introduce yourself in one line.</h3>*@
-                        
+
                         <div class="row">
                             <div class="col-lg-6">
                                 <ul>
@@ -666,5 +694,26 @@ else
     private void ScrollIntoView(string target)
     {
         JSRuntime.InvokeVoidAsync("ScrollIntoView", target);
+    }
+
+    void RemoveImage()
+    {
+        edtingPortfolio.SideImageData = string.Empty;
+        PortfolioService.OnChange += StateHasChanged;
+    }
+
+    async Task OnFileChange(InputFileChangeEventArgs e)
+    {
+        var format = "image/png";
+
+        foreach (var image in e.GetMultipleFiles(int.MaxValue))
+        {
+            var resizeImage = await image.RequestImageFileAsync(format, 200, 200);
+            var buffer = new byte[resizeImage.Size];
+            await resizeImage.OpenReadStream().ReadAsync(buffer);
+            var imageData = $"data:{format};base64,{Convert.ToBase64String(buffer)}";
+            edtingPortfolio.SideImageData = imageData;
+            PortfolioService.OnChange += StateHasChanged;
+        }
     }
 }
