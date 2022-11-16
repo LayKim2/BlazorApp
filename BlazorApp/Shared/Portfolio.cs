@@ -20,6 +20,7 @@ public class Portfolio
     public string RightName { get; set; } = string.Empty;
     public string RightEnglishName { get; set; } = string.Empty;
     public string CamereTestUrl { get; set; } = string.Empty;
+    public string HighlightUrl { get; set; } = string.Empty;
     public DateTime CameraTestDateUpdated { get; set; } = DateTime.Now;
     public DateTime HighlightDateUpdated { get; set; } = DateTime.Now;
     // home section

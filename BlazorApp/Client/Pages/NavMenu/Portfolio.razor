@@ -7,10 +7,10 @@
 @implements IDisposable
 @attribute [Authorize]
 
-<!-- ======= SideBar Section ======= -->
 @if (PortfolioService.IsEdit)
 {
     <EditForm Model="edtingPortfolio" OnValidSubmit="SavePortfolio">
+        <!-- ======= SideBar Section ======= -->
         <header id="header">
             <div class="d-flex flex-column">
                 <div class="profile">
@@ -18,13 +18,14 @@
 
                         <MudCardContent>
                             @*@if (!string.IsNullOrEmpty(edtingPortfolio.SideImageUrl))
-                            {
-                                <img src="@edtingPortfolio.SideImageUrl" alt="" class="img-fluid rounded-circle">
-                            } else *@
+                        {
+                        <img src="@edtingPortfolio.SideImageUrl" alt="" class="img-fluid rounded-circle">
+                        } else *@
                             @if (!string.IsNullOrEmpty(edtingPortfolio.SideImageData))
                             {
                                 <img src="@edtingPortfolio.SideImageData" alt="" class="img-fluid rounded-circle">
-                            } else
+                            }
+                            else
                             {
                                 @*<MudImage Src="/images/sample/profile-img.jpg" />*@
                                 <img src="/images/sample/profile-img.jpg" alt="" class="img-fluid rounded-circle">
@@ -72,7 +73,7 @@
                 <!-- .nav-menu -->
             </div>
         </header>
-
+        <!-- ======= SideBar Section ======= -->
         <!-- ======= Main Section ======= -->
         <main id="main">
             <div class="row">
@@ -96,8 +97,10 @@
                         <div class="section-title col-lg-10 col-md-6" style="margin-bottom:100px;">
                             <h2>HELLO, MY NAME IS</h2>
                             <p>
-                                <h1><strong>청슬</strong>입니다.</h1>
-                                <h3>Chung Seul</h3>
+                                @*<div><span><InputText @bind-Value="edtingPortfolio.SideName" class="form-control" style="width:200px;"></InputText>입니다.</span></div>*@
+                                <h1><strong>@edtingPortfolio.SideName</strong>입니다.</h1>
+                                @*<h3>@edtingPortfolio.RightEnglishName</h3>*@
+                                <h3><InputText @bind-Value="edtingPortfolio.RightEnglishName" class="form-control" style="width:200px;"></InputText></h3>
                             </p>
                         </div>
                     </div>
@@ -105,29 +108,67 @@
                     <div class="row no-gutters">
 
                         <div class="col-lg-6 col-md-6 d-md-flex align-items-md-stretch aos-init aos-animate" data-aos="fade-up">
-                            <div class="count-box">
-                                <i class="bi bi-emoji-smile"></i>
-                                <p class="align-center" style="font-size:32px; font-weight:bold; color:#173b6c;">Camera Test ( Updated : 11/14/2022 )</p>
-                                <iframe width="600"
-                                    height="350"
-                                    src="https://www.youtube.com/embed/m8e-FF8MsqU"
-                                    frameborder="0"
-                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                    allowfullscreen></iframe>
-                            </div>
+                            @if(!string.IsNullOrEmpty(edtingPortfolio.CamereTestUrl))
+                            {
+                                <div class="count-box">
+                                    <i class="bi bi-emoji-smile"></i>
+                                    <p class="align-center" style="font-size:32px; font-weight:bold; color:#173b6c;">Camera Test ( Updated : 11/14/2022 )</p>
+                                    <iframe width="600"
+                                        height="350"
+                                        src="@edtingPortfolio.CamereTestUrl"
+                                        frameborder="0"
+                                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                        allowfullscreen></iframe>
+                                        @*<label for="imageUrl">Video Url</label>*@
+                                        <InputText id="imageUrl" @bind-Value="edtingPortfolio.CamereTestUrl" class="form-control"></InputText>
+                                </div>
+                            }  else
+                            {
+                                <div class="count-box">
+                                    <i class="bi bi-emoji-smile"></i>
+                                    <p class="align-center" style="font-size:32px; font-weight:bold; color:#173b6c;">Camera Test ( Updated : 11/14/2022 )</p>
+                                    <iframe width="600"
+                                        height="350"
+                                        src="https://www.youtube.com/embed/m8e-FF8MsqU"
+                                        frameborder="0"
+                                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                        allowfullscreen></iframe>
+                                        @*<label for="imageUrl">Video Url</label>*@
+                                        <InputText id="imageUrl" @bind-Value="edtingPortfolio.CamereTestUrl" class="form-control"></InputText>
+                                </div>
+                            }
                         </div>
 
                         <div class="col-lg-6 col-md-6 d-md-flex align-items-md-stretch aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
-                            <div class="count-box">
-                                <i class="bi bi-journal-richtext"></i>
-                                <p style="font-size:32px; font-weight:bold; color:#173b6c">Highlight ( Updated : 11/01/2022 )</p>
-                                <iframe width="600"
-                                    height="350"
-                                    src="https://www.youtube.com/embed/m8e-FF8MsqU"
-                                    frameborder="0"
-                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                    allowfullscreen></iframe>
-                            </div>
+                            @if(!string.IsNullOrEmpty(edtingPortfolio.HighlightUrl))
+                            {
+                                 <div class="count-box">
+                                    <i class="bi bi-journal-richtext"></i>
+                                    <p style="font-size:32px; font-weight:bold; color:#173b6c">Highlight ( Updated : 11/01/2022 )</p>
+                                    <iframe width="600"
+                                        height="350"
+                                        src="@edtingPortfolio.HighlightUrl"
+                                        frameborder="0"
+                                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                        allowfullscreen></iframe>
+                                        @*<label for="imageUrl">Video Url</label>*@
+                                        <InputText id="imageUrl" @bind-Value="edtingPortfolio.HighlightUrl" class="form-control"></InputText>
+                                </div>
+                            } else
+                            {
+                                <div class="count-box">
+                                    <i class="bi bi-journal-richtext"></i>
+                                    <p style="font-size:32px; font-weight:bold; color:#173b6c">Highlight ( Updated : 11/01/2022 )</p>
+                                    <iframe width="600"
+                                        height="350"
+                                        src="https://www.youtube.com/embed/m8e-FF8MsqU"
+                                        frameborder="0"
+                                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                        allowfullscreen></iframe>
+                                        @*<label for="imageUrl">Video Url</label>*@
+                                        <InputText id="imageUrl" @bind-Value="edtingPortfolio.HighlightUrl" class="form-control"></InputText>
+                                </div>
+                            }
                         </div>
                     </div>
 
@@ -146,7 +187,14 @@
                             <img src="/images/sample/profile-img.jpg" class="img-fluid" alt="" />
                         </div>
                         <div class="col-lg-8 pt-4 pt-lg-0 content" data-aos="fade-left">
-                            <h3>Introduce yourself in one line.</h3>
+                            @if(!string.IsNullOrEmpty(edtingPortfolio.AboutIntroduce))
+                            {
+                                <InputText @bind-Value="edtingPortfolio.AboutIntroduce" class="form-control"></InputText>
+                            } else
+                            {
+                                <InputText @bind-Value="edtingPortfolio.AboutIntroduce" class="form-control">Introduce yourself in one line.</InputText>
+                            }
+                            @*<h3>Introduce yourself in one line.</h3>*@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <ul>
@@ -339,13 +387,15 @@
 }
 else
 {
+    <!-- ======= SideBar Section ======= -->
     <header id="header">
         <div class="d-flex flex-column">
             <div class="profile">
                 @if (!string.IsNullOrEmpty(edtingPortfolio.SideImageData))
                 {
                     <img src="@edtingPortfolio.SideImageData" alt="" class="img-fluid rounded-circle">
-                } else
+                }
+                else
                 {
                     <img src="/images/sample/profile-img.jpg" alt="" class="img-fluid rounded-circle">
                 }
@@ -384,7 +434,7 @@ else
             <!-- .nav-menu -->
         </div>
     </header>
-
+    <!-- ======= SideBar Section ======= -->
     <!-- ======= Main Section ======= -->
     <main id="main">
         <div class="row">
@@ -408,7 +458,7 @@ else
                     <div class="section-title col-lg-10 col-md-6" style="margin-bottom:100px;">
                         <h2>HELLO, MY NAME IS</h2>
                         <p>
-                            <h1><strong>@edtingPortfolio.RightName</strong>입니다.</h1>
+                            <h1><strong>@edtingPortfolio.SideName</strong>입니다.</h1>
                             <h3>@edtingPortfolio.RightEnglishName</h3>
                         </p>
                     </div>
@@ -416,30 +466,63 @@ else
 
                 <div class="row no-gutters">
 
-                    <div class="col-lg-6 col-md-6 d-md-flex align-items-md-stretch aos-init aos-animate" data-aos="fade-up">
-                        <div class="count-box">
-                            <i class="bi bi-emoji-smile"></i>
-                            <p class="align-center" style="font-size:32px; font-weight:bold; color:#173b6c;">Camera Test ( Updated : @edtingPortfolio.CameraTestDateUpdated.ToShortDateString() )</p>
-                            <iframe width="600"
-                                height="350"
-                                src="https://www.youtube.com/embed/m8e-FF8MsqU"
-                                frameborder="0"
-                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                allowfullscreen></iframe>
+                    @if (!string.IsNullOrEmpty(edtingPortfolio.CamereTestUrl))
+                    {
+                        <div class="col-lg-6 col-md-6 d-md-flex align-items-md-stretch aos-init aos-animate" data-aos="fade-up">
+                            <div class="count-box">
+                                <i class="bi bi-emoji-smile"></i>
+                                <p class="align-center" style="font-size:32px; font-weight:bold; color:#173b6c;">Camera Test ( Updated : @edtingPortfolio.CameraTestDateUpdated.ToShortDateString() )</p>
+                                <iframe width="600"
+                                    height="350"
+                                    src="@edtingPortfolio.CamereTestUrl"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen></iframe>
+                            </div>
                         </div>
-                    </div>
+                    } else
+                    {
+                        <div class="col-lg-6 col-md-6 d-md-flex align-items-md-stretch aos-init aos-animate" data-aos="fade-up">
+                            <div class="count-box">
+                                <i class="bi bi-emoji-smile"></i>
+                                <p class="align-center" style="font-size:32px; font-weight:bold; color:#173b6c;">Camera Test ( Updated : @edtingPortfolio.CameraTestDateUpdated.ToShortDateString() )</p>
+                                <iframe width="600"
+                                    height="350"
+                                    src="https://www.youtube.com/embed/m8e-FF8MsqU"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    }
 
                     <div class="col-lg-6 col-md-6 d-md-flex align-items-md-stretch aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
-                        <div class="count-box">
-                            <i class="bi bi-journal-richtext"></i>
-                            <p style="font-size:32px; font-weight:bold; color:#173b6c">Highlight ( Updated : @edtingPortfolio.HighlightDateUpdated.ToShortDateString() )</p>
-                            <iframe width="600"
-                                height="350"
-                                src="https://www.youtube.com/embed/m8e-FF8MsqU"
-                                frameborder="0"
-                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                allowfullscreen></iframe>
-                        </div>
+                        @if (!string.IsNullOrEmpty(edtingPortfolio.HighlightUrl))
+                        {
+                            <div class="count-box">
+                                <i class="bi bi-journal-richtext"></i>
+                                <p style="font-size:32px; font-weight:bold; color:#173b6c">Highlight ( Updated : @edtingPortfolio.HighlightDateUpdated.ToShortDateString() )</p>
+                                <iframe width="600"
+                                    height="350"
+                                    src="@edtingPortfolio.HighlightUrl"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen></iframe>
+                            </div>
+                        } else
+                        {
+                            <div class="count-box">
+                                <i class="bi bi-journal-richtext"></i>
+                                <p style="font-size:32px; font-weight:bold; color:#173b6c">Highlight ( Updated : @edtingPortfolio.HighlightDateUpdated.ToShortDateString() )</p>
+                                <iframe width="600"
+                                    height="350"
+                                    src="https://www.youtube.com/embed/m8e-FF8MsqU"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen></iframe>
+                            </div>
+                        }
+
                     </div>
                 </div>
 
@@ -458,7 +541,14 @@ else
                         <img src="/images/sample/profile-img.jpg" class="img-fluid" alt="" />
                     </div>
                     <div class="col-lg-8 pt-4 pt-lg-0 content" data-aos="fade-left">
-                        <h3>@edtingPortfolio.AboutIntroduce</h3>
+
+                        @if(!string.IsNullOrEmpty(edtingPortfolio.AboutIntroduce))
+                        {
+                            <h3>@edtingPortfolio.AboutIntroduce</h3>
+                        } else
+                        {
+                            <h3>Introduce yourself in one line.</h3>
+                        }
                         @*<h3>Introduce yourself in one line.</h3>*@
 
                         <div class="row">
