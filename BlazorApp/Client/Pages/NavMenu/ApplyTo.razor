@@ -1,17 +1,49 @@
 ﻿@page "/applyto"
 @attribute [Authorize]
 
-<h3>Apply to</h3>
+<h3>Video Url</h3>
 
-<p role="status">Current count: @currentCount</p>
+<EditForm Model="Portfolio">
+    <div class="mb-0">
+        <label for="imageUrl">Image Url</label>
+        <InputText id="imageUrl" @bind-Value="Portfolio.CamereTestUrl" class="form-control"></InputText>
+    </div>
 
-<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+    @if (!string.IsNullOrEmpty(Portfolio.CamereTestUrl))
+    {
+        <div style="width:600px; height:350px;">
+            <iframe width="600"
+                height="350"
+                src="@Portfolio.CamereTestUrl"
+                frameborder="0"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+        </div>
+    }
+
+    <div class="mb-0">
+        <label for="images">Image(s)</label>
+        <InputFile id="fileInput" OnChange="OnFileChange" hidden multiple accept=".jpg, .jpeg, .png" />
+        <MudFab HtmlTag="label" Size="Size.Small" Color="Color.Primary" StartIcon="@Icons.Filled.CloudUpload" for="fileInput" />
+    </div>
+</EditForm>
+
 
 @code {
-    private int currentCount = 0;
 
-    private void IncrementCount()
+    BlazorApp.Shared.Portfolio Portfolio = new BlazorApp.Shared.Portfolio();
+
+    async Task OnFileChange(InputFileChangeEventArgs e)
     {
-        currentCount++;
+        var format = "image/png";
+
+        foreach (var image in e.GetMultipleFiles(int.MaxValue))
+        {
+            var resizeImage = await image.RequestImageFileAsync(format, 200, 200);
+            var buffer = new byte[resizeImage.Size];
+            await resizeImage.OpenReadStream().ReadAsync(buffer);
+            var imageData = $"data:{format};base64,{Convert.ToBase64String(buffer)}";
+            Portfolio.SideImageData = imageData;
+        }
     }
 }
