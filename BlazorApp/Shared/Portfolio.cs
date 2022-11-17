@@ -27,6 +27,7 @@ public class Portfolio
 
 
     //about section
+    public string AboutImageData { get; set; } = string.Empty;
     public string AboutIntroduce { get; set; } = string.Empty;
     public string AboutBirthday{ get; set; } = string.Empty;
     public string AboutPhone { get; set; } = string.Empty;
@@ -41,10 +42,21 @@ public class Portfolio
 
     //concept 1 section
     public string Concept1 { get; set; } = string.Empty;
+    public string Concept1VideoUrl1 { get; set; } = string.Empty;
+    public string Concept1VideoUrl2 { get; set; } = string.Empty;
+    public string Concept1ImageData1 { get; set; } = string.Empty;
+    public string Concept1ImageData2 { get; set; } = string.Empty;
+    public string Concept1ImageData3 { get; set; } = string.Empty;
+
     //concept 1 section
 
     //concept 2 section
     public string Concept2 { get; set; } = string.Empty;
+    public string Concept2VideoUrl1 { get; set; } = string.Empty;
+    public string Concept2VideoUrl2 { get; set; } = string.Empty;
+    public string Concept2ImageData1 { get; set; } = string.Empty;
+    public string Concept2ImageData2 { get; set; } = string.Empty;
+    public string Concept2ImageData3 { get; set; } = string.Empty;
     //concept 2 section
 
     public DateTime DateUpdated { get; set; } = DateTime.Now;
