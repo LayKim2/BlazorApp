@@ -114,13 +114,13 @@
                                     <i class="bi bi-emoji-smile"></i>
                                     <p class="align-center" style="font-size:32px; font-weight:bold; color:#173b6c;">Camera Test ( Updated : 11/14/2022 )</p>
                                     <iframe width="600"
-                                        height="350"
-                                        src="@edtingPortfolio.CamereTestUrl"
-                                        frameborder="0"
-                                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                        allowfullscreen></iframe>
-                                        @*<label for="imageUrl">Video Url</label>*@
-                                        <InputText id="imageUrl" @bind-Value="edtingPortfolio.CamereTestUrl" class="form-control"></InputText>
+                                    height="350"
+                                    src="@edtingPortfolio.CamereTestUrl"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen></iframe>
+                                    @*<label for="imageUrl">Video Url</label>*@
+                                    <InputText id="imageUrl" @bind-Value="edtingPortfolio.CamereTestUrl" class="form-control"></InputText>
                                 </div>
                             }  else
                             {
@@ -128,13 +128,13 @@
                                     <i class="bi bi-emoji-smile"></i>
                                     <p class="align-center" style="font-size:32px; font-weight:bold; color:#173b6c;">Camera Test ( Updated : 11/14/2022 )</p>
                                     <iframe width="600"
-                                        height="350"
-                                        src="https://www.youtube.com/embed/m8e-FF8MsqU"
-                                        frameborder="0"
-                                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                        allowfullscreen></iframe>
-                                        @*<label for="imageUrl">Video Url</label>*@
-                                        <InputText id="imageUrl" @bind-Value="edtingPortfolio.CamereTestUrl" class="form-control"></InputText>
+                                    height="350"
+                                    src="https://www.youtube.com/embed/m8e-FF8MsqU"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen></iframe>
+                                    @*<label for="imageUrl">Video Url</label>*@
+                                    <InputText id="imageUrl" @bind-Value="edtingPortfolio.CamereTestUrl" class="form-control"></InputText>
                                 </div>
                             }
                         </div>
@@ -142,17 +142,17 @@
                         <div class="col-lg-6 col-md-6 d-md-flex align-items-md-stretch aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
                             @if(!string.IsNullOrEmpty(edtingPortfolio.HighlightUrl))
                             {
-                                 <div class="count-box">
+                                <div class="count-box">
                                     <i class="bi bi-journal-richtext"></i>
                                     <p style="font-size:32px; font-weight:bold; color:#173b6c">Highlight ( Updated : 11/01/2022 )</p>
                                     <iframe width="600"
-                                        height="350"
-                                        src="@edtingPortfolio.HighlightUrl"
-                                        frameborder="0"
-                                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                        allowfullscreen></iframe>
-                                        @*<label for="imageUrl">Video Url</label>*@
-                                        <InputText id="imageUrl" @bind-Value="edtingPortfolio.HighlightUrl" class="form-control"></InputText>
+                                    height="350"
+                                    src="@edtingPortfolio.HighlightUrl"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen></iframe>
+                                    @*<label for="imageUrl">Video Url</label>*@
+                                    <InputText id="imageUrl" @bind-Value="edtingPortfolio.HighlightUrl" class="form-control"></InputText>
                                 </div>
                             } else
                             {
@@ -160,13 +160,13 @@
                                     <i class="bi bi-journal-richtext"></i>
                                     <p style="font-size:32px; font-weight:bold; color:#173b6c">Highlight ( Updated : 11/01/2022 )</p>
                                     <iframe width="600"
-                                        height="350"
-                                        src="https://www.youtube.com/embed/m8e-FF8MsqU"
-                                        frameborder="0"
-                                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                        allowfullscreen></iframe>
-                                        @*<label for="imageUrl">Video Url</label>*@
-                                        <InputText id="imageUrl" @bind-Value="edtingPortfolio.HighlightUrl" class="form-control"></InputText>
+                                    height="350"
+                                    src="https://www.youtube.com/embed/m8e-FF8MsqU"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen></iframe>
+                                    @*<label for="imageUrl">Video Url</label>*@
+                                    <InputText id="imageUrl" @bind-Value="edtingPortfolio.HighlightUrl" class="form-control"></InputText>
                                 </div>
                             }
                         </div>
@@ -194,21 +194,49 @@
                             {
                                 <InputText @bind-Value="edtingPortfolio.AboutIntroduce" class="form-control">Introduce yourself in one line.</InputText>
                             }
-                            @*<h3>Introduce yourself in one line.</h3>*@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <ul>
                                         <li>
                                             <i class="bi bi-chevron-right"></i>
-                                            <strong>Birthday:</strong> <span>1 May 1994</span>
+                                            <strong>Birthday:</strong>
+                                            @if (!string.IsNullOrEmpty(edtingPortfolio.AboutBirthday))
+                                            {
+                                                <InputText @bind-Value="edtingPortfolio.AboutBirthday" class="form-control"></InputText>
+                                                @*<span>@edtingPortfolio.AboutBirthday</span>*@
+                                            }
+                                            else
+                                            {
+                                                <InputText @bind-Value="edtingPortfolio.AboutBirthday" class="form-control">1 May 1994</InputText>
+                                                @*<span>1 May 1994</span>*@
+                                            }
                                         </li>
                                         <li>
                                             <i class="bi bi-chevron-right"></i>
-                                            <strong>Phone:</strong> <span>+123 456 7890</span>
+                                            <strong>Phone:</strong>
+                                            @if (!string.IsNullOrEmpty(edtingPortfolio.AboutPhone))
+                                            {
+                                                <InputText @bind-Value="edtingPortfolio.AboutPhone" class="form-control"></InputText>
+                                                @*<span>@edtingPortfolio.AboutPhone</span>*@
+                                            }
+                                            else
+                                            {
+                                                <InputText @bind-Value="edtingPortfolio.AboutPhone" class="form-control">+123 456 7891</InputText>
+                                                @*<span>+123 456 7891</span>*@
+                                            }
                                         </li>
                                         <li>
                                             <i class="bi bi-chevron-right"></i> <strong>Size:</strong>
-                                            <span>181cm 74kg 👕105👖32👞270</span>
+                                            @if (!string.IsNullOrEmpty(edtingPortfolio.AboutSize))
+                                            {
+                                                <InputText @bind-Value="edtingPortfolio.AboutSize" class="form-control"></InputText>
+                                                @*<span>@edtingPortfolio.AboutSize</span>*@
+                                            }
+                                            else
+                                            {
+                                                <InputText @bind-Value="edtingPortfolio.AboutSize" class="form-control">181cm 74kg 👕105👖32👞270</InputText>
+                                                @*<span>181cm 74kg 👕105👖32👞270</span>*@
+                                            }
                                         </li>
                                     </ul>
                                 </div>
@@ -216,12 +244,30 @@
                                     <ul>
                                         <li>
                                             <i class="bi bi-chevron-right"></i> <strong>Age:</strong>
-                                            <span>31</span>
+                                            @if (edtingPortfolio.AboutAge != 0)
+                                            {
+                                                @*<InputText @bind-Value="edtingPortfolio.AboutAge" class="form-control"></InputText>*@
+                                                <span>@edtingPortfolio.AboutAge</span>
+                                            }
+                                            else
+                                            {
+                                                @*<InputText @bind-Value="edtingPortfolio.AboutAge" class="form-control">31</InputText>*@
+                                                <span>31</span>
+                                            }
                                         </li>
                                         <li>
                                             <i class="bi bi-chevron-right"></i>
                                             <strong>Email:</strong>
-                                            <span>email@example.com</span>
+                                            @if (!string.IsNullOrEmpty(edtingPortfolio.AboutEmail))
+                                            {
+                                                <InputText @bind-Value="edtingPortfolio.AboutEmail" class="form-control"></InputText>
+                                                @*<span>@edtingPortfolio.AboutEmail</span>*@
+                                            }
+                                            else
+                                            {
+                                                <InputText @bind-Value="edtingPortfolio.AboutEmail" class="form-control">email@example.com</InputText>
+                                                <span>email@example.com</span>
+                                            }
                                         </li>
                                     </ul>
                                 </div>
@@ -230,16 +276,55 @@
                                     <h3>Main Filmography</h3>
                                     <ul>
                                         <li>
-                                            <strong>드라마 - </strong> <span>SBS 치얼업 단역</span>
+                                            @if (!string.IsNullOrEmpty(edtingPortfolio.AboutMainFilmograpy1))
+                                            {
+                                                <InputText @bind-Value="edtingPortfolio.AboutMainFilmograpy1" class="form-control"></InputText>
+                                                @*<span>@edtingPortfolio.AboutMainFilmograpy1</span>*@
+                                            }
+                                            else
+                                            {
+                                                <InputText @bind-Value="edtingPortfolio.AboutMainFilmograpy1" class="form-control"><strong>Drama - </strong> <span> A </span></InputText>
+                                                @*<strong>Drama - </strong> <span> A </span>*@
+                                            }
                                         </li>
                                         <li>
-                                            <strong>광고 - </strong> <span>신세계 ‘JAJU’ 디즈니 메인페이지</span>
+                                            @if (!string.IsNullOrEmpty(edtingPortfolio.AboutMainFilmograpy2))
+                                            {
+                                                <InputText @bind-Value="edtingPortfolio.AboutMainFilmograpy2" class="form-control"></InputText>
+                                                @*<span>@edtingPortfolio.AboutMainFilmograpy2</span>*@
+                                            }
+                                            else
+                                            {
+                                                <InputText @bind-Value="edtingPortfolio.AboutMainFilmograpy2" class="form-control"> <strong>Drama - </strong> <span> B </span></InputText>
+                                                @*<strong>Drama - </strong> <span> B </span>*@
+                                            }
+                                            @*<strong>광고 - </strong> <span>신세계 ‘JAJU’ 디즈니 메인페이지</span>*@
                                         </li>
                                         <li>
-                                            <strong>광고 - </strong> <span>PlayStation Korea 공식 유튜브</span>
+                                            @if (!string.IsNullOrEmpty(edtingPortfolio.AboutMainFilmograpy3))
+                                            {
+                                                <InputText @bind-Value="edtingPortfolio.AboutMainFilmograpy3" class="form-control"></InputText>
+                                                @*<span>@edtingPortfolio.AboutMainFilmograpy3</span>*@
+                                            }
+                                            else
+                                            {
+                                                <InputText @bind-Value="edtingPortfolio.AboutMainFilmograpy3" class="form-control"><strong>Ad - </strong> <span> C </span></InputText>
+                                                @*<strong>Ad - </strong> <span> C </span>*@
+                                            }
+                                            @*<strong>광고 - </strong> <span>PlayStation Korea 공식 유튜브</span>*@
                                         </li>
                                         <li>
-                                            <strong>방송 - </strong> <span>나는 솔로</span>
+                                            @if (!string.IsNullOrEmpty(edtingPortfolio.AboutMainFilmograpy4))
+                                            {
+                                                <InputText @bind-Value="edtingPortfolio.AboutMainFilmograpy4" class="form-control"></InputText>
+                                                @*<span>@edtingPortfolio.AboutMainFilmograpy4</span>*@
+                                            }
+                                            else
+                                            {
+                                                <InputText @bind-Value="edtingPortfolio.AboutMainFilmograpy4" class="form-control"><strong>Music - </strong> <span> D </span></InputText>
+                                                @*<strong>Music - </strong> <span> D </span>*@
+                                            }
+                                            @*<strong>방송 - </strong> <span>나는 솔로</span>*@
                                         </li>
                                     </ul>
                                 </div>
@@ -473,25 +558,26 @@ else
                                 <i class="bi bi-emoji-smile"></i>
                                 <p class="align-center" style="font-size:32px; font-weight:bold; color:#173b6c;">Camera Test ( Updated : @edtingPortfolio.CameraTestDateUpdated.ToShortDateString() )</p>
                                 <iframe width="600"
-                                    height="350"
-                                    src="@edtingPortfolio.CamereTestUrl"
-                                    frameborder="0"
-                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                    allowfullscreen></iframe>
+                                height="350"
+                                src="@edtingPortfolio.CamereTestUrl"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe>
                             </div>
                         </div>
-                    } else
+                    }
+                    else
                     {
                         <div class="col-lg-6 col-md-6 d-md-flex align-items-md-stretch aos-init aos-animate" data-aos="fade-up">
                             <div class="count-box">
                                 <i class="bi bi-emoji-smile"></i>
                                 <p class="align-center" style="font-size:32px; font-weight:bold; color:#173b6c;">Camera Test ( Updated : @edtingPortfolio.CameraTestDateUpdated.ToShortDateString() )</p>
                                 <iframe width="600"
-                                    height="350"
-                                    src="https://www.youtube.com/embed/m8e-FF8MsqU"
-                                    frameborder="0"
-                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                    allowfullscreen></iframe>
+                                height="350"
+                                src="https://www.youtube.com/embed/m8e-FF8MsqU"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe>
                             </div>
                         </div>
                     }
@@ -503,23 +589,24 @@ else
                                 <i class="bi bi-journal-richtext"></i>
                                 <p style="font-size:32px; font-weight:bold; color:#173b6c">Highlight ( Updated : @edtingPortfolio.HighlightDateUpdated.ToShortDateString() )</p>
                                 <iframe width="600"
-                                    height="350"
-                                    src="@edtingPortfolio.HighlightUrl"
-                                    frameborder="0"
-                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                    allowfullscreen></iframe>
+                                height="350"
+                                src="@edtingPortfolio.HighlightUrl"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe>
                             </div>
-                        } else
+                        }
+                        else
                         {
                             <div class="count-box">
                                 <i class="bi bi-journal-richtext"></i>
                                 <p style="font-size:32px; font-weight:bold; color:#173b6c">Highlight ( Updated : @edtingPortfolio.HighlightDateUpdated.ToShortDateString() )</p>
                                 <iframe width="600"
-                                    height="350"
-                                    src="https://www.youtube.com/embed/m8e-FF8MsqU"
-                                    frameborder="0"
-                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                    allowfullscreen></iframe>
+                                height="350"
+                                src="https://www.youtube.com/embed/m8e-FF8MsqU"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe>
                             </div>
                         }
 
@@ -537,11 +624,10 @@ else
                 </div>
 
                 <div class="row">
-                    <div class="col-lg-4" data-aos="fade-right">
-                        <img src="/images/sample/profile-img.jpg" class="img-fluid" alt="" />
-                    </div>
-                    <div class="col-lg-8 pt-4 pt-lg-0 content" data-aos="fade-left">
-
+                        <div class="col-lg-4" data-aos="fade-right">
+                            <img src="/images/sample/profile-img.jpg" class="img-fluid" alt="" />
+                        </div>
+                        <div class="col-lg-8 pt-4 pt-lg-0 content" data-aos="fade-left">
                         @if(!string.IsNullOrEmpty(edtingPortfolio.AboutIntroduce))
                         {
                             <h3>@edtingPortfolio.AboutIntroduce</h3>
@@ -549,66 +635,125 @@ else
                         {
                             <h3>Introduce yourself in one line.</h3>
                         }
-                        @*<h3>Introduce yourself in one line.</h3>*@
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <ul>
+                                        <li>
+                                            <i class="bi bi-chevron-right"></i>
+                                            <strong>Birthday:</strong>
+                                            @if (!string.IsNullOrEmpty(edtingPortfolio.AboutBirthday))
+                                            {
+                                                <span>@edtingPortfolio.AboutBirthday</span>
+                                            }
+                                            else
+                                            {
+                                                <span>1 May 1994</span>
+                                            }
+                                        </li>
+                                        <li>
+                                            <i class="bi bi-chevron-right"></i>
+                                            <strong>Phone:</strong>
+                                            @if (!string.IsNullOrEmpty(edtingPortfolio.AboutPhone))
+                                            {
+                                                <span>@edtingPortfolio.AboutPhone</span>
+                                            }
+                                            else
+                                            {
+                                                <span>1 May 1994</span>
+                                            }
+                                        </li>
+                                        <li>
+                                            <i class="bi bi-chevron-right"></i> <strong>Size:</strong>
+                                            @if (!string.IsNullOrEmpty(edtingPortfolio.AboutSize))
+                                            {
+                                                <span>@edtingPortfolio.AboutSize</span>
+                                            }
+                                            else
+                                            {
+                                                <span>181cm 74kg 👕105👖32👞270</span>
+                                            }
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-lg-6">
+                                    <ul>
+                                        <li>
+                                            <i class="bi bi-chevron-right"></i> <strong>Age:</strong>
+                                            @if (edtingPortfolio.AboutAge != 0)
+                                            {
+                                                <span>@edtingPortfolio.AboutAge</span>
+                                            }
+                                            else
+                                            {
+                                                <span>31</span>
+                                            }
+                                        </li>
+                                        <li>
+                                            <i class="bi bi-chevron-right"></i>
+                                            <strong>Email:</strong>
+                                            @if (!string.IsNullOrEmpty(edtingPortfolio.AboutEmail))
+                                            {
+                                                <span>@edtingPortfolio.AboutEmail</span>
+                                            }
+                                            else
+                                            {
+                                                <span>email@example.com</span>
+                                            }
+                                        </li>
+                                    </ul>
+                                </div>
 
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <ul>
-                                    <li>
-                                        <i class="bi bi-chevron-right"></i>
-                                        <strong>Birthday:</strong> <span>@edtingPortfolio.AboutBirthday</span>
-                                        @*<span>1 May 1994</span>*@
-                                    </li>
-                                    <li>
-                                        <i class="bi bi-chevron-right"></i>
-                                        <strong>Phone:</strong> <span>@edtingPortfolio.AboutPhone</span>
-                                        @*<span>+123 456 7890</span>*@
-                                    </li>
-                                    <li>
-                                        <i class="bi bi-chevron-right"></i> <strong>Size:</strong>
-                                        <span>@edtingPortfolio.AboutSize</span>
-                                        @*<span>181cm 74kg 👕105👖32👞270</span>*@
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="col-lg-6">
-                                <ul>
-                                    <li>
-                                        <i class="bi bi-chevron-right"></i> <strong>Age:</strong>
-                                        <span>@edtingPortfolio.AboutAge</span>
-                                    </li>
-                                    <li>
-                                        <i class="bi bi-chevron-right"></i>
-                                        <strong>Email:</strong>
-                                        <span>@edtingPortfolio.AboutEmail</span>
-                                    </li>
-                                </ul>
-                            </div>
-
-                            <div class="col-lg-12" style="margin-top:30px;">
-                                <h3>Main Filmography</h3>
-                                <ul>
-                                    <li>
-                                        @edtingPortfolio.AboutMainFilmograpy1
-                                        @*<strong>드라마 - </strong> <span>SBS 치얼업 단역</span>*@
-                                    </li>
-                                    <li>
-                                        @edtingPortfolio.AboutMainFilmograpy2
-                                        @*<strong>광고 - </strong> <span>신세계 ‘JAJU’ 디즈니 메인페이지</span>*@
-                                    </li>
-                                    <li>
-                                        @edtingPortfolio.AboutMainFilmograpy3
-                                        @*<strong>광고 - </strong> <span>PlayStation Korea 공식 유튜브</span>*@
-                                    </li>
-                                    <li>
-                                        @edtingPortfolio.AboutMainFilmograpy4
-                                        @*<strong>방송 - </strong> <span>나는 솔로</span>*@
-                                    </li>
-                                </ul>
+                                <div class="col-lg-12" style="margin-top:30px;">
+                                    <h3>Main Filmography</h3>
+                                    <ul>
+                                        <li>
+                                            @if (!string.IsNullOrEmpty(edtingPortfolio.AboutMainFilmograpy1))
+                                            {
+                                                <span>@edtingPortfolio.AboutMainFilmograpy1</span>
+                                            }
+                                            else
+                                            {
+                                                <strong>Drama - </strong> <span> A </span>
+                                            }
+                                        </li>
+                                        <li>
+                                            @if (!string.IsNullOrEmpty(edtingPortfolio.AboutMainFilmograpy2))
+                                            {
+                                                <span>@edtingPortfolio.AboutMainFilmograpy2</span>
+                                            }
+                                            else
+                                            {
+                                                <strong>Drama - </strong> <span> B </span>
+                                            }
+                                            @*<strong>광고 - </strong> <span>신세계 ‘JAJU’ 디즈니 메인페이지</span>*@
+                                        </li>
+                                        <li>
+                                            @if (!string.IsNullOrEmpty(edtingPortfolio.AboutMainFilmograpy3))
+                                            {
+                                                <span>@edtingPortfolio.AboutMainFilmograpy3</span>
+                                            }
+                                            else
+                                            {
+                                                <strong>Ad - </strong> <span> C </span>
+                                            }
+                                            @*<strong>광고 - </strong> <span>PlayStation Korea 공식 유튜브</span>*@
+                                        </li>
+                                        <li>
+                                            @if (!string.IsNullOrEmpty(edtingPortfolio.AboutMainFilmograpy4))
+                                            {
+                                                <span>@edtingPortfolio.AboutMainFilmograpy4</span>
+                                            }
+                                            else
+                                            {
+                                                <strong>Music - </strong> <span> D </span>
+                                            }
+                                            @*<strong>방송 - </strong> <span>나는 솔로</span>*@
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
             </div>
         </section>
         <!-- End About Section -->
