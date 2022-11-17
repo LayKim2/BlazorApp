@@ -38,7 +38,9 @@ public class PortfolioService : IPortfolioService
             _context.Portfolios.Add(portfolio);
 
             response.Data = portfolio;
-        } else {
+        } else
+        {
+            dbPortfolio.Url = portfolio.Url;
             dbPortfolio.SideName = portfolio.SideName;
             dbPortfolio.Concept1 = portfolio.Concept1;
             dbPortfolio.Concept2 = portfolio.Concept2;

@@ -4,6 +4,8 @@ public class Portfolio
 {
     public int Id { get; set; }
 
+    public string Url { get; set; } = string.Empty;
+
     // user model
     public User? User { get; set; }
     public int UserId { get; set; }

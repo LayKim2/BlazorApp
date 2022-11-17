@@ -6,6 +6,7 @@ public class User
     public string Email { get; set; } = string.Empty;
     public byte[] PasswordHash { get; set; }
     public byte[] PasswordSalt { get; set; }
+    public string Url { get; set; } = string.Empty;
     public DateTime DateCreated { get; set; } = DateTime.Now;
 
     //public Address Address { get; set; }
