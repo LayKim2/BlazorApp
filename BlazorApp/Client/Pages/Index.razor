@@ -7,7 +7,7 @@
 
 <AuthorizeView>
     <NotAuthorized>
-
+        <span>Test</span>
     </NotAuthorized>
 </AuthorizeView>
 
@@ -20,34 +20,42 @@
 
     protected override async Task OnInitializedAsync()
     {
-        //string nameIdentifier = (await AuthStateProvider.GetAuthenticationStateAsync()).User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
         var User = (await AuthenticationStateProvider.GetAuthenticationStateAsync()).User;
 
-        if (User != null)
-        {
-            var NameIdentifier = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
-
-            if (NameIdentifier != null)
+            if (User != null)
             {
-                authorized = true;
+                var NameIdentifier = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+
+                if (NameIdentifier != null)
+                {
+                    authorized = true;
+                }
+                else
+                {
+                    authorized = false;
+                }
+            }
+
+            if (authorized)
+            {
+                JSRuntime.InvokeVoidAsync("Expand");
+                NavigationManager.NavigateTo("admin");
             }
             else
             {
-                authorized = false;
+                JSRuntime.InvokeVoidAsync("Collapse");
+                NavigationManager.NavigateTo("login");
             }
-        }
 
-        if (authorized)
-        {
-            JSRuntime.InvokeVoidAsync("Expand");
-            NavigationManager.NavigateTo("admin");
-        }
-        else
-        {
-            JSRuntime.InvokeVoidAsync("Collapse");
-            NavigationManager.NavigateTo("login");
-        }
     }
+
+    //protected override async Task OnParametersSetAsync()
+    //{
+    //    if (!string.IsNullOrEmpty(Url))
+    //    {
+
+    //    }
+    //}
 }
 
 

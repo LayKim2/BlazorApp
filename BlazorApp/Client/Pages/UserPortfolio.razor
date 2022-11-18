@@ -1,0 +1,555 @@
+﻿@page "/{url}"
+@inject IJSRuntime JSRuntime
+@inject NavigationManager NavigationManager
+@inject IUserPortfolioService UserPortfolioService
+@implements IDisposable
+
+<div>
+    <!-- ======= SideBar Section ======= -->
+    <header id="header">
+        <div class="d-flex flex-column">
+            <div class="profile">
+                @if (!string.IsNullOrEmpty(model.SideImageData))
+                {
+                    <img src="@model.SideImageData" alt="" class="img-fluid rounded-circle">
+                }
+                else
+                {
+                    <img src="/images/sample/profile-img.jpg" alt="" class="img-fluid rounded-circle">
+                }
+                <h1 class="text-light"><a>@model.SideName</a></h1>
+                <div class="social-links mt-3 text-center">
+                    <a class="twitter"><i class="bx bxl-twitter"></i></a>
+                    <a class="facebook"><i class="bx bxl-facebook"></i></a>
+                    <a class="instagram"><i class="bx bxl-instagram"></i></a>
+                    <a class="google-plus"><i class="bx bxl-skype"></i></a>
+                    <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+                </div>
+            </div>
+
+            <nav id="navbar" class="nav-menu navbar">
+                <ul>
+                    <li>
+                        <a id="navhome" href="" @onclick="@(e => ScrollIntoView("home"))" class="nav-link scrollto active" @onclick:preventDefault><i class='bx bxs-home'></i> <span>Home</span></a>
+                    </li>
+                    <li>
+                        <a id="navabout" href="" @onclick="@(e => ScrollIntoView("about"))" class="nav-link scrollto" @onclick:preventDefault><i class="bx bx-user"></i> <span>About</span></a>
+                    </li>
+                    <li>
+                        <a id="navconcept1" href="" @onclick="@(e => ScrollIntoView("concept1"))" class="nav-link scrollto" @onclick:preventDefault>
+                            <i class="bx bxs-layer"></i>
+                            <span>@model.Concept1</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a id="navconcept2" href="" @onclick="@(e => ScrollIntoView("concept2"))" class="nav-link scrollto" @onclick:preventDefault>
+                            <i class="bx bxs-layer"></i>
+                            <span>@model.Concept2</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <!-- .nav-menu -->
+        </div>
+    </header>
+    <!-- ======= SideBar Section ======= -->
+    <!-- ======= Main Section ======= -->
+    <main id="main">
+
+        <!-- ======= Home Section ======= -->
+        <section id="home" class="home">
+            <div class="container">
+
+                <div class="row">
+                    <div class="section-title col-lg-10 col-md-6" style="margin-bottom:100px;">
+                        <h2>HELLO, MY NAME IS</h2>
+                        <p>
+                            <h1><strong>@model.SideName</strong>입니다.</h1>
+                            <h3>@model.RightEnglishName</h3>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="row no-gutters">
+
+                    @if (!string.IsNullOrEmpty(model.CamereTestUrl))
+                    {
+                        <div class="col-lg-6 col-md-6 d-md-flex align-items-md-stretch aos-init aos-animate" data-aos="fade-up">
+                            <div class="count-box">
+                                <i class="bi bi-emoji-smile"></i>
+                                <p class="align-center" style="font-size:32px; font-weight:bold; color:#173b6c;">Camera Test ( Updated : @model.CameraTestDateUpdated.ToShortDateString() )</p>
+                                <iframe width="600"
+                                    height="350"
+                                    src="@model.CamereTestUrl"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-lg-6 col-md-6 d-md-flex align-items-md-stretch aos-init aos-animate" data-aos="fade-up">
+                            <div class="count-box">
+                                <i class="bi bi-emoji-smile"></i>
+                                <p class="align-center" style="font-size:32px; font-weight:bold; color:#173b6c;">Camera Test ( Updated : @model.CameraTestDateUpdated.ToShortDateString() )</p>
+                                <iframe width="600"
+                                    height="350"
+                                    src="https://www.youtube.com/embed/m8e-FF8MsqU"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    }
+
+                    <div class="col-lg-6 col-md-6 d-md-flex align-items-md-stretch aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
+                        @if (!string.IsNullOrEmpty(model.HighlightUrl))
+                        {
+                            <div class="count-box">
+                                <i class="bi bi-journal-richtext"></i>
+                                <p style="font-size:32px; font-weight:bold; color:#173b6c">Highlight ( Updated : @model.HighlightDateUpdated.ToShortDateString() )</p>
+                                <iframe width="600"
+                                    height="350"
+                                    src="@model.HighlightUrl"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen></iframe>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="count-box">
+                                <i class="bi bi-journal-richtext"></i>
+                                <p style="font-size:32px; font-weight:bold; color:#173b6c">Highlight ( Updated : @model.HighlightDateUpdated.ToShortDateString() )</p>
+                                <iframe width="600"
+                                    height="350"
+                                    src="https://www.youtube.com/embed/m8e-FF8MsqU"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen></iframe>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        <!-- ======= End  Home Section ======= -->
+        <!-- ======= About Section ======= -->
+        <section id="about" class="about">
+            <div class="container">
+                <div class="section-title">
+                    <h2>About</h2>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-4" data-aos="fade-right">
+                        @if (!string.IsNullOrEmpty(model.AboutImageData))
+                        {
+                            <img src="@model.AboutImageData" class="img-fluid" alt="" />
+                        }
+                        else
+                        {
+                            <img src="/images/sample/profile-img.jpg" class="img-fluid" alt="" />
+                        }
+                    </div>
+                    <div class="col-lg-8 pt-4 pt-lg-0 content" data-aos="fade-left">
+                        @if (!string.IsNullOrEmpty(model.AboutIntroduce))
+                        {
+                            <h3>@model.AboutIntroduce</h3>
+                        }
+                        else
+                        {
+                            <h3>Introduce yourself in one line.</h3>
+                        }
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <ul>
+                                    <li>
+                                        <i class="bi bi-chevron-right"></i>
+                                        <strong>Birthday:</strong>
+                                        @if (!string.IsNullOrEmpty(model.AboutBirthday))
+                                        {
+                                            <span>@model.AboutBirthday</span>
+                                        }
+                                        else
+                                        {
+                                            <span>1 May 1994</span>
+                                        }
+                                    </li>
+                                    <li>
+                                        <i class="bi bi-chevron-right"></i>
+                                        <strong>Phone:</strong>
+                                        @if (!string.IsNullOrEmpty(model.AboutPhone))
+                                        {
+                                            <span>@model.AboutPhone</span>
+                                        }
+                                        else
+                                        {
+                                            <span>1 May 1994</span>
+                                        }
+                                    </li>
+                                    <li>
+                                        <i class="bi bi-chevron-right"></i> <strong>Size:</strong>
+                                        @if (!string.IsNullOrEmpty(model.AboutSize))
+                                        {
+                                            <span>@model.AboutSize</span>
+                                        }
+                                        else
+                                        {
+                                            <span>181cm 74kg 👕105👖32👞270</span>
+                                        }
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-lg-6">
+                                <ul>
+                                    <li>
+                                        <i class="bi bi-chevron-right"></i> <strong>Age:</strong>
+                                        @if (model.AboutAge != 0)
+                                        {
+                                            <span>@model.AboutAge</span>
+                                        }
+                                        else
+                                        {
+                                            <span>31</span>
+                                        }
+                                    </li>
+                                    <li>
+                                        <i class="bi bi-chevron-right"></i>
+                                        <strong>Email:</strong>
+                                        @if (!string.IsNullOrEmpty(model.AboutEmail))
+                                        {
+                                            <span>@model.AboutEmail</span>
+                                        }
+                                        else
+                                        {
+                                            <span>email@example.com</span>
+                                        }
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="col-lg-12" style="margin-top:30px;">
+                                <h3>Main Filmography</h3>
+                                <ul>
+                                    <li>
+                                        @if (!string.IsNullOrEmpty(model.AboutMainFilmograpy1))
+                                        {
+                                            <span>@model.AboutMainFilmograpy1</span>
+                                        }
+                                        else
+                                        {
+                                            <strong>Drama - </strong> <span> A </span>
+                                        }
+                                    </li>
+                                    <li>
+                                        @if (!string.IsNullOrEmpty(model.AboutMainFilmograpy2))
+                                        {
+                                            <span>@model.AboutMainFilmograpy2</span>
+                                        }
+                                        else
+                                        {
+                                            <strong>Drama - </strong> <span> B </span>
+                                        }
+                                        @*<strong>광고 - </strong> <span>신세계 ‘JAJU’ 디즈니 메인페이지</span>*@
+                                    </li>
+                                    <li>
+                                        @if (!string.IsNullOrEmpty(model.AboutMainFilmograpy3))
+                                        {
+                                            <span>@model.AboutMainFilmograpy3</span>
+                                        }
+                                        else
+                                        {
+                                            <strong>Ad - </strong> <span> C </span>
+                                        }
+                                        @*<strong>광고 - </strong> <span>PlayStation Korea 공식 유튜브</span>*@
+                                    </li>
+                                    <li>
+                                        @if (!string.IsNullOrEmpty(model.AboutMainFilmograpy4))
+                                        {
+                                            <span>@model.AboutMainFilmograpy4</span>
+                                        }
+                                        else
+                                        {
+                                            <strong>Music - </strong> <span> D </span>
+                                        }
+                                        @*<strong>방송 - </strong> <span>나는 솔로</span>*@
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End About Section -->
+        <!-- ======= Concept1 Section ======= -->
+        <section id="concept1" class="concept1">
+            <div class="container">
+
+                <div class="section-title">
+                    <h2>@model.Concept1</h2>
+                </div>
+
+                @*<div class="row" data-aos="fade-up">
+                <div class="col-lg-12 d-flex justify-content-center">
+                <ul id="portfolio-flters">
+                <li data-filter="*" class="filter-active">All</li>
+                <li data-filter=".filter-app">App</li>
+                <li data-filter=".filter-card">Card</li>
+                <li data-filter=".filter-web">Web</li>
+                </ul>
+                </div>
+                </div>*@
+
+                <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="100">
+
+                    <div class="col-md-6 portfolio-item filter-app">
+                        <div class="portfolio-wrap">
+                            @if (!string.IsNullOrEmpty(model.Concept1VideoUrl1))
+                            {
+                                <iframe width="635"
+                                    height="330"
+                                    src="@model.Concept1VideoUrl1"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen></iframe>
+                            }
+                            else
+                            {
+                                <iframe width="635"
+                                    height="330"
+                                    src="https://www.youtube.com/embed/m8e-FF8MsqU"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen></iframe>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 portfolio-item filter-app">
+                        <div class="portfolio-wrap">
+                            @if (!string.IsNullOrEmpty(model.Concept1VideoUrl2))
+                            {
+                                <iframe width="635"
+                                    height="330"
+                                    src="@model.Concept1VideoUrl2"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen></iframe>
+                            }
+                            else
+                            {
+                                <iframe width="635"
+                                    height="330"
+                                    src="https://www.youtube.com/embed/m8e-FF8MsqU"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen></iframe>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 portfolio-item filter-card">
+                        <div class="portfolio-wrap">
+                            @if (!string.IsNullOrEmpty(model.Concept1ImageData1))
+                            {
+                                <img src="@model.Concept1ImageData1" class="img-fluid" alt="">
+                            }
+                            else
+                            {
+                                <img src="/images/sample/pic/portfolio-4.jpg" class="img-fluid" alt="">
+                            }
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+                        <div class="portfolio-wrap">
+                            @if (!string.IsNullOrEmpty(model.Concept1ImageData2))
+                            {
+                                <img src="@model.Concept1ImageData2" class="img-fluid" alt="">
+                            }
+                            else
+                            {
+                                <img src="/images/sample/pic/portfolio-4.jpg" class="img-fluid" alt="">
+                            }
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+                        <div class="portfolio-wrap">
+                            @if (!string.IsNullOrEmpty(model.Concept1ImageData3))
+                            {
+                                <img src="@model.Concept1ImageData3" class="img-fluid" alt="">
+                            }
+                            else
+                            {
+                                <img src="/images/sample/pic/portfolio-4.jpg" class="img-fluid" alt="">
+                            }
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+        <!-- End Concept1 Section -->
+        <!-- ======= Concept2 Section ======= -->
+        <section id="concept2" class="concept2">
+            <div class="container">
+
+                <div class="section-title">
+                    <h2>@model.Concept2</h2>
+                </div>
+
+                @*<div class="row" data-aos="fade-up">
+                <div class="col-lg-12 d-flex justify-content-center">
+                <ul id="portfolio-flters">
+                <li data-filter="*" class="filter-active">All</li>
+                <li data-filter=".filter-app">App</li>
+                <li data-filter=".filter-card">Card</li>
+                <li data-filter=".filter-web">Web</li>
+                </ul>
+                </div>
+                </div>*@
+
+                <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="100">
+
+                    <div class="col-md-6 portfolio-item filter-app">
+                        <div class="portfolio-wrap">
+                            @if (!string.IsNullOrEmpty(model.Concept2VideoUrl1))
+                            {
+                                <iframe width="635"
+                                    height="330"
+                                    src="@model.Concept2VideoUrl1"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen></iframe>
+                            }
+                            else
+                            {
+                                <iframe width="635"
+                                    height="330"
+                                    src="https://www.youtube.com/embed/m8e-FF8MsqU"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen></iframe>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 portfolio-item filter-app">
+                        <div class="portfolio-wrap">
+                            @if (!string.IsNullOrEmpty(model.Concept2VideoUrl2))
+                            {
+                                <iframe width="635"
+                                    height="330"
+                                    src="@model.Concept2VideoUrl2"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen></iframe>
+                            }
+                            else
+                            {
+                                <iframe width="635"
+                                    height="330"
+                                    src="https://www.youtube.com/embed/m8e-FF8MsqU"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen></iframe>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+                        <div class="portfolio-wrap">
+                            @if (!string.IsNullOrEmpty(model.Concept2ImageData1))
+                            {
+                                <img src="@model.Concept2ImageData1" class="img-fluid" alt="">
+                            }
+                            else
+                            {
+                                <img src="/images/sample/pic/portfolio-1.jpg" class="img-fluid" alt="">
+                            }
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+                        <div class="portfolio-wrap">
+                            @if (!string.IsNullOrEmpty(model.Concept2ImageData2))
+                            {
+                                <img src="@model.Concept2ImageData2" class="img-fluid" alt="">
+                            }
+                            else
+                            {
+                                <img src="/images/sample/pic/portfolio-2.jpg" class="img-fluid" alt="">
+                            }
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+                        <div class="portfolio-wrap">
+                            @if (!string.IsNullOrEmpty(model.Concept2ImageData3))
+                            {
+                                <img src="@model.Concept2ImageData3" class="img-fluid" alt="">
+                            }
+                            else
+                            {
+                                <img src="/images/sample/pic/portfolio-3.jpg" class="img-fluid" alt="">
+                            }
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+        <!-- End Concept2 Section -->
+    </main>
+    <!-- ======= End  Main Section ======= -->
+    <!-- ======= End  SideBar Section ======= -->
+</div>
+@code {
+
+    [Parameter]
+    public string Url { get; set; }  
+
+    BlazorApp.Shared.Portfolio model = new BlazorApp.Shared.Portfolio();
+
+    protected override async Task OnInitializedAsync()
+    {
+        JSRuntime.InvokeVoidAsync("Collapse");
+
+        ////model = await UserPortfolioService.GetPortfolioByUrl(Url);
+        //UserPortfolioService.OnChange += StateHasChanged;
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var result = await UserPortfolioService.GetPortfolioByUrl(Url);
+
+        model = result.Data;
+        //if (!result.Success)
+        //{
+
+        //} else
+        //{
+            
+        //}
+        UserPortfolioService.OnChange += StateHasChanged;
+    }
+
+
+    public void Dispose()
+    {
+        UserPortfolioService.OnChange -= StateHasChanged;
+    }
+
+    private void ScrollIntoView(string target)
+    {
+        JSRuntime.InvokeVoidAsync("ScrollIntoView", target);
+    }
+}

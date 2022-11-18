@@ -30,7 +30,8 @@
   <!-- DI -->
   <ItemGroup>
     <Using Include="BlazorApp.Server.Services.AuthService" />
-	<Using Include="BlazorApp.Server.Services.PortfolioService" />
+	  <Using Include="BlazorApp.Server.Services.PortfolioService" />
+    <Using Include="BlazorApp.Server.Services.UserPortfolioService" />
   </ItemGroup>
   <!-- DI -->
 
