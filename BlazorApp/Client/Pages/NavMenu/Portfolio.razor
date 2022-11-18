@@ -1270,7 +1270,13 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        edtingPortfolio = await PortfolioService.GetPortfolio();
+
+        var result = await PortfolioService.GetPortfolio();
+
+        if(result != null){
+            edtingPortfolio = result;
+        }
+
         PortfolioService.OnChange += StateHasChanged;
         //isAuthenticated = await AuthService.IsUserAuthenticated();
 
