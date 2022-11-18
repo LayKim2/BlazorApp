@@ -1,49 +1,44 @@
 ﻿@page "/applyto"
+@using Radzen
+@using Radzen.Blazor
 @attribute [Authorize]
 
-<h3>Video Url</h3>
 
-<EditForm Model="Portfolio">
-    <div class="mb-0">
-        <label for="imageUrl">Image Url</label>
-        <InputText id="imageUrl" @bind-Value="Portfolio.CamereTestUrl" class="form-control"></InputText>
-    </div>
 
-    @if (!string.IsNullOrEmpty(Portfolio.CamereTestUrl))
-    {
-        <div style="width:600px; height:350px;">
-            <iframe width="600"
-                height="350"
-                src="@Portfolio.CamereTestUrl"
-                frameborder="0"
-                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen></iframe>
-        </div>
-    }
+<h3>Apply to</h3>
 
-    <div class="mb-0">
-        <label for="images">Image(s)</label>
-        <InputFile id="fileInput" OnChange="OnFileChange" hidden multiple accept=".jpg, .jpeg, .png" />
-        <MudFab HtmlTag="label" Size="Size.Small" Color="Color.Primary" StartIcon="@Icons.Filled.CloudUpload" for="fileInput" />
-    </div>
-</EditForm>
+<RadzenDataGrid AllowFiltering="true" AllowColumnResize="true"
+                FilterMode="FilterMode.Simple" PageSize="5" AllowPaging="true" AllowSorting="true" Data="@applies" TItem="Apply" ColumnWidth="300px"
+                FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                LogicalFilterOperator="LogicalFilterOperator.Or">
+    <Columns>
+        <RadzenDataGridColumn TItem="Apply" Property="ID" Filterable="false" Title="ID" Frozen="true" Width="80px" TextAlign="TextAlign.Center" />
+        @*<RadzenDataGridColumn TItem="Employee" Title="Photo" Sortable="false" Filterable="false" Width="200px" >
+        <Template Context="data">
+        <RadzenImage Path="@data.Photo" class="rz-gravatar" />
+        </Template>
+        </RadzenDataGridColumn>*@
+        <RadzenDataGridColumn TItem="Apply" Property="Title" Title="Title" />
+        <RadzenDataGridColumn TItem="Apply" Property="Date" Title="Date" FormatString="{0:d}" />
+        <RadzenDataGridColumn TItem="Apply" Property="Result" Title="Result" />
+        <RadzenDataGridColumn TItem="Apply" Property="Notes" Title="Notes" />
+    </Columns>
+</RadzenDataGrid>
 
 
 @code {
+    IEnumerable<Apply> applies;
 
-    BlazorApp.Shared.Portfolio Portfolio = new BlazorApp.Shared.Portfolio();
-
-    async Task OnFileChange(InputFileChangeEventArgs e)
+    protected override async Task OnInitializedAsync()
     {
-        var format = "image/png";
+        await base.OnInitializedAsync();
 
-        foreach (var image in e.GetMultipleFiles(int.MaxValue))
-        {
-            var resizeImage = await image.RequestImageFileAsync(format, 200, 200);
-            var buffer = new byte[resizeImage.Size];
-            await resizeImage.OpenReadStream().ReadAsync(buffer);
-            var imageData = $"data:{format};base64,{Convert.ToBase64String(buffer)}";
-            Portfolio.SideImageData = imageData;
-        }
+        //employees = dbContext.Employees;
     }
 }
+
+
+<RadzenDialog />
+<RadzenNotification />
+<RadzenContextMenu />
+<RadzenTooltip />

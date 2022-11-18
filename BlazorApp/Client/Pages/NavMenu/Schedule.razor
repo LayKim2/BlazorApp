@@ -4,8 +4,6 @@
 @using Radzen.Blazor
 @inject Radzen.DialogService DialogService
 
-<PageTitle>Schedule</PageTitle>
-
 <RadzenScheduler @ref=@scheduler SlotRender=@OnSlotRender style="height: 768px;" TItem="Appointment" Data=@appointments StartProperty="Start" EndProperty="End"
                  TextProperty="Text" SelectedIndex="2"
                  SlotSelect=@OnSlotSelect AppointmentSelect=@OnAppointmentSelect AppointmentRender=@OnAppointmentRender>
