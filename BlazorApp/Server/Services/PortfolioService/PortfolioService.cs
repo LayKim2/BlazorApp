@@ -51,8 +51,6 @@ public class PortfolioService : IPortfolioService
             dbPortfolio.AboutIntroduce = portfolio.AboutIntroduce;
             dbPortfolio.AboutSize = portfolio.AboutSize;
             dbPortfolio.AboutAge = portfolio.AboutAge;
-            dbPortfolio.CameraTestDateUpdated = portfolio.CameraTestDateUpdated;
-            dbPortfolio.HighlightDateUpdated = portfolio.HighlightDateUpdated;
             dbPortfolio.RightEnglishName = portfolio.RightEnglishName;
             dbPortfolio.RightName = portfolio.RightName;
             dbPortfolio.AboutImageData = portfolio.AboutImageData;
@@ -63,6 +61,7 @@ public class PortfolioService : IPortfolioService
             dbPortfolio.AboutMainFilmograpy4 =  portfolio.AboutMainFilmograpy4;
             dbPortfolio.AboutPhone = portfolio.AboutPhone;
             dbPortfolio.CamereTestUrl  =  portfolio.CamereTestUrl;
+            dbPortfolio.HighlightUrl = portfolio.HighlightUrl;
             dbPortfolio.SideImageData =  portfolio.SideImageData;
             dbPortfolio.Concept1ImageData1 = portfolio.Concept1ImageData1;
             dbPortfolio.Concept1ImageData2 = portfolio.Concept1ImageData2;

@@ -78,9 +78,9 @@
             <div class="row">
                 <div class="section-title col-lg-10 col-md-4" style="font-weight:bold; text-align:right; font-size:24px;">
                     @if(!string.IsNullOrEmpty(edtingPortfolio.Url)){
-                        <span>Url : www.showhighlight.com/<InputText @bind-Value="@edtingPortfolio.Url" class="form-control"></InputText></span>
+                        <span>Url : https://actorportfolioservice.azurewebsites.net/<InputText @bind-Value="@edtingPortfolio.Url" class="form-control"></InputText></span>
                     } else {
-                        <span>Url : www.showhighlight.com/<InputText @bind-Value="@edtingPortfolio.Url" class="form-control" >[Input your url]</InputText></span>
+                        <span>Url : https://actorportfolioservice.azurewebsites.net/<InputText @bind-Value="@edtingPortfolio.Url" class="form-control" >[Input your url]</InputText></span>
                     }
                 </div>
 
@@ -391,7 +391,7 @@
                         {
                             <div class="col-md-6 portfolio-item filter-app">
                                 <div class="portfolio-wrap">
-                                    <iframe width="635"
+                                    <iframe width="635" style="min-height:330px;"
                                     height="330"
                                     src="@edtingPortfolio.Concept1VideoUrl1"
                                     frameborder="0"
@@ -406,7 +406,7 @@
                         {
                             <div class="col-md-6 portfolio-item filter-app">
                                 <div class="portfolio-wrap">
-                                    <iframe width="635"
+                                    <iframe width="635" style="min-height:330px;"
                                     height="330"
                                     src="https://www.youtube.com/embed/m8e-FF8MsqU"
                                     frameborder="0"
@@ -422,7 +422,7 @@
                         {
                             <div class="col-md-6 portfolio-item filter-app">
                                 <div class="portfolio-wrap">
-                                    <iframe width="635"
+                                    <iframe width="635" style="min-height:330px;"
                                     height="330"
                                     src="@edtingPortfolio.Concept1VideoUrl2"
                                     frameborder="0"
@@ -437,7 +437,7 @@
                         {
                             <div class="col-md-6 portfolio-item filter-app">
                                 <div class="portfolio-wrap">
-                                    <iframe width="635"
+                                    <iframe width="635" style="min-height:330px;"
                                     height="330"
                                     src="https://www.youtube.com/embed/m8e-FF8MsqU"
                                     frameborder="0"
@@ -758,7 +758,7 @@ else
                     <a class="facebook"><i class="bx bxl-facebook"></i></a>
                     <a class="instagram"><i class="bx bxl-instagram"></i></a>
                     <a class="google-plus"><i class="bx bxl-skype"></i></a>
-                    <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+                    <a class="linkedin"><i class="bx bxl-linkedin"></i></a>
                 </div>
             </div>
 
@@ -813,11 +813,11 @@ else
             <div class="container">
 
                 <div class="row">
-                    <div class="section-title col-lg-10 col-md-6" style="margin-bottom:100px;">
+                    <div class="section-title col-lg-10 col-md-6" style="margin-bottom:50px;">
                         <h2>HELLO, MY NAME IS</h2>
                         <p>
                             <h1><strong>@edtingPortfolio.SideName</strong>입니다.</h1>
-                            <h3>@edtingPortfolio.RightEnglishName</h3>
+                            <h3 style="margin-left:20px;">@edtingPortfolio.RightEnglishName</h3>
                         </p>
                     </div>
                 </div>
@@ -830,7 +830,7 @@ else
                             <div class="count-box">
                                 <i class="bi bi-emoji-smile"></i>
                                 <p class="align-center" style="font-size:32px; font-weight:bold; color:#173b6c;">Camera Test ( Updated : @edtingPortfolio.CameraTestDateUpdated.ToShortDateString() )</p>
-                                <iframe width="600"
+                                <iframe style="min-height:300px;" width="600"
                                 height="350"
                                 src="@edtingPortfolio.CamereTestUrl"
                                 frameborder="0"
@@ -845,7 +845,7 @@ else
                             <div class="count-box">
                                 <i class="bi bi-emoji-smile"></i>
                                 <p class="align-center" style="font-size:32px; font-weight:bold; color:#173b6c;">Camera Test ( Updated : @edtingPortfolio.CameraTestDateUpdated.ToShortDateString() )</p>
-                                <iframe width="600"
+                                <iframe style="min-height:300px;" width="600"
                                 height="350"
                                 src="https://www.youtube.com/embed/m8e-FF8MsqU"
                                 frameborder="0"
@@ -861,7 +861,7 @@ else
                             <div class="count-box">
                                 <i class="bi bi-journal-richtext"></i>
                                 <p style="font-size:32px; font-weight:bold; color:#173b6c">Highlight ( Updated : @edtingPortfolio.HighlightDateUpdated.ToShortDateString() )</p>
-                                <iframe width="600"
+                                <iframe style="min-height:300px;" width="600"
                                 height="350"
                                 src="@edtingPortfolio.HighlightUrl"
                                 frameborder="0"
@@ -874,7 +874,7 @@ else
                             <div class="count-box">
                                 <i class="bi bi-journal-richtext"></i>
                                 <p style="font-size:32px; font-weight:bold; color:#173b6c">Highlight ( Updated : @edtingPortfolio.HighlightDateUpdated.ToShortDateString() )</p>
-                                <iframe width="600"
+                                <iframe style="min-height:300px;" width="600"
                                 height="350"
                                 src="https://www.youtube.com/embed/m8e-FF8MsqU"
                                 frameborder="0"
@@ -1063,7 +1063,7 @@ else
                         <div class="portfolio-wrap">
                             @if (!string.IsNullOrEmpty(edtingPortfolio.Concept1VideoUrl1))
                             {
-                                <iframe width="635"
+                                <iframe width="635" style="min-height:330px;"
                                 height="330"
                                 src="@edtingPortfolio.Concept1VideoUrl1"
                                 frameborder="0"
@@ -1072,7 +1072,7 @@ else
                             }
                             else
                             {
-                                <iframe width="635"
+                                <iframe width="635" style="min-height:330px;"
                                 height="330"
                                 src="https://www.youtube.com/embed/m8e-FF8MsqU"
                                 frameborder="0"
@@ -1086,7 +1086,7 @@ else
                         <div class="portfolio-wrap">
                             @if (!string.IsNullOrEmpty(edtingPortfolio.Concept1VideoUrl2))
                             {
-                                <iframe width="635"
+                                <iframe width="635" style="min-height:330px;"
                                 height="330"
                                 src="@edtingPortfolio.Concept1VideoUrl2"
                                 frameborder="0"
@@ -1095,7 +1095,7 @@ else
                             }
                             else
                             {
-                                <iframe width="635"
+                                <iframe width="635" style="min-height:330px;"
                                 height="330"
                                 src="https://www.youtube.com/embed/m8e-FF8MsqU"
                                 frameborder="0"
@@ -1126,7 +1126,7 @@ else
                             }
                             else
                             {
-                                <img src="/images/sample/pic/portfolio-4.jpg" class="img-fluid" alt="">
+                                <img src="/images/sample/pic/portfolio-5.jpg" class="img-fluid" alt="">
                             }
                         </div>
                     </div>
@@ -1139,7 +1139,7 @@ else
                             }
                             else
                             {
-                                <img src="/images/sample/pic/portfolio-4.jpg" class="img-fluid" alt="">
+                                <img src="/images/sample/pic/portfolio-6.jpg" class="img-fluid" alt="">
                             }
                         </div>
                     </div>
@@ -1174,7 +1174,7 @@ else
                         <div class="portfolio-wrap">
                             @if (!string.IsNullOrEmpty(edtingPortfolio.Concept2VideoUrl1))
                             {
-                                <iframe width="635"
+                                <iframe width="635" style="min-height:330px;"
                                 height="330"
                                 src="@edtingPortfolio.Concept2VideoUrl1"
                                 frameborder="0"
@@ -1183,7 +1183,7 @@ else
                             }
                             else
                             {
-                                <iframe width="635"
+                                <iframe width="635" style="min-height:330px;"
                                 height="330"
                                 src="https://www.youtube.com/embed/m8e-FF8MsqU"
                                 frameborder="0"
@@ -1197,7 +1197,7 @@ else
                         <div class="portfolio-wrap">
                             @if (!string.IsNullOrEmpty(edtingPortfolio.Concept2VideoUrl2))
                             {
-                                <iframe width="635"
+                                <iframe width="635" style="min-height:330px;"
                                 height="330"
                                 src="@edtingPortfolio.Concept2VideoUrl2"
                                 frameborder="0"
@@ -1206,7 +1206,7 @@ else
                             }
                             else
                             {
-                                <iframe width="635"
+                                <iframe width="635" style="min-height:330px;"
                                 height="330"
                                 src="https://www.youtube.com/embed/m8e-FF8MsqU"
                                 frameborder="0"
