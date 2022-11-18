@@ -45,6 +45,8 @@ public class PortfolioService : IPortfolioService
             dbPortfolio.Concept1 = portfolio.Concept1;
             dbPortfolio.Concept2 = portfolio.Concept2;
             dbPortfolio.DateUpdated = DateTime.Now;
+            dbPortfolio.HighlightDateUpdated = DateTime.Now;
+            dbPortfolio.CameraTestDateUpdated = DateTime.Now;
             dbPortfolio.AboutBirthday = portfolio.AboutBirthday;
             dbPortfolio.AboutIntroduce = portfolio.AboutIntroduce;
             dbPortfolio.AboutSize = portfolio.AboutSize;

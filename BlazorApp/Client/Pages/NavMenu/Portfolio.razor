@@ -116,7 +116,7 @@
                             {
                                 <div class="count-box">
                                     <i class="bi bi-emoji-smile"></i>
-                                    <p class="align-center" style="font-size:32px; font-weight:bold; color:#173b6c;">Camera Test ( Updated : 11/14/2022 )</p>
+                                    <p class="align-center" style="font-size:32px; font-weight:bold; color:#173b6c;">Camera Test ( Updated : @edtingPortfolio.CameraTestDateUpdated.ToShortDateString() )</p>
                                     <iframe width="600"
                                     height="350"
                                     src="@edtingPortfolio.CamereTestUrl"
@@ -131,7 +131,7 @@
                             {
                                 <div class="count-box">
                                     <i class="bi bi-emoji-smile"></i>
-                                    <p class="align-center" style="font-size:32px; font-weight:bold; color:#173b6c;">Camera Test ( Updated : 11/14/2022 )</p>
+                                    <p class="align-center" style="font-size:32px; font-weight:bold; color:#173b6c;">Camera Test ( Updated : @edtingPortfolio.CameraTestDateUpdated.ToShortDateString() )</p>
                                     <iframe width="600"
                                     height="350"
                                     src="https://www.youtube.com/embed/m8e-FF8MsqU"
@@ -149,7 +149,7 @@
                             {
                                 <div class="count-box">
                                     <i class="bi bi-journal-richtext"></i>
-                                    <p style="font-size:32px; font-weight:bold; color:#173b6c">Highlight ( Updated : 11/01/2022 )</p>
+                                    <p style="font-size:32px; font-weight:bold; color:#173b6c">Highlight ( Updated : @edtingPortfolio.HighlightDateUpdated.ToShortDateString() )</p>
                                     <iframe width="600"
                                     height="350"
                                     src="@edtingPortfolio.HighlightUrl"
@@ -164,7 +164,7 @@
                             {
                                 <div class="count-box">
                                     <i class="bi bi-journal-richtext"></i>
-                                    <p style="font-size:32px; font-weight:bold; color:#173b6c">Highlight ( Updated : 11/01/2022 )</p>
+                                    <p style="font-size:32px; font-weight:bold; color:#173b6c">Highlight ( Updated : @edtingPortfolio.HighlightDateUpdated.ToShortDateString() )</p>
                                     <iframe width="600"
                                     height="350"
                                     src="https://www.youtube.com/embed/m8e-FF8MsqU"
@@ -793,9 +793,9 @@ else
         <div class="row">
             <div class="section-title col-lg-10 col-md-4" style="font-weight:bold; text-align:right; font-size:24px;">
                     @if(!string.IsNullOrEmpty(edtingPortfolio.Url)){
-                        <span>Url : www.showhighlight.com/@edtingPortfolio.Url</span>
+                        <span>URL : https://actorportfolioservice.azurewebsites.net/@edtingPortfolio.Url</span>
                     } else {
-                        <span>Url : www.showhighlight.com/@edtingPortfolio.Url</span>
+                        <span>URL : https://actorportfolioservice.azurewebsites.net/@edtingPortfolio.Url</span>
                     }
                 </div>
 

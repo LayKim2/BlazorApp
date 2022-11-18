@@ -1,160 +1,81 @@
 ﻿@page "/Schedule"
-@using FFmpegBlazor
-@inject IJSRuntime Runtime
-@implements IDisposable
+@using BlazorApp.Client.Components.Schedule
+@using Radzen
+@using Radzen.Blazor
+@inject Radzen.DialogService DialogService
 
-<PageTitle>Convert MP4 to MP3</PageTitle>
+<PageTitle>Schedule</PageTitle>
 
-<h1>Convert MP4 to MP3</h1>
-Extract audio from an MP4 video and create an MP3 audio file.
-<br />
-<br />
-<div>
-    <label for="videoFile">Video file:</label>
-    <InputFile id="videoFile" OnChange="LoadVideoFile" />
-</div>
-<br />
-<video width="300" autoplay controls src="@videoInputUrl" />
-<br />
-<br />
-<input type="checkbox" @bind-value="@download" />&nbsp;Download Output File
-<br />
-<br />
-<button class="btn btn-primary" @onclick="Process">Convert MP4 to MP3</button>
-<br />
-<br />
-<audio controls src="@audioOutputUrl" />
+<RadzenScheduler @ref=@scheduler SlotRender=@OnSlotRender style="height: 768px;" TItem="Appointment" Data=@appointments StartProperty="Start" EndProperty="End"
+                 TextProperty="Text" SelectedIndex="2"
+                 SlotSelect=@OnSlotSelect AppointmentSelect=@OnAppointmentSelect AppointmentRender=@OnAppointmentRender>
+    <RadzenDayView />
+    <RadzenWeekView />
+    <RadzenMonthView />
+</RadzenScheduler>
 
-<br />
-<Logger LogMessages="@logMessages" Progress="@progressMessage" Rows="10"/>
+@code {
+    RadzenScheduler<Appointment> scheduler;
+    Dictionary<DateTime, string> events = new Dictionary<DateTime, string>();
 
-@code
-{
-    FFMPEG? ffMpeg;
-    byte[]? videoBuffer;
-    string? videoInputUrl = string.Empty;
-    string audioOutputUrl = string.Empty;
-    string logMessages = string.Empty;
-    string progressMessage = string.Empty;
-    bool download = false;
-    const string inputFile = "input.mp4";
-    const string outputFile = "output.mp3";
-
-    protected override async Task OnInitializedAsync()
+    IList<Appointment> appointments = new List<Appointment>
     {
-        // Wire-up events
-        if (FFmpegFactory.Runtime == null)
+        new Appointment { Start = DateTime.Today.AddDays(-2), End = DateTime.Today.AddDays(-2), Text = "Birthday" },
+        new Appointment { Start = DateTime.Today.AddDays(-11), End = DateTime.Today.AddDays(-10), Text = "Day off" },
+        new Appointment { Start = DateTime.Today.AddDays(-10), End = DateTime.Today.AddDays(-8), Text = "Work from home" },
+        new Appointment { Start = DateTime.Today.AddHours(10), End = DateTime.Today.AddHours(12), Text = "Online meeting" },
+        new Appointment { Start = DateTime.Today.AddHours(10), End = DateTime.Today.AddHours(13), Text = "Skype call" },
+        new Appointment { Start = DateTime.Today.AddHours(14), End = DateTime.Today.AddHours(14).AddMinutes(30), Text = "Dentist appointment" },
+        new Appointment { Start = DateTime.Today.AddDays(1), End = DateTime.Today.AddDays(12), Text = "Vacation" },
+    };
+
+    void OnSlotRender(SchedulerSlotRenderEventArgs args)
+    {
+        // Highlight today in month view
+        if (args.View.Text == "Month" && args.Start.Date == DateTime.Today)
         {
-            FFmpegFactory.Logger += LogToConsole;
-            FFmpegFactory.Progress += ProgressChange;
+            args.Attributes["style"] = "background: rgba(255,220,40,.2);";
         }
 
-        // Initialize Library
-        await FFmpegFactory.Init(Runtime);
-    }
-
-
-    private async void LoadVideoFile(InputFileChangeEventArgs v)
-    {
-        // Clear logs and progress
-        logMessages = string.Empty;
-        progressMessage = string.Empty;
-
-        // Get first file from input selection
-        var file = v.GetMultipleFiles()[0];
-
-        //Maximum size for file that can be read
-        int maxSize = 100000000;
-
-        // Read all bytes
-        using var stream = file.OpenReadStream(maxSize); 
-        videoBuffer = new byte[file.Size];
-
-        // Read all bytes
-        await stream.ReadAsync(videoBuffer);
-
-        // Create a video link from the buffer, so that video can be played
-        videoInputUrl = FFmpegFactory.CreateURLFromBuffer(videoBuffer, 
-            inputFile, file.ContentType);
-
-        // Re render DOM
-        StateHasChanged();
-    }
-
-    private async void Process()
-    {
-        // Create an instance of FFmpeg
-        ffMpeg = FFmpegFactory.CreateFFmpeg(new FFmpegConfig() { Log = true });
-
-        // Download all dependencies from the CDN
-        await ffMpeg.Load();
-
-        if (!ffMpeg.IsLoaded) return;
-
-        // Write buffer to in-memory files (special emscripten files,
-        // FFmpegwasm only interacts with this file)
-        ffMpeg.WriteFile(inputFile, videoBuffer);
-
-        // Pass CLI argument here equivalent to ffmpeg -i inputFile.mp4 outputFile.mp3
-        await ffMpeg.Run("-i", inputFile, outputFile);
-
-        // Delete in-memory file
-        ffMpeg.UnlinkFile(inputFile);
-    }
-
-    private async void ProgressChange(Progress message)
-    {
-        // Display progress % (0-1)
-        // Cap the progress as it doesn't always report (0-1)
-        var progressRatio = 
-            message.Ratio <= 0 ? 0 : message.Ratio >= 100 ? 1 : message.Ratio;
-        progressMessage = $"Progress: {progressRatio.ToString("P2")}";
-
-        Console.WriteLine(progressMessage);
-        LogToUi(progressMessage);
-
-        // If FFmpeg processing is complete, generate a media URL so that it can be
-        // played and/or downloaded
-        if (message.Ratio == 1)
+        // Highlight working hours (9-18)
+        if ((args.View.Text == "Week" || args.View.Text == "Day") && args.Start.Hour > 8 && args.Start.Hour < 19)
         {
-            progressMessage = $"Progress: 100%";
-
-            // Get a bufferPointer from C WASM to C#
-            var res = await ffMpeg!.ReadFile(outputFile);
-
-            // Generate a URL from the file bufferPointer
-            audioOutputUrl = FFmpegFactory.CreateURLFromBuffer(res, outputFile, 
-                "audio/mp3");
-
-            // Download the file if required
-            if (download)
-            { 
-                FFmpegFactory.DownloadBufferAsFile(res, outputFile, 
-                    "audio/mp3");
-            }
-
-            // Rerender DOM
-            StateHasChanged();
+            args.Attributes["style"] = "background: rgba(255,220,40,.2);";
         }
     }
 
-    private void LogToConsole(Logs message)
+    async Task OnSlotSelect(SchedulerSlotSelectEventArgs args)
     {
-        var logMessage = $"{message.Type} {message.Message}";
-        Console.WriteLine(logMessage);
-        LogToUi(logMessage);
+        Appointment data = await DialogService.OpenAsync<AddAppointmentPage>("Add Appointment",
+            new Dictionary<string, object> { { "Start", args.Start }, { "End", args.End } });
+
+        if (data != null)
+        {
+            appointments.Add(data);
+            // Either call the Reload method or reassign the Data property of the Scheduler
+            await scheduler.Reload();
+        }
     }
 
-    private void LogToUi(string message)
+    async Task OnAppointmentSelect(SchedulerAppointmentSelectEventArgs<Appointment> args)
     {
-        logMessages += $"{message}\r\n";
-        // Re-render DOM
-        StateHasChanged();
+        await DialogService.OpenAsync<EditAppointmentPage>("Edit Appointment", new Dictionary<string, object> { { "Appointment", args.Data } });
+
+        await scheduler.Reload();
     }
 
-    public void Dispose()
+    void OnAppointmentRender(SchedulerAppointmentRenderEventArgs<Appointment> args)
     {
-        FFmpegFactory.Logger -= LogToConsole;
-        FFmpegFactory.Progress -= ProgressChange;
+        // Never call StateHasChanged in AppointmentRender - would lead to infinite loop
+
+        if (args.Data.Text == "Birthday")
+        {
+            args.Attributes["style"] = "background: red";
+        }
     }
 }
+
+<RadzenDialog />
+<RadzenNotification />
+<RadzenContextMenu />
+<RadzenTooltip />
