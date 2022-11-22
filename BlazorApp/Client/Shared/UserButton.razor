@@ -11,13 +11,13 @@
     <div class="dropdown-menu dropdown-menu-right @UserMenuCssClass">
         <AuthorizeView>
             <Authorized>
-                <a href="profile" class="dropdown-item">Profile</a>
+                <a href="admin/profile" class="dropdown-item">Profile</a>
                 <hr />
                 <button class="dropdown-item" @onclick="Logout">Logout</button>
             </Authorized>
             <NotAuthorized>
                 <a href="login?returnUrl=@NavigationManager.ToBaseRelativePath(NavigationManager.Uri)" class="dropdown-item">Login</a>
-                <a href="register" class="dropdown-item">Register</a>
+                <a href="admin/register" class="dropdown-item">Register</a>
             </NotAuthorized>
         </AuthorizeView>
     </div>
