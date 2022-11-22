@@ -3,6 +3,7 @@
 @inject NavigationManager NavigationManager
 @inject IUserPortfolioService UserPortfolioService
 @implements IDisposable
+@using MudBlazor
 
 <div>
     <!-- ======= SideBar Section ======= -->
@@ -553,3 +554,8 @@
         JSRuntime.InvokeVoidAsync("ScrollIntoView", target);
     }
 }
+
+        
+<MudThemeProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />

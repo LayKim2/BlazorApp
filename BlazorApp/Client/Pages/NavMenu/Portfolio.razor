@@ -5,6 +5,7 @@
 @inject IAuthService AuthService
 @implements IDisposable
 @attribute [Authorize]
+@using MudBlazor
 
 @if (PortfolioService.IsEdit)
 {
@@ -1385,3 +1386,8 @@ else
         }
     }
 }
+
+                
+<MudThemeProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
