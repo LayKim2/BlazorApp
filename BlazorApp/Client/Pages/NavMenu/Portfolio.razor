@@ -7,7 +7,21 @@
 @attribute [Authorize]
 @using MudBlazor
 
-@if (PortfolioService.IsEdit)
+
+@if (edtingPortfolio == null)
+{
+    <div id="app" style="margin: 0 auto; width: 100vw; height: 100vh">
+        <div style="padding-top: 300px; ">
+            <div class="text-center">
+                <img src="/images/logo-icon.png" style=" width: 3%;" />
+            </div>
+            <div class="text-center mt-3">
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
+                      style="font-size: 16pt; width: 36px; height: 36px; color: lightblue" />
+            </div>
+        </div>
+    </div>
+} else if (PortfolioService.IsEdit)
 {
     <EditForm Model="edtingPortfolio" OnValidSubmit="SavePortfolio">
         <!-- ======= SideBar Section ======= -->
@@ -1266,22 +1280,33 @@ else
 }
 <!-- ======= End  SideBar Section ======= -->
 @code {
-    BlazorApp.Shared.Portfolio edtingPortfolio = new BlazorApp.Shared.Portfolio();
+    BlazorApp.Shared.Portfolio edtingPortfolio = null;
     //bool isAuthenticated = false;
 
     protected override async Task OnInitializedAsync()
     {
+        await LoadPortfolio();
 
-        var result = await PortfolioService.GetPortfolio();
 
-        if(result != null){
-            edtingPortfolio = result;
-        }
+        //if(result != null){
+        //    edtingPortfolio = result;
+        //}
 
-        PortfolioService.OnChange += StateHasChanged;
+        //PortfolioService.OnChange += StateHasChanged;
         //isAuthenticated = await AuthService.IsUserAuthenticated();
 
         JSRuntime.InvokeVoidAsync("Collapse");
+    }
+
+    private async Task LoadPortfolio()
+    {
+        edtingPortfolio = await PortfolioService.GetPortfolio();
+
+        if(edtingPortfolio == null){
+            edtingPortfolio = new BlazorApp.Shared.Portfolio();
+        }
+
+        PortfolioService.OnChange += StateHasChanged;
     }
 
     public void Dispose()
