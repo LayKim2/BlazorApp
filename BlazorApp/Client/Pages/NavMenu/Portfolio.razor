@@ -101,9 +101,9 @@
 
                 <div class="col-lg-2 col-md-6 d-md-flex">
                     <div>
-                        <button class="btn btn-danger" @onclick="() => BackPortfolio()">Back</button>
-                        <button id="btnEdit" class="btn btn-success" @onclick="(() => EditPortfolio())">Edit</button>
-                        <button id="btnSave" class="btn btn-primary" @onclick="(() => SavePortfolio())">Save</button>
+                        <button id="btnBack" class="btn btn-danger"  @onclick="() => BackPortfolio()">Back</button>
+                        <button id="btnEdit" class="btn btn-success" hidden="@(HideEdit)" @onclick="(() => EditPortfolio())">Edit</button>
+                        <button id="btnSave" class="btn btn-primary" hidden="@(HideSave)" @onclick="(() => SavePortfolio())">Save</button>
                     </div>
                 </div>
             </div>
@@ -816,9 +816,9 @@ else
 
             <div class="col-lg-2 col-md-6 d-md-flex">
                 <div>
-                    <button class="btn btn-danger" @onclick="() => BackPortfolio()">Back</button>
-                    <button class="btn btn-success" @onclick="(() => EditPortfolio())">Edit</button>
-                    <button class="btn btn-primary" @onclick="(() => SavePortfolio())">Save</button>
+                    <button id="btnBack" class="btn btn-danger" @onclick="() => BackPortfolio()">Back</button>
+                    <button id="btnEdit" class="btn btn-success" hidden="@(HideEdit)" @onclick="(() => EditPortfolio())">Edit</button>
+                    <button id="btnSave" class="btn btn-primary" hidden="@(HideSave)" @onclick="(() => SavePortfolio())">Save</button>
                 </div>
             </div>
         </div>
@@ -1281,19 +1281,13 @@ else
 <!-- ======= End  SideBar Section ======= -->
 @code {
     BlazorApp.Shared.Portfolio edtingPortfolio = null;
-    //bool isAuthenticated = false;
+
+    private bool HideEdit { get; set; } = false;
+    private bool HideSave { get; set; } = true;
 
     protected override async Task OnInitializedAsync()
     {
         await LoadPortfolio();
-
-
-        //if(result != null){
-        //    edtingPortfolio = result;
-        //}
-
-        //PortfolioService.OnChange += StateHasChanged;
-        //isAuthenticated = await AuthService.IsUserAuthenticated();
 
         JSRuntime.InvokeVoidAsync("Collapse");
     }
@@ -1323,12 +1317,19 @@ else
     private async Task SavePortfolio()
     {
         PortfolioService.IsEdit = false;
+
+        HideEdit = !HideEdit;
+        HideSave = !HideSave;
+
         edtingPortfolio = await PortfolioService.AddOrUpdatePortfolio(edtingPortfolio);
     }
 
     private void EditPortfolio()
     {
         PortfolioService.IsEdit = true;
+
+        HideEdit = !HideEdit;
+        HideSave = !HideSave;
     }
 
     private void ScrollIntoView(string target)
