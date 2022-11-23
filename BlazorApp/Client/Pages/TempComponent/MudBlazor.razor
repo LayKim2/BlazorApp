@@ -1,0 +1,86 @@
+﻿@page "/admin/mudblazor"
+
+<PageTitle></PageTitle>
+
+@* === 1. upload image card 1 ===*@
+
+@*<MudCard Class="ma-2" Style="background-color:#040b14;">
+    <MudCardContent>
+        @if (!string.IsNullOrEmpty(edtingPortfolio.SideImageData))
+        {
+            <img src="@edtingPortfolio.SideImageData" alt="" class="img-fluid rounded-circle">
+        }
+        else
+        {
+            <img src="/images/sample/profile-img.jpg" alt="" class="img-fluid rounded-circle">
+        }
+        <MudCardActions Style="justify-content: center;">
+            <MudFab HtmlTag="label" Size="Size.Small" Color="Color.Primary" StartIcon="@Icons.Filled.CloudUpload" for="fileInput" />
+            <InputFile id="fileInput" OnChange="@((e) =>OnFileChange(e, "SideImageData"))" hidden accept=".jpg, .jpeg, .png" />
+        </MudCardActions>
+    </MudCardContent>
+</MudCard>*@
+
+
+@* === 2. upload image card 2 ===*@
+
+@*<div class="col-lg-4 portfolio-wrap" style="justify-content:center;">
+    @if (!string.IsNullOrEmpty(edtingPortfolio.AboutImageData))
+    {
+        <MudCard Class="ma-2">
+            <MudCardContent>
+                <MudImage Src="@edtingPortfolio.Concept1ImageData1" />
+            </MudCardContent>
+            <MudCardActions Style="justify-content: center;">
+                <MudFab HtmlTag="label" Size="Size.Small" Color="Color.Primary" StartIcon="@Icons.Filled.CloudUpload" for="fileInput10" />
+                <InputFile id="fileInput10" OnChange="@((e) =>OnFileChange(e, "AboutImageData"))" hidden accept=".jpg, .jpeg, .png" />
+                <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="@(() =>RemoveImage("AboutImageData"))">Remove</MudButton>
+            </MudCardActions>
+        </MudCard>
+    }
+    else
+    {
+        <MudCard Class="ma-2">
+            <MudCardContent>
+                <MudImage Src="/images/sample/profile-img.jpg" />
+            </MudCardContent>
+            <MudCardActions Style="justify-content: center;">
+                <MudFab HtmlTag="label" Size="Size.Small" Color="Color.Primary" StartIcon="@Icons.Filled.CloudUpload" for="fileInput10" />
+                <InputFile id="fileInput10" OnChange="@((e) =>OnFileChange(e, "AboutImageData"))" hidden accept=".jpg, .jpeg, .png" />
+                <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="@(() =>RemoveImage("AboutImageData"))">Remove</MudButton>
+            </MudCardActions>
+        </MudCard>
+    }
+</div>*@
+
+
+@* === 3. upload image card 3 ===*@
+
+@*<div class="portfolio-wrap" style="justify-content:center;">
+    @if (!string.IsNullOrEmpty(edtingPortfolio.Concept2ImageData3))
+    {
+        <MudCard Class="ma-2">
+            <MudCardContent>
+                <MudImage Src="@edtingPortfolio.Concept2ImageData3" />
+            </MudCardContent>
+            <MudCardActions Style="justify-content: center;">
+                <MudFab HtmlTag="label" Size="Size.Small" Color="Color.Primary" StartIcon="@Icons.Filled.CloudUpload" for="fileInput7" />
+                <InputFile id="fileInput7" OnChange="@((e) =>OnFileChange(e, "Concept2ImageData3"))" hidden accept=".jpg, .jpeg, .png" />
+                <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="@(() =>RemoveImage("Concept2ImageData3"))">Remove</MudButton>
+            </MudCardActions>
+        </MudCard>
+    }
+    else
+    {
+        <MudCard Class="ma-2">
+            <MudCardContent>
+                <MudImage Src="/images/sample/pic/portfolio-6.jpg" />
+            </MudCardContent>
+            <MudCardActions Style="justify-content: center;">
+                <MudFab HtmlTag="label" Size="Size.Small" Color="Color.Primary" StartIcon="@Icons.Filled.CloudUpload" for="fileInput7" />
+                <InputFile id="fileInput7" OnChange="@((e) =>OnFileChange(e, "Concept2ImageData3"))" hidden accept=".jpg, .jpeg, .png" />
+                <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="@(() =>RemoveImage("Concept2ImageData3"))">Remove</MudButton>
+            </MudCardActions>
+        </MudCard>
+    }
+</div>*@

@@ -5,7 +5,6 @@
 @inject IAuthService AuthService
 @implements IDisposable
 @attribute [Authorize]
-@using MudBlazor
 
 
 @if (edtingPortfolio == null)
@@ -17,40 +16,27 @@
             </div>
             <div class="text-center mt-3">
                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
-                      style="font-size: 16pt; width: 36px; height: 36px; color: lightblue" />
+                  style="font-size: 16pt; width: 36px; height: 36px; color: lightblue" />
             </div>
         </div>
     </div>
-} else if (PortfolioService.IsEdit)
+}
+else if (PortfolioService.IsEdit)
 {
     <EditForm Model="edtingPortfolio" OnValidSubmit="SavePortfolio">
         <!-- ======= SideBar Section ======= -->
         <header id="header">
             <div class="d-flex flex-column">
                 <div class="profile">
-                    <MudCard Class="ma-2" Style="background-color:#040b14;">
 
-                        <MudCardContent>
-                            @*@if (!string.IsNullOrEmpty(edtingPortfolio.SideImageUrl))
-                        {
-                        <img src="@edtingPortfolio.SideImageUrl" alt="" class="img-fluid rounded-circle">
-                        } else *@
-                            @if (!string.IsNullOrEmpty(edtingPortfolio.SideImageData))
-                            {
-                                <img src="@edtingPortfolio.SideImageData" alt="" class="img-fluid rounded-circle">
-                            }
-                            else
-                            {
-                                @*<MudImage Src="/images/sample/profile-img.jpg" />*@
-                                <img src="/images/sample/profile-img.jpg" alt="" class="img-fluid rounded-circle">
-                            }
-                            <MudCardActions Style="justify-content: center;">
-                                <MudFab HtmlTag="label" Size="Size.Small" Color="Color.Primary" StartIcon="@Icons.Filled.CloudUpload" for="fileInput" />
-                                @*<MudButton Color="Color.Error" OnClick="@(() =>RemoveImage("SideImageData"))" StartIcon="@Icons.Filled.Delete"></MudButton>*@
-                                <InputFile id="fileInput" OnChange="@((e) =>OnFileChange(e, "SideImageData"))" hidden accept=".jpg, .jpeg, .png" />
-                            </MudCardActions>
-                        </MudCardContent>
-                    </MudCard>
+                    @if (!string.IsNullOrEmpty(edtingPortfolio.SideImageData))
+                    {
+                        <img src="@edtingPortfolio.SideImageData" alt="" class="img-fluid rounded-circle">
+                    }
+                    else
+                    {
+                        <img src="/images/sample/profile-img.jpg" alt="" class="img-fluid rounded-circle">
+                    }
 
                     <InputText @bind-Value="edtingPortfolio.SideName" class="form-control"></InputText>
                     <div class="social-links mt-3 text-center">
@@ -92,16 +78,20 @@
         <main id="main">
             <div class="row">
                 <div class="section-title col-lg-10 col-md-4" style="font-weight:bold; text-align:right; font-size:24px;">
-                    @if(!string.IsNullOrEmpty(edtingPortfolio.Url)){
-                        <span>Url : https://actorportfolioservice.azurewebsites.net/<InputText @bind-Value="@edtingPortfolio.Url" class="form-control"></InputText></span>
-                    } else {
-                        <span>Url : https://actorportfolioservice.azurewebsites.net/<InputText @bind-Value="@edtingPortfolio.Url" class="form-control" >[Input your url]</InputText></span>
+                    @if (!string.IsNullOrEmpty(edtingPortfolio.Url))
+                    {
+                        <span>URL : https://actorportfolioservice.azurewebsites.net/<InputText @bind-Value="@edtingPortfolio.Url" class="form-control"></InputText></span>
+                    }
+                    else
+
+                    {
+                        <span>URL : https://actorportfolioservice.azurewebsites.net/<InputText placeholder="Input last URL name" @bind-Value="@edtingPortfolio.Url" class="form-control"></InputText></span>
                     }
                 </div>
 
                 <div class="col-lg-2 col-md-6 d-md-flex">
                     <div>
-                        <button id="btnBack" class="btn btn-danger"  @onclick="() => BackPortfolio()">Back</button>
+                        <button id="btnBack" class="btn btn-danger" @onclick="() => BackPortfolio()">Back</button>
                         <button id="btnEdit" class="btn btn-success" hidden="@(HideEdit)" @onclick="(() => EditPortfolio())">Edit</button>
                         <button id="btnSave" class="btn btn-primary" hidden="@(HideSave)" @onclick="(() => SavePortfolio())">Save</button>
                     </div>
@@ -207,29 +197,11 @@
                         <div class="col-lg-4 portfolio-wrap" style="justify-content:center;">
                             @if (!string.IsNullOrEmpty(edtingPortfolio.AboutImageData))
                             {
-                                <MudCard Class="ma-2">
-                                    <MudCardContent>
-                                        <MudImage Src="@edtingPortfolio.Concept1ImageData1" />
-                                    </MudCardContent>
-                                    <MudCardActions Style="justify-content: center;">
-                                        <MudFab HtmlTag="label" Size="Size.Small" Color="Color.Primary" StartIcon="@Icons.Filled.CloudUpload" for="fileInput10" />
-                                        <InputFile id="fileInput10" OnChange="@((e) =>OnFileChange(e, "AboutImageData"))" hidden accept=".jpg, .jpeg, .png" />
-                                        <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="@(() =>RemoveImage("AboutImageData"))">Remove</MudButton>
-                                    </MudCardActions>
-                                </MudCard>
+                                <img src="@edtingPortfolio.AboutImageData" class="img-fluid" alt="" />
                             }
                             else
                             {
-                                <MudCard Class="ma-2">
-                                    <MudCardContent>
-                                        <MudImage Src="/images/sample/profile-img.jpg" />
-                                    </MudCardContent>
-                                    <MudCardActions Style="justify-content: center;">
-                                        <MudFab HtmlTag="label" Size="Size.Small" Color="Color.Primary" StartIcon="@Icons.Filled.CloudUpload" for="fileInput10" />
-                                        <InputFile id="fileInput10" OnChange="@((e) =>OnFileChange(e, "AboutImageData"))" hidden accept=".jpg, .jpeg, .png" />
-                                        <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="@(() =>RemoveImage("AboutImageData"))">Remove</MudButton>
-                                    </MudCardActions>
-                                </MudCard>
+                                <img src="/images/sample/profile-img.jpg" class="img-fluid" alt="" />
                             }
                         </div>
                         <div class="col-lg-8 pt-4 pt-lg-0 content" data-aos="fade-left">
@@ -464,98 +436,41 @@
                             </div>
                         }
 
-                        <div class="col-lg-4 col-md-6 portfolio-item filter-card" style="width:33%">
+                        <div class="col-lg-4 col-md-6 portfolio-item filter-app">
                             <div class="portfolio-wrap">
                                 @if (!string.IsNullOrEmpty(edtingPortfolio.Concept1ImageData1))
                                 {
-                                    <MudCard Class="ma-2">
-                                        <MudCardContent>
-                                            <MudImage Src="@edtingPortfolio.Concept1ImageData1" />
-                                        </MudCardContent>
-                                        <MudCardActions Style="justify-content: center;">
-                                            <MudFab HtmlTag="label" Size="Size.Small" Color="Color.Primary" StartIcon="@Icons.Filled.CloudUpload" for="fileInput2" />
-                                            <InputFile id="fileInput2" OnChange="@((e) =>OnFileChange(e, "Concept1ImageData1"))" hidden accept=".jpg, .jpeg, .png" />
-                                            <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="@(() =>RemoveImage("Concept1ImageData1"))">Remove</MudButton>
-                                        </MudCardActions>
-                                    </MudCard>
+                                    <img src="@edtingPortfolio.Concept1ImageData1" class="img-fluid" alt="">
                                 }
                                 else
                                 {
-                                    <MudCard Class="ma-2">
-                                        <MudCardContent>
-                                            <MudImage Src="/images/sample/pic/portfolio-4.jpg" />
-                                        </MudCardContent>
-                                        <MudCardActions Style="justify-content: center;">
-                                            <MudFab HtmlTag="label" Size="Size.Small" Color="Color.Primary" StartIcon="@Icons.Filled.CloudUpload" for="fileInput2" />
-                                            <InputFile id="fileInput2" OnChange="@((e) =>OnFileChange(e, "Concept1ImageData1"))" hidden accept=".jpg, .jpeg, .png" />
-                                            <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="@(() =>RemoveImage("Concept1ImageData1"))">Remove</MudButton>
-                                        </MudCardActions>
-                                    </MudCard>
+                                    <img src="/images/sample/pic/portfolio-1.jpg" class="img-fluid" alt="">
                                 }
-                                @*<img src="/images/sample/pic/portfolio-4.jpg" class="img-fluid" alt="">*@
                             </div>
                         </div>
 
-                        <div class="col-lg-4 col-md-6 portfolio-item filter-web" style="width:33%">
+                        <div class="col-lg-4 col-md-6 portfolio-item filter-web">
                             <div class="portfolio-wrap">
-                                @*<img src="/images/sample/pic/portfolio-5.jpg" class="img-fluid" alt="">*@
                                 @if (!string.IsNullOrEmpty(edtingPortfolio.Concept1ImageData2))
                                 {
-                                    <MudCard Class="ma-2">
-                                        <MudCardContent>
-                                            <MudImage Src="@edtingPortfolio.Concept1ImageData2" />
-                                        </MudCardContent>
-                                        <MudCardActions Style="justify-content: center;">
-                                            <MudFab HtmlTag="label" Size="Size.Small" Color="Color.Primary" StartIcon="@Icons.Filled.CloudUpload" for="fileInput3" />
-                                            <InputFile id="fileInput3" OnChange="@((e) =>OnFileChange(e, "Concept1ImageData2"))" hidden accept=".jpg, .jpeg, .png" />
-                                            <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="@(() =>RemoveImage("Concept1ImageData2"))">Remove</MudButton>
-                                        </MudCardActions>
-                                    </MudCard>
+                                    <img src="@edtingPortfolio.Concept1ImageData2" class="img-fluid" alt="">
                                 }
                                 else
                                 {
-                                    <MudCard Class="ma-2">
-                                        <MudCardContent>
-                                            <MudImage Src="/images/sample/pic/portfolio-5.jpg" />
-                                        </MudCardContent>
-                                        <MudCardActions Style="justify-content: center;">
-                                            <MudFab HtmlTag="label" Size="Size.Small" Color="Color.Primary" StartIcon="@Icons.Filled.CloudUpload" for="fileInput3" />
-                                            <InputFile id="fileInput3" OnChange="@((e) =>OnFileChange(e, "Concept1ImageData2"))" hidden accept=".jpg, .jpeg, .png" />
-                                            <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="@(() =>RemoveImage("Concept1ImageData2"))">Remove</MudButton>
-                                        </MudCardActions>
-                                    </MudCard>
+                                    <img src="/images/sample/pic/portfolio-2.jpg" class="img-fluid" alt="">
                                 }
                             </div>
                         </div>
 
-                        <div class="col-lg-4 col-md-6 portfolio-item filter-app" style="width:33%">
-                            <div class="portfolio-wrap" style="justify-content:center;">
-                                @*<img src="/images/sample/pic/portfolio-6.jpg" class="img-fluid" alt="">*@
-                                @if (!string.IsNullOrEmpty(edtingPortfolio.Concept1ImageData3))
+                        <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+                            <div class="portfolio-wrap">
+                                @if (!string.IsNullOrEmpty(edtingPortfolio.Concept2ImageData3))
                                 {
-                                    <MudCard Class="ma-2">
-                                        <MudCardContent>
-                                            <MudImage Src="@edtingPortfolio.Concept1ImageData3" />
-                                        </MudCardContent>
-                                        <MudCardActions Style="justify-content: center;">
-                                            <MudFab HtmlTag="label" Size="Size.Small" Color="Color.Primary" StartIcon="@Icons.Filled.CloudUpload" for="fileInput4" />
-                                            <InputFile id="fileInput4" OnChange="@((e) =>OnFileChange(e, "Concept1ImageData3"))" hidden accept=".jpg, .jpeg, .png" />
-                                            <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="@(() =>RemoveImage("Concept1ImageData3"))">Remove</MudButton>
-                                        </MudCardActions>
-                                    </MudCard>
+                                    <img src="@edtingPortfolio.Concept1ImageData3" class="img-fluid" alt="">
                                 }
                                 else
                                 {
-                                    <MudCard Class="ma-2">
-                                        <MudCardContent>
-                                            <MudImage Src="/images/sample/pic/portfolio-6.jpg" />
-                                        </MudCardContent>
-                                        <MudCardActions Style="justify-content: center;">
-                                            <MudFab HtmlTag="label" Size="Size.Small" Color="Color.Primary" StartIcon="@Icons.Filled.CloudUpload" for="fileInput4" />
-                                            <InputFile id="fileInput4" OnChange="@((e) =>OnFileChange(e, "Concept1ImageData3"))" hidden accept=".jpg, .jpeg, .png" />
-                                            <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="@(() =>RemoveImage("Concept1ImageData3"))">Remove</MudButton>
-                                        </MudCardActions>
-                                    </MudCard>
+                                    <img src="/images/sample/pic/portfolio-3.jpg" class="img-fluid" alt="">
                                 }
                             </div>
                         </div>
@@ -648,98 +563,41 @@
                             </div>
                         }
 
-                        <div class="col-lg-4 col-md-6 portfolio-item filter-card" style="width:33%">
+                        <div class="col-lg-4 col-md-6 portfolio-item filter-app">
                             <div class="portfolio-wrap">
                                 @if (!string.IsNullOrEmpty(edtingPortfolio.Concept2ImageData1))
                                 {
-                                    <MudCard Class="ma-2">
-                                        <MudCardContent>
-                                            <MudImage Src="@edtingPortfolio.Concept2ImageData1" />
-                                        </MudCardContent>
-                                        <MudCardActions Style="justify-content: center;">
-                                            <MudFab HtmlTag="label" Size="Size.Small" Color="Color.Primary" StartIcon="@Icons.Filled.CloudUpload" for="fileInput5" />
-                                            <InputFile id="fileInput5" OnChange="@((e) =>OnFileChange(e, "Concept2ImageData1"))" hidden accept=".jpg, .jpeg, .png" />
-                                            <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="@(() =>RemoveImage("Concept2ImageData1"))">Remove</MudButton>
-                                        </MudCardActions>
-                                    </MudCard>
+                                    <img src="@edtingPortfolio.Concept2ImageData1" class="img-fluid" alt="">
                                 }
                                 else
                                 {
-                                    <MudCard Class="ma-2">
-                                        <MudCardContent>
-                                            <MudImage Src="/images/sample/pic/portfolio-4.jpg" />
-                                        </MudCardContent>
-                                        <MudCardActions Style="justify-content: center;">
-                                            <MudFab HtmlTag="label" Size="Size.Small" Color="Color.Primary" StartIcon="@Icons.Filled.CloudUpload" for="fileInput5" />
-                                            <InputFile id="fileInput5" OnChange="@((e) =>OnFileChange(e, "Concept2ImageData1"))" hidden accept=".jpg, .jpeg, .png" />
-                                            <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="@(() =>RemoveImage("Concept2ImageData1"))">Remove</MudButton>
-                                        </MudCardActions>
-                                    </MudCard>
+                                    <img src="/images/sample/pic/portfolio-4.jpg" class="img-fluid" alt="">
                                 }
-                                @*<img src="/images/sample/pic/portfolio-4.jpg" class="img-fluid" alt="">*@
                             </div>
                         </div>
 
-                        <div class="col-lg-4 col-md-6 portfolio-item filter-web" style="width:33%">
+                        <div class="col-lg-4 col-md-6 portfolio-item filter-web">
                             <div class="portfolio-wrap">
-                                @*<img src="/images/sample/pic/portfolio-5.jpg" class="img-fluid" alt="">*@
                                 @if (!string.IsNullOrEmpty(edtingPortfolio.Concept2ImageData2))
                                 {
-                                    <MudCard Class="ma-2">
-                                        <MudCardContent>
-                                            <MudImage Src="@edtingPortfolio.Concept2ImageData2" />
-                                        </MudCardContent>
-                                        <MudCardActions Style="justify-content: center;">
-                                            <MudFab HtmlTag="label" Size="Size.Small" Color="Color.Primary" StartIcon="@Icons.Filled.CloudUpload" for="fileInput6" />
-                                            <InputFile id="fileInput6" OnChange="@((e) =>OnFileChange(e, "Concept2ImageData2"))" hidden accept=".jpg, .jpeg, .png" />
-                                            <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="@(() =>RemoveImage("Concept2ImageData2"))">Remove</MudButton>
-                                        </MudCardActions>
-                                    </MudCard>
+                                    <img src="@edtingPortfolio.Concept2ImageData2" class="img-fluid" alt="">
                                 }
                                 else
                                 {
-                                    <MudCard Class="ma-2">
-                                        <MudCardContent>
-                                            <MudImage Src="/images/sample/pic/portfolio-5.jpg" />
-                                        </MudCardContent>
-                                        <MudCardActions Style="justify-content: center;">
-                                            <MudFab HtmlTag="label" Size="Size.Small" Color="Color.Primary" StartIcon="@Icons.Filled.CloudUpload" for="fileInput6" />
-                                            <InputFile id="fileInput6" OnChange="@((e) =>OnFileChange(e, "Concept2ImageData2"))" hidden accept=".jpg, .jpeg, .png" />
-                                            <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="@(() =>RemoveImage("Concept2ImageData2"))">Remove</MudButton>
-                                        </MudCardActions>
-                                    </MudCard>
+                                    <img src="/images/sample/pic/portfolio-5.jpg" class="img-fluid" alt="">
                                 }
                             </div>
                         </div>
 
-                        <div class="col-lg-4 col-md-6 portfolio-item filter-app" style="width:33%">
-                            <div class="portfolio-wrap" style="justify-content:center;">
-                                @*<img src="/images/sample/pic/portfolio-6.jpg" class="img-fluid" alt="">*@
+                        <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+                            <div class="portfolio-wrap">
                                 @if (!string.IsNullOrEmpty(edtingPortfolio.Concept2ImageData3))
                                 {
-                                    <MudCard Class="ma-2">
-                                        <MudCardContent>
-                                            <MudImage Src="@edtingPortfolio.Concept2ImageData3" />
-                                        </MudCardContent>
-                                        <MudCardActions Style="justify-content: center;">
-                                            <MudFab HtmlTag="label" Size="Size.Small" Color="Color.Primary" StartIcon="@Icons.Filled.CloudUpload" for="fileInput7" />
-                                            <InputFile id="fileInput7" OnChange="@((e) =>OnFileChange(e, "Concept2ImageData3"))" hidden accept=".jpg, .jpeg, .png" />
-                                            <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="@(() =>RemoveImage("Concept2ImageData3"))">Remove</MudButton>
-                                        </MudCardActions>
-                                    </MudCard>
+                                    <img src="@edtingPortfolio.Concept2ImageData3" class="img-fluid" alt="">
                                 }
                                 else
                                 {
-                                    <MudCard Class="ma-2">
-                                        <MudCardContent>
-                                            <MudImage Src="/images/sample/pic/portfolio-6.jpg" />
-                                        </MudCardContent>
-                                        <MudCardActions Style="justify-content: center;">
-                                            <MudFab HtmlTag="label" Size="Size.Small" Color="Color.Primary" StartIcon="@Icons.Filled.CloudUpload" for="fileInput7" />
-                                            <InputFile id="fileInput7" OnChange="@((e) =>OnFileChange(e, "Concept2ImageData3"))" hidden accept=".jpg, .jpeg, .png" />
-                                            <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="@(() =>RemoveImage("Concept2ImageData3"))">Remove</MudButton>
-                                        </MudCardActions>
-                                    </MudCard>
+                                    <img src="/images/sample/pic/portfolio-6.jpg" class="img-fluid" alt="">
                                 }
                             </div>
                         </div>
@@ -807,12 +665,15 @@ else
     <main id="main">
         <div class="row">
             <div class="section-title col-lg-10 col-md-4" style="font-weight:bold; text-align:right; font-size:24px;">
-                    @if(!string.IsNullOrEmpty(edtingPortfolio.Url)){
-                        <span>URL : https://actorportfolioservice.azurewebsites.net/@edtingPortfolio.Url</span>
-                    } else {
-                        <span>URL : https://actorportfolioservice.azurewebsites.net/@edtingPortfolio.Url</span>
-                    }
-                </div>
+                @if (!string.IsNullOrEmpty(edtingPortfolio.Url))
+                {
+                    <span>URL : https://actorportfolioservice.azurewebsites.net/@edtingPortfolio.Url</span>
+                }
+                else
+                {
+                    <span>URL : https://actorportfolioservice.azurewebsites.net/[Name]</span>
+                }
+            </div>
 
             <div class="col-lg-2 col-md-6 d-md-flex">
                 <div>
@@ -1296,8 +1157,26 @@ else
     {
         edtingPortfolio = await PortfolioService.GetPortfolio();
 
-        if(edtingPortfolio == null){
+        if (edtingPortfolio == null)
+
+
+        {
             edtingPortfolio = new BlazorApp.Shared.Portfolio();
+        }
+
+        if (PortfolioService.IsEdit)
+        {
+            HideEdit = true;
+            HideSave = false;
+        }
+
+
+        else
+
+
+        {
+            HideEdit = false;
+            HideSave = true;
         }
 
         PortfolioService.OnChange += StateHasChanged;
@@ -1412,8 +1291,3 @@ else
         }
     }
 }
-
-                
-<MudThemeProvider />
-<MudDialogProvider />
-<MudSnackbarProvider />

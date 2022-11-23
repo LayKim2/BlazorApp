@@ -1,8 +1,8 @@
 ﻿@page "/TempUploadImage"
-@using MudBlazor
+@*@using MudBlazor*@
 
 
-<EditForm Model="Portfolio">
+@*<EditForm Model="Portfolio">
     <div class="mb-0">
         <label for="imageUrl">Image Url</label>
         <InputText id="imageUrl" @bind-Value="Portfolio.CamereTestUrl" class="form-control"></InputText>
@@ -13,7 +13,7 @@
         <InputFile id="fileInput" OnChange="OnFileChange" hidden multiple accept=".jpg, .jpeg, .png" />
         <MudFab HtmlTag="label" Size="Size.Small" Color="Color.Primary" StartIcon="@Icons.Filled.CloudUpload" for="fileInput" />
     </div>
-</EditForm>
+</EditForm>*@
 
 
 @code {
@@ -36,6 +36,6 @@
 }
 
             
-<MudThemeProvider />
+@*<MudThemeProvider />
 <MudDialogProvider />
-<MudSnackbarProvider />
+<MudSnackbarProvider />*@
