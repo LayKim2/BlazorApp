@@ -21,7 +21,7 @@ public class AuthService : IAuthService
     }
 
     public int GetUserId() => int.Parse(_httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
-    public string GetUserEmail() => _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Name);
+    public string GetUserEmail() => _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Email);
 
     public Task<User> GetUserByEmail(string email)
     {
@@ -110,7 +110,8 @@ public class AuthService : IAuthService
         List<Claim> claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.Email),
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Name, user.Name)
                 //new Claim(ClaimTypes.Role, user.Role) // TODO -- token role
             };
 

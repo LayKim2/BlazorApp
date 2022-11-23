@@ -1,4 +1,7 @@
-﻿@inherits LayoutComponentBase
+﻿@inject AuthenticationStateProvider AuthStateProvider
+@using System.Security.Claims
+@inherits LayoutComponentBase
+@inject IAuthService AuthService
 @attribute [Authorize]
 
 <div class="page">
@@ -9,7 +12,7 @@
     <main>
         <div id="top" class="top-row px-4">
             <AuthorizeView>
-                <h3>Hi! <i>@context.User.Identity.Name</i></h3>
+                <h3>Hi! <i>@userName</i></h3>
             </AuthorizeView>
             <UserButton />
             @*<a href="/" target="_blank">Login</a>*@
@@ -20,3 +23,20 @@
         </article>
     </main>
 </div>
+
+@code {
+    private string userName = string.Empty;
+    bool isAuthenticated = false;
+
+    protected override async Task OnInitializedAsync() {
+
+        isAuthenticated = await AuthService.IsUserAuthenticated();
+
+        if (isAuthenticated){
+            userName = (await AuthStateProvider.GetAuthenticationStateAsync())
+                    .User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name).Value;
+        }
+        
+    }
+    
+}
