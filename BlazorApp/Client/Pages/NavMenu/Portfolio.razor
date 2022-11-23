@@ -1233,25 +1233,77 @@ else
     }
 
 
-    async Task ShowInlineDialog()
+    async Task ShowBusyDialog(string message)
     {
-
+        await BusyDialog(message);
     }
 
-    private void BackPortfolio()
+    async Task BusyDialog(string message)
     {
+        await DialogService.OpenAsync("", ds =>
+        {
+            RenderFragment content = b =>
+            {
+                b.OpenElement(0, "div");
+                b.AddAttribute(1, "class", "row");
+
+                b.OpenElement(2, "div");
+                b.AddAttribute(3, "class", "col-md-12");
+
+                b.AddContent(4, message);
+
+                b.CloseElement();
+                b.CloseElement();
+            };
+            return content;
+        }, new DialogOptions() { ShowTitle = false, Style = "min-height:auto;min-width:auto;width:auto", CloseDialogOnEsc = false });
+    }
+
+    async Task ShowInlineDialog()
+    {
+         var result = await DialogService.OpenAsync("Warning", ds =>
+            @<div>
+                <p class="mb-4">Editing data is not saved. Are you continue <b></b>?</p>
+                <div class="row">
+                    <div class="col">
+                        <RadzenButton Text="Ok" Click="() => GoBack()" Class="me-1" Style="width: 172px;" />
+                        <RadzenButton Text="Cancel" Click="() => ds.Close(false)" Style="width: 172px;" ButtonStyle="ButtonStyle.Light" Class="me-1" />
+                    </div>
+                </div>
+       </div>
+    , new DialogOptions() { Width = "400px", Draggable = true}
+    );
+    }
+
+    private async Task GoBack() {
+        PortfolioService.IsEdit = false;
         JSRuntime.InvokeVoidAsync("Expand");
         NavigationManager.NavigateTo("/");
     }
 
+    private async Task BackPortfolio()
+    {
+        if(PortfolioService.IsEdit) {
+            await ShowInlineDialog();
+        } else {
+            await GoBack();
+        }
+    }
+
     private async Task SavePortfolio()
     {
+        ShowBusyDialog("Saving...");
+
         PortfolioService.IsEdit = false;
 
         HideEdit = !HideEdit;
         HideSave = !HideSave;
 
         edtingPortfolio = await PortfolioService.AddOrUpdatePortfolio(edtingPortfolio);
+
+        await DialogService.Alert("Portfolio is saved!", "Alert", new AlertOptions() { OkButtonText = "Yes" });
+
+        DialogService.Close();
     }
 
     private void EditPortfolio()

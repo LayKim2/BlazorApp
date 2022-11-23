@@ -15,7 +15,7 @@ public class PortfolioService : IPortfolioService
     }
 
     public async Task<ServiceResponse<Portfolio>> GetPortfolio()
-    {
+    {   
         int userId = _authService.GetUserId();
         string email = _authService.GetUserEmail();
         var portfolio = await _context.Portfolios
