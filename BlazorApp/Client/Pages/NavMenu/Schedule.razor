@@ -1,7 +1,5 @@
 ﻿@page "/admin/Schedule"
 @using BlazorApp.Client.Components.Schedule
-@using Radzen
-@using Radzen.Blazor
 @inject Radzen.DialogService DialogService
 
 <RadzenScheduler @ref=@scheduler SlotRender=@OnSlotRender style="height: 768px;" TItem="Appointment" Data=@appointments StartProperty="Start" EndProperty="End"
@@ -73,7 +71,3 @@
     }
 }
 
-<RadzenDialog />
-<RadzenNotification />
-<RadzenContextMenu />
-<RadzenTooltip />

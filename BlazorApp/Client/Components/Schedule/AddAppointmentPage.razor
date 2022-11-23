@@ -1,6 +1,6 @@
 ﻿@inject Radzen.DialogService DialogService
 
-<RadzenTemplateForm TItem="Appointment" Data="" Submit=@OnSubmit>
+<RadzenTemplateForm TItem="Appointment" Data="@model" Submit=@OnSubmit>
     <div class="row" style="margin-bottom: 16px">
         <div class="col-md-3">
             <RadzenLabel Text="Text" />
@@ -15,7 +15,7 @@
             <RadzenLabel Text="Start" />
         </div>
         <div class="col">
-            <RadzenDatePicker Name="Start" ShowTime="true" />
+            @*<RadzenDatePicker Name="Start" ShowTime="true" />*@
             <RadzenRequiredValidator Text="Start is required" Component="Start" />
         </div>
     </div>
@@ -24,7 +24,7 @@
             <RadzenLabel Text="End" />
         </div>
         <div class="col">
-            <RadzenDatePicker Name="End" ShowTime="true" />
+            @*<RadzenDatePicker Name="End" ShowTime="true" />*@
             <RadzenRequiredValidator Component="End" Text="End is required" />
         </div>
     </div>
