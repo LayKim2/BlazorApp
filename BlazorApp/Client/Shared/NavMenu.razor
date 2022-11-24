@@ -2,7 +2,7 @@
 
 <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="">HIGHLIGHT</a>
+        <a class="navbar-brand" style="font-weight:bold;" href="">HIGHLIGHT</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -18,12 +18,12 @@
         </div>
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="admin/portfolio" onclick="@Collapse">
-                <span class="oi oi-calendar" aria-hidden="true"></span> Portfolio
+                <span class="oi oi-document" aria-hidden="true"></span> Portfolio
             </NavLink>
         </div>
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="admin/applyto">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Apply to
+                <span class="oi oi-spreadsheet" aria-hidden="true"></span> Apply to
             </NavLink>
         </div>
         <div class="nav-item px-3">
@@ -33,7 +33,7 @@
         </div>
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="admin/editor">
-                <span class="oi oi-copywriting" aria-hidden="true"></span> Editor
+                <span class="oi oi-eyedropper" aria-hidden="true"></span> Editor
             </NavLink>
         </div>
         <div class="nav-item px-3">
@@ -45,6 +45,8 @@
 </div>
 
 @code {
+    //bool sidebar1Expanded = true;
+
     private bool collapseNavMenu = true;
 
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;

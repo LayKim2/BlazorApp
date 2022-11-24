@@ -5,17 +5,16 @@
 @attribute [Authorize]
 
 <div class="page">
-    <div class="sidebar">
+    <div class="sidebar" style="background-color:#3a474d;">
         <NavMenu />
     </div>
 
     <main>
         <div id="top" class="top-row px-4">
             <AuthorizeView>
-                <h3>Hi! <i>@userName</i></h3>
+                <h3 style="margin-right:20px;">Hello, <i>@userName</i></h3>
             </AuthorizeView>
             <UserButton />
-            @*<a href="/" target="_blank">Login</a>*@
         </div>
 
         <article class="content px-4">
