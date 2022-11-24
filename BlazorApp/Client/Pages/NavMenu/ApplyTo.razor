@@ -15,8 +15,18 @@
 }
 else
 {
-    <RadzenDataGrid Data="@forecasts" TItem="WeatherForecast" AllowPaging="true" PageSize="10" AllowSorting="true" AllowFiltering="true" AllowColumnResize="true">
+    <RadzenDataGrid @ref="grid" Data="@forecasts2" TItem="WeatherForecast" AllowPaging="true" PageSize="10" AllowSorting="true" AllowFiltering="true" AllowColumnResize="true">
         <Columns>
+            <RadzenDataGridColumn TItem="WeatherForecast" Width="60px" Sortable="false" Filterable="false">
+                <HeaderTemplate>
+                    <RadzenCheckBox TriState="false" TValue="bool" Value="@(forecasts2.Any(i => selectedForecastes != null && selectedForecastes.Contains(i)))"
+                                Change="@(args => selectedForecastes = args ? forecasts2.ToList() : null)" />
+                </HeaderTemplate>
+                <Template Context="data">
+                    <RadzenCheckBox TriState="false" Value="@(selectedForecastes != null && selectedForecastes.Contains(data))"
+                                TValue="bool" Change=@(args => { if(!allowRowSelectOnRowClick) { grid.SelectRow(data); }}) />
+                </Template>
+            </RadzenDataGridColumn>
             <RadzenDataGridColumn TItem="WeatherForecast" Property="Date" Title="Date">
                 <Template Context="forecast">
                     @forecast.Date.ToShortDateString()
@@ -52,14 +62,20 @@ else
 
 
 @code {
+    bool allowRowSelectOnRowClick = false;
     IEnumerable<Apply> applies;
+    IEnumerable<WeatherForecast> forecasts2;
+    IList<WeatherForecast> selectedForecastes;
+
     private WeatherForecast[]? forecasts;
+    RadzenDataGrid<WeatherForecast>? grid;
 
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
 
         forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
+        forecasts2 = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
     }
 
     public class WeatherForecast
