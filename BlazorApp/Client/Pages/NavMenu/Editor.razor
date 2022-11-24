@@ -1,0 +1,39 @@
+﻿@page "/admin/editor"
+
+<h3>Editor</h3>
+
+<RadzenText TextStyle="TextStyle.H6" TagName="TagName.H3" Class="my-4">Default set of tools</RadzenText>
+<RadzenHtmlEditor @bind-Value=@value style="height: 500px; margin-bottom: 1rem;" UploadUrl="upload/image" Change=@OnChange Paste=@OnPaste Execute=@OnExecute />
+
+<RadzenText TextStyle="TextStyle.H6" TagName="TagName.H3" Class="my-4">Custom set of tools (text-editing only)</RadzenText>
+<RadzenHtmlEditor @bind-Value=@value style="height: 500px; margin-bottom: 1rem;" UploadUrl="upload/image" Change=@OnChange Paste=@OnPaste Execute=@OnExecute>
+    <RadzenHtmlEditorUndo />
+    <RadzenHtmlEditorRedo />
+    <RadzenHtmlEditorSeparator />
+    <RadzenHtmlEditorBold />
+    <RadzenHtmlEditorItalic />
+    <RadzenHtmlEditorUnderline />
+    <RadzenHtmlEditorStrikeThrough />
+    <RadzenHtmlEditorSeparator />
+    <RadzenHtmlEditorColor />
+    <RadzenHtmlEditorBackground />
+    <RadzenHtmlEditorRemoveFormat />
+    <RadzenHtmlEditorFontName />
+    <RadzenHtmlEditorFontSize />
+</RadzenHtmlEditor>
+
+@code {
+    string value = string.Empty;
+
+    void OnPaste(HtmlEditorPasteEventArgs args)
+    {
+    }
+
+    void OnChange(string html)
+    {
+    }
+
+    void OnExecute(HtmlEditorExecuteEventArgs args)
+    {
+    }
+}

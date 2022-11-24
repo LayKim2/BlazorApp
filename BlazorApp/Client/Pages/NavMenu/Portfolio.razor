@@ -39,7 +39,8 @@ else if (PortfolioService.IsEdit)
                         <img src="/images/sample/profile-img.jpg" alt="" class="img-fluid rounded-circle">
                     }
 
-                    <InputText @bind-Value="edtingPortfolio.SideName" class="form-control"></InputText>
+                    <RadzenTextBox @bind-Value="edtingPortfolio.SideName" @oninput=@(args => OnChangeName(args.Value.ToString())) Class="w-100 form-control" />
+
                     <div class="social-links mt-3 text-center">
                         <a class="twitter"><i class="bx bxl-twitter"></i></a>
                         <a class="facebook"><i class="bx bxl-facebook"></i></a>
@@ -52,19 +53,19 @@ else if (PortfolioService.IsEdit)
                 <nav id="navbar" class="nav-menu navbar">
                     <ul>
                         <li>
-                            <a id="navhome" href="" @onclick="@(e => ScrollIntoView("home"))" class="nav-link scrollto active" @onclick:preventDefault><i class='bx bxs-home'></i> <span>Home</span></a>
+                            <a id="navhome" @onclick="@(e => ScrollIntoView("home"))" class="nav-link scrollto active" @onclick:preventDefault><i class='bx bxs-home'></i> <span>Home</span></a>
                         </li>
                         <li>
-                            <a id="navabout" href="" @onclick="@(e => ScrollIntoView("about"))" class="nav-link scrollto" @onclick:preventDefault><i class="bx bx-user"></i> <span>About</span></a>
+                            <a id="navabout" @onclick="@(e => ScrollIntoView("about"))" class="nav-link scrollto" @onclick:preventDefault><i class="bx bx-user"></i> <span>About</span></a>
                         </li>
                         <li>
-                            <a id="navconcept1" href="" @onclick="@(e => ScrollIntoView("concept1"))" class="nav-link scrollto" @onclick:preventDefault>
+                            <a id="navconcept1" @onclick="@(e => ScrollIntoView("concept1"))" class="nav-link scrollto" @onclick:preventDefault>
                                 <i class="bx bxs-layer"></i>
                                 <InputText @bind-Value="edtingPortfolio.Concept1" class="form-control"></InputText>
                             </a>
                         </li>
                         <li>
-                            <a id="navconcept2" href="" @onclick="@(e => ScrollIntoView("concept2"))" class="nav-link scrollto" @onclick:preventDefault>
+                            <a id="navconcept2" @onclick="@(e => ScrollIntoView("concept2"))" class="nav-link scrollto" @onclick:preventDefault>
                                 <i class="bx bxs-layer"></i>
                                 <InputText @bind-Value="edtingPortfolio.Concept2" class="form-control"></InputText>
                             </a>
@@ -1232,6 +1233,11 @@ else
         PortfolioService.OnChange -= StateHasChanged;
     }
 
+
+    void OnChangeName(string value)
+    {
+        edtingPortfolio.SideName = value;
+    }
 
     async Task ShowBusyDialog(string message)
     {
