@@ -1,8 +1,24 @@
 ﻿@page "/admin/setting"
+@using MudBlazor
 @attribute [Authorize]
 
 <h3>Setting</h3>
 
+<MudCard Class="ma-2">
+    <MudCardContent>
+        <MudImage Src="/images/sample/pic/portfolio-6.jpg" />
+    </MudCardContent>
+    <MudCardActions Style="justify-content: center;">
+        <MudFab HtmlTag="label" Size="Size.Small" Color="Color.Primary" StartIcon="@Icons.Filled.CloudUpload" for="fileInput7" />
+        <InputFile id="fileInput7" hidden accept=".jpg, .jpeg, .png" />
+        <MudButton Variant="MudBlazor.Variant.Filled" Color="Color.Error">Remove</MudButton>
+    </MudCardActions>
+</MudCard>
+
 @code {
 
 }
+
+<MudThemeProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
