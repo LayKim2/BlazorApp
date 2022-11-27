@@ -6,7 +6,7 @@
 @inject DialogService DialogService
 @implements IDisposable
 @attribute [Authorize]
-
+@layout EmptyLayout
 
 @if (edtingPortfolio == null)
 {
@@ -93,10 +93,9 @@ else if (PortfolioService.IsEdit)
                             @*<span>URL : https://actorportfolioservice.azurewebsites.net/[Name]</span>*@
                         }
                     </div>
-                    <div class="col-md-1 p-3 d-md-flex">
-                        @*<button id="btnBack" class="btn btn-danger" @onclick="() => BackPortfolio()">Back</button>*@
+                    @*<div class="col-md-1 p-3 d-md-flex">
                         <RadzenButton id="btnBack" Text="Back" Style="width: 100%;" ButtonStyle="ButtonStyle.Danger" Click=@BackPortfolio />
-                    </div>
+                    </div>*@
                     @if (!HideEdit)
                     {
                         <div class="col-md-1 p-3 d-md-flex" style="margin:0">
@@ -695,10 +694,9 @@ else
                         @*<span>URL : https://actorportfolioservice.azurewebsites.net/[Name]</span>*@
                     }
                 </div>
-                <div class="col-md-1 p-3 d-md-flex">
-                    @*<button id="btnBack" class="btn btn-danger" @onclick="() => BackPortfolio()">Back</button>*@
+                @*<div class="col-md-1 p-3 d-md-flex">
                     <RadzenButton id="btnBack" Text="Back" Style="width: 100%;" ButtonStyle="ButtonStyle.Danger" Click=@BackPortfolio />
-                </div>
+                </div>*@
                 @if(!HideEdit){
                     <div class="col-md-1 p-3 d-md-flex">
                     <RadzenButton id="btnEdit" Text="Edit" Style="width: 100%;" ButtonStyle="ButtonStyle.Secondary" Click=@EditPortfolio />
@@ -1278,11 +1276,11 @@ else
     );
     }
 
-    private async Task GoBack() {
-        PortfolioService.IsEdit = false;
-        JSRuntime.InvokeVoidAsync("Expand");
-        NavigationManager.NavigateTo("/");
-    }
+    //private async Task GoBack() {
+    //    PortfolioService.IsEdit = false;
+
+    //    NavigationManager.NavigateTo("admin/home");
+    //}
 
     private async Task BackPortfolio()
     {

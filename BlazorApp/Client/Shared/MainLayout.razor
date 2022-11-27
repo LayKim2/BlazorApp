@@ -4,51 +4,59 @@
 @inject IAuthService AuthService
 @using MudBlazor
 @attribute [Authorize]
+@inject IJSRuntime JSRuntime
 
-<MudLayout Class="page">
-    <MudAppBar Elevation="25" Class="sidebar" Style="background-color:#3a474d;">
-        <MudImage Src="/images/logo-icon.png" Width="40" Height="35"/>
-        <MudText Typo="Typo.h6" Class="ml-3">HIGHLIGHT</MudText>
-        <MudToolBar DisableGutters="true">
-            <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" Class="ml-3"/>
-        </MudToolBar>
-        <MudSpacer/>
-        <AuthorizeView>
-            <h3 style="margin-right:20px; padding-top: 5px;">Hello, <i>@userName</i></h3>
-        </AuthorizeView>
-        <UserButton />
-        @*<MudMenu >
-            <ActivatorContent>
+<AuthorizeView>
+    <Authorized>
+        <MudLayout Class="page">
+            <MudAppBar Elevation="25" Class="sidebar" Style="background-color:#3a474d;">
+                <MudImage Src="/images/logo-icon.png" Width="40" Height="35" />
+                <MudText Typo="Typo.h6" Class="ml-3">HIGHLIGHT</MudText>
+                <MudToolBar DisableGutters="true">
+                    <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" OnClick="@((e) => DrawerToggle())" Class="ml-3" />
+                </MudToolBar>
+                <MudSpacer />
+                    <h3 style="margin-right:20px; padding-top: 5px;">Hello, <i>@userName</i></h3>
+                <UserButton />
+                @*<MudMenu >
+                <ActivatorContent>
                 <MudAvatar Color="Color.Error">Lay</MudAvatar>
-            </ActivatorContent>
-        </MudMenu>*@
-    </MudAppBar>
-    <MudDrawer @bind-Open="_drawerOpen" Elevation="25" ClipMode="DrawerClipMode.Always" Style="width:200px;">
-        <MudNavMenu>
-            <MudNavLink Class="nav-link" Href="/admin/home" Icon="@Icons.Material.Outlined.Home">Home</MudNavLink>
-        </MudNavMenu>
-        <MudNavMenu>
-            <MudNavLink Class="nav-link" Href="/admin/portfolio" Icon="@Icons.Material.Outlined.CorporateFare">Portfolio</MudNavLink>
-        </MudNavMenu>
-        <MudNavMenu>
-            <MudNavLink Class="nav-link" Href="/admin/applyto" Icon="@Icons.Material.Outlined.PlaylistAddCheck">Apply to</MudNavLink>
-        </MudNavMenu>
-        <MudNavMenu>
-            <MudNavLink Class="nav-link" Href="/admin/schedule" Icon="@Icons.Material.Outlined.CalendarMonth">Schedule</MudNavLink>
-        </MudNavMenu>
-        <MudNavMenu>
-            <MudNavLink Class="nav-link" Href="/admin/editor" Icon="@Icons.Material.Outlined.EditNote">Editor</MudNavLink>
-        </MudNavMenu>
-        <MudNavMenu>
-            <MudNavLink Class="nav-link" Href="/admin/setting" Icon="@Icons.Material.Outlined.Settings">Setting</MudNavLink>
-        </MudNavMenu>
-    </MudDrawer>
-    <MudMainContent>
+                </ActivatorContent>
+                </MudMenu>*@
+            </MudAppBar>
+            <MudDrawer @bind-Open="_drawerOpen" Elevation="25" ClipMode="DrawerClipMode.Always" Style="width:200px;">
+                <MudNavMenu>
+                    <MudNavLink Class="nav-link" Href="/admin/home" Icon="@Icons.Material.Outlined.Home">Home</MudNavLink>
+                </MudNavMenu>
+                <MudNavMenu>
+                    <MudNavLink Class="nav-link" OnClick="GoPortfolio" Icon="@Icons.Material.Outlined.CorporateFare">Portfolio</MudNavLink>
+                </MudNavMenu>
+                <MudNavMenu>
+                    <MudNavLink Class="nav-link" Href="/admin/applyto" Icon="@Icons.Material.Outlined.PlaylistAddCheck">Apply to</MudNavLink>
+                </MudNavMenu>
+                <MudNavMenu>
+                    <MudNavLink Class="nav-link" Href="/admin/schedule" Icon="@Icons.Material.Outlined.CalendarMonth">Schedule</MudNavLink>
+                </MudNavMenu>
+                <MudNavMenu>
+                    <MudNavLink Class="nav-link" Href="/admin/editor" Icon="@Icons.Material.Outlined.EditNote">Editor</MudNavLink>
+                </MudNavMenu>
+                <MudNavMenu>
+                    <MudNavLink Class="nav-link" Href="/admin/setting" Icon="@Icons.Material.Outlined.Settings">Setting</MudNavLink>
+                </MudNavMenu>
+            </MudDrawer>
+            <MudMainContent>
+                <article class="content px-4">
+                    @Body
+                </article>
+            </MudMainContent>
+        </MudLayout>
+    </Authorized>
+    <NotAuthorized>
         <article class="content px-4">
             @Body
         </article>
-    </MudMainContent>
-</MudLayout>
+    </NotAuthorized>
+</AuthorizeView>
 
 
 @*original*@
@@ -78,7 +86,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-
         isAuthenticated = await AuthService.IsUserAuthenticated();
 
         if (isAuthenticated)
@@ -86,7 +93,16 @@
             userName = (await AuthStateProvider.GetAuthenticationStateAsync())
             .User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name).Value;
         }
+    }
 
+    private async Task DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+
+    private async Task GoPortfolio()
+    {
+        await JSRuntime.InvokeAsync<object>("open", "admin/portfolio", "_blank");
     }
 }
 
