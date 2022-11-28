@@ -25,23 +25,24 @@
                 </MudMenu>*@
             </MudAppBar>
             <MudDrawer @bind-Open="_drawerOpen" Elevation="25" ClipMode="DrawerClipMode.Always" Style="width:200px;">
+                <BlazorApp.Client.Shared.Components.UserCard></BlazorApp.Client.Shared.Components.UserCard>
                 <MudNavMenu>
-                    <MudNavLink Class="nav-link" Href="/admin/home" Icon="@Icons.Material.Outlined.Home">Home</MudNavLink>
+                    <MudNavLink Class="nav-link" Style="color:#616161;" Href="/admin/home" Icon="@Icons.Material.Outlined.Home">Home</MudNavLink>
                 </MudNavMenu>
                 <MudNavMenu>
-                    <MudNavLink Class="nav-link" OnClick="GoPortfolio" Icon="@Icons.Material.Outlined.CorporateFare">Portfolio</MudNavLink>
+                    <MudNavLink Class="nav-link" Style="color:#616161;" OnClick="GoPortfolio" Icon="@Icons.Material.Outlined.CorporateFare">Portfolio</MudNavLink>
                 </MudNavMenu>
                 <MudNavMenu>
-                    <MudNavLink Class="nav-link" Href="/admin/applyto" Icon="@Icons.Material.Outlined.PlaylistAddCheck">Apply to</MudNavLink>
+                    <MudNavLink Class="nav-link" Style="color:#616161;" Href="/admin/applyto" Icon="@Icons.Material.Outlined.PlaylistAddCheck">Apply to</MudNavLink>
                 </MudNavMenu>
                 <MudNavMenu>
-                    <MudNavLink Class="nav-link" Href="/admin/schedule" Icon="@Icons.Material.Outlined.CalendarMonth">Schedule</MudNavLink>
+                    <MudNavLink Class="nav-link" Style="color:#616161;" Href="/admin/schedule" Icon="@Icons.Material.Outlined.CalendarMonth">Schedule</MudNavLink>
                 </MudNavMenu>
                 <MudNavMenu>
-                    <MudNavLink Class="nav-link" Href="/admin/editor" Icon="@Icons.Material.Outlined.EditNote">Editor</MudNavLink>
+                    <MudNavLink Class="nav-link" Style="color:#616161;" Href="/admin/editor" Icon="@Icons.Material.Outlined.EditNote">Editor</MudNavLink>
                 </MudNavMenu>
                 <MudNavMenu>
-                    <MudNavLink Class="nav-link" Href="/admin/setting" Icon="@Icons.Material.Outlined.Settings">Setting</MudNavLink>
+                    <MudNavLink Class="nav-link" Style="color:#616161;" Href="/admin/setting" Icon="@Icons.Material.Outlined.Settings">Setting</MudNavLink>
                 </MudNavMenu>
             </MudDrawer>
             <MudMainContent>
