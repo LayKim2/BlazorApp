@@ -1260,21 +1260,23 @@ else
         }, new DialogOptions() { ShowTitle = false, Style = "min-height:auto;min-width:auto;width:auto", CloseDialogOnEsc = false });
     }
 
-    async Task ShowInlineDialog()
-    {
-         var result = await DialogService.OpenAsync("Warning", ds =>
-            @<div>
-                <p class="mb-4">Editing data is not saved. Are you continue <b></b>?</p>
-                <div class="row">
-                    <div class="col">
-                        <RadzenButton Text="Ok" Click="() => GoBack()" Class="me-1" Style="width: 172px;" />
-                        <RadzenButton Text="Cancel" Click="() => ds.Close(false)" Style="width: 172px;" ButtonStyle="ButtonStyle.Light" Class="me-1" />
-                    </div>
-                </div>
-       </div>
-    , new DialogOptions() { Width = "400px", Draggable = true}
-    );
-    }
+    // back button
+
+    //async Task ShowInlineDialog()
+    //{
+    //     var result = await DialogService.OpenAsync("Warning", ds =>
+    //        @<div>
+    //            <p class="mb-4">Editing data is not saved. Are you continue <b></b>?</p>
+    //            <div class="row">
+    //                <div class="col">
+    //                    <RadzenButton Text="Ok" Click="() => GoBack()" Class="me-1" Style="width: 172px;" />
+    //                    <RadzenButton Text="Cancel" Click="() => ds.Close(false)" Style="width: 172px;" ButtonStyle="ButtonStyle.Light" Class="me-1" />
+    //                </div>
+    //            </div>
+    //   </div>
+    //, new DialogOptions() { Width = "400px", Draggable = true}
+    //);
+    //}
 
     //private async Task GoBack() {
     //    PortfolioService.IsEdit = false;
@@ -1282,14 +1284,17 @@ else
     //    NavigationManager.NavigateTo("admin/home");
     //}
 
-    private async Task BackPortfolio()
-    {
-        if(PortfolioService.IsEdit) {
-            await ShowInlineDialog();
-        } else {
-            await GoBack();
-        }
-    }
+    //private async Task BackPortfolio()
+    //{
+    //    if(PortfolioService.IsEdit) {
+    //        await ShowInlineDialog();
+    //    } else {
+    //        await GoBack();
+    //    }
+    //}
+
+    // back button
+
 
     private async Task SavePortfolio()
     {
