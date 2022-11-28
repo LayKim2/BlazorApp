@@ -1,6 +1,6 @@
 ﻿@using MudBlazor
 @inject IAuthService AuthService
-@inject Radzen.DialogService DialogService
+@*@inject Radzen.DialogService DialogService*@
 @inject ISnackbar Snackbar
 
 <EditForm Model="request" OnValidSubmit="ChangePassword">
@@ -40,11 +40,11 @@
 
     private async Task ChangePassword()
     {
-        ShowBusyDialog("Saving...");
+        //ShowBusyDialog("Saving...");
 
         var result = await AuthService.ChangePassword(request);
 
-        DialogService.Close();
+        //DialogService.Close();
 
         if(result.Success) {
             request.Password = string.Empty;
@@ -80,31 +80,31 @@
         }
     }
 
-    async Task ShowBusyDialog(string message)
-    {
-        await BusyDialog(message);
-    }
+    //async Task ShowBusyDialog(string message)
+    //{
+    //    await BusyDialog(message);
+    //}
 
-    async Task BusyDialog(string message)
-    {
-        await DialogService.OpenAsync("", ds =>
-        {
-            RenderFragment content = b =>
-            {
-                b.OpenElement(0, "div");
-                b.AddAttribute(1, "class", "row");
+    //async Task BusyDialog(string message)
+    //{
+    //    await DialogService.OpenAsync("", ds =>
+    //    {
+    //        RenderFragment content = b =>
+    //        {
+    //            b.OpenElement(0, "div");
+    //            b.AddAttribute(1, "class", "row");
 
-                b.OpenElement(2, "div");
-                b.AddAttribute(3, "class", "col-md-12");
+    //            b.OpenElement(2, "div");
+    //            b.AddAttribute(3, "class", "col-md-12");
 
-                b.AddContent(4, message);
+    //            b.AddContent(4, message);
 
-                b.CloseElement();
-                b.CloseElement();
-            };
-            return content;
-        }, new Radzen.DialogOptions() { ShowTitle = false, Style = "min-height:auto;min-width:auto;width:auto", CloseDialogOnEsc = false });
-    }
+    //            b.CloseElement();
+    //            b.CloseElement();
+    //        };
+    //        return content;
+    //    }, new Radzen.DialogOptions() { ShowTitle = false, Style = "min-height:auto;min-width:auto;width:auto", CloseDialogOnEsc = false });
+    //}
 }
 
 

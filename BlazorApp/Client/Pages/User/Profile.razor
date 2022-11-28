@@ -1,0 +1,134 @@
+﻿@using MudBlazor
+@using System.Security.Claims
+@inject AuthenticationStateProvider AuthStateProvider
+@inject IAuthService AuthService
+
+<MudGrid>
+    <MudItem xs="12" sm="4" md="3">
+        <MudCard Elevation="25">
+            <MudCardContent>
+                <div class="d-flex justify-center mb-4">
+                    @if (!string.IsNullOrEmpty(ImageDataUrl))
+                    {
+                        <MudAvatar Image="@ImageDataUrl" Style="height:250px; width:250px;"> </MudAvatar>
+                    }
+                    else
+                    {
+                        <MudAvatar Color="Color.Secondary" Style="height:250px; width:250px;">@FirstLetterOfName</MudAvatar>
+                    }
+                </div>
+                <MudText Typo="Typo.h6" Align="Align.Center">@ProfileModel.UserName</MudText>
+                @if (!string.IsNullOrEmpty(ProfileModel.UserEnglishName)){
+                    <MudText Typo="Typo.h6" Align="Align.Center">@ProfileModel.UserEnglishName</MudText>
+                }
+                <MudText Align="Align.Center">@ProfileModel.Email</MudText>
+            </MudCardContent>
+            <MudCardActions Class="d-flex justify-center">
+                <InputFile id="fileInput" OnChange="UploadFiles" hidden />
+                <MudButton HtmlTag="label"
+                            Variant="MudBlazor.Variant.Text"
+                            Color="Color.Primary"
+                            Size="Size.Small"
+                            StartIcon="@Icons.Filled.CloudUpload"
+                            for="fileInput">
+                        Upload Image
+                        </MudButton>
+                @if (!string.IsNullOrEmpty(ImageDataUrl)){
+                    <MudButton Variant="MudBlazor.Variant.Text"
+                           Color="Color.Error"
+                           StartIcon="@Icons.Filled.Delete"
+                           Size="Size.Small"
+                           OnClick="DeleteAsync">
+                        Delete Image
+                    </MudButton>
+                }
+            </MudCardActions>
+        </MudCard>
+    </MudItem>
+    <MudItem xs="12" sm="8" md="9">
+        <EditForm Model="ProfileModel" OnValidSubmit="UpdateProfile">
+            <DataAnnotationsValidator />
+            <MudCard Elevation="25">
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText>Profile Details</MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudGrid>
+                        <MudItem xs="12" md="6">
+                            <MudTextField @bind-Value="@ProfileModel.UserName" For="@(() => ProfileModel.UserName)" Label="User Name" Variant="MudBlazor.Variant.Outlined" />
+                        </MudItem>
+                        <MudItem xs="12" md="6">
+                            <MudTextField @bind-Value="@ProfileModel.UserEnglishName" For="@(() => ProfileModel.UserEnglishName)" Label="User Englisth Name" Variant="MudBlazor.Variant.Outlined" />
+                        </MudItem>
+                        <MudItem xs="12" md="6">
+                            <MudTextField @bind-Value="@ProfileModel.PhoneNumber" For="@(() => ProfileModel.PhoneNumber)" Label="User PhoneNumber" Variant="MudBlazor.Variant.Outlined" />
+                        </MudItem>
+                        <MudItem xs="12" md="6">
+                            <MudTextField @bind-Value="@ProfileModel.Email" For="@(() => ProfileModel.Email)" Label="User Email" Variant="MudBlazor.Variant.Outlined" InputType="InputType.Email" Disabled=true />
+                        </MudItem>
+                    </MudGrid>
+                </MudCardContent>
+                <MudCardActions Class="pb-4 pl-4">
+                    <MudButton Variant="MudBlazor.Variant.Filled" Color="Color.Primary" Class="ml-auto" ButtonType="MudBlazor.ButtonType.Submit">Save Changes</MudButton>
+                </MudCardActions>
+            </MudCard>
+        </EditForm>
+    </MudItem>
+</MudGrid>
+
+@code {
+    [Parameter]
+    public string ImageDataUrl { get; set; }
+
+    bool isAuthenticated = false;
+
+    private char FirstLetterOfName { get; set; }
+
+    private readonly UpdateProfileRequest ProfileModel = new();
+
+    private IBrowserFile _file;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadDataAsync();
+    }
+
+    private async Task LoadDataAsync()
+    {
+        isAuthenticated = await AuthService.IsUserAuthenticated();
+
+        if (isAuthenticated)
+        {
+            var state = await AuthStateProvider.GetAuthenticationStateAsync();
+            var user = state.User;
+
+            ProfileModel.UserName = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name).Value;
+            ProfileModel.UserEnglishName = string.Empty;
+            ProfileModel.Email = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email).Value;
+            ProfileModel.PhoneNumber = string.Empty;
+
+            if (ProfileModel.UserName.Length > 0)
+            {
+                FirstLetterOfName = ProfileModel.UserName[0];
+            }
+        }
+    }
+
+    private async Task UploadFiles(InputFileChangeEventArgs e) {
+        _file = e.File;
+
+        if (_file != null) {
+
+        }
+    }
+
+    private async Task DeleteAsync() {
+
+    }
+
+    private async Task UpdateProfile() {
+
+    }
+}
