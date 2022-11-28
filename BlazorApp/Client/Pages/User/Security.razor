@@ -1,5 +1,7 @@
-﻿@inject IAuthService AuthService
-@inject DialogService DialogService
+﻿@using MudBlazor
+@inject IAuthService AuthService
+@inject Radzen.DialogService DialogService
+@inject ISnackbar Snackbar
 
 <EditForm Model="request" OnValidSubmit="ChangePassword">
     <DataAnnotationsValidator />
@@ -25,7 +27,7 @@
         </MudBlazor.MudCardActions>
     </MudBlazor.MudCard>
 </EditForm>
-@message
+@*@message*@
 
 @code {
     UserChangePassword request = new UserChangePassword();
@@ -44,7 +46,21 @@
 
         DialogService.Close();
 
-        message = result.Message;
+        if(result.Success) {
+            request.Password = string.Empty;
+            request.ConfirmPassword = string.Empty;
+
+            Snackbar.Clear();
+            Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomRight;
+            Snackbar.Add(result.Message, MudBlazor.Severity.Success);
+
+        } else {
+            Snackbar.Clear();
+            Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomRight;
+            Snackbar.Add(result.Message, MudBlazor.Severity.Error);
+        }
+
+        //message = result.Message;
     }
 
     private void TogglePasswordVisibility(bool newPassword)
@@ -87,6 +103,9 @@
                 b.CloseElement();
             };
             return content;
-        }, new DialogOptions() { ShowTitle = false, Style = "min-height:auto;min-width:auto;width:auto", CloseDialogOnEsc = false });
+        }, new Radzen.DialogOptions() { ShowTitle = false, Style = "min-height:auto;min-width:auto;width:auto", CloseDialogOnEsc = false });
     }
 }
+
+
+<MudSnackbarProvider />
