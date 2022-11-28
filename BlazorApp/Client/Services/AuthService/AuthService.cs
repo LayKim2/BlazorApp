@@ -38,4 +38,18 @@ public class AuthService : IAuthService
 
         return await result.Content.ReadFromJsonAsync<ServiceResponse<int>>();
     }
+
+    public async Task<User> GetUser()
+    {
+        var response = await _http.GetFromJsonAsync<ServiceResponse<User>>("api/auth/get-user");
+
+        return response.Data;
+    }
+
+    public async Task<ServiceResponse<bool>> UpdateProfile(UpdateProfile request)
+    {
+        var result = await _http.PostAsJsonAsync("api/auth/update-profile", request);
+
+        return await result.Content.ReadFromJsonAsync<ServiceResponse<bool>>();
+    }
 }

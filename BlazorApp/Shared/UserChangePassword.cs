@@ -4,7 +4,7 @@ namespace BlazorApp.Shared;
 
 public class UserChangePassword
 {
-    [Required, StringLength(100, MinimumLength =6)]
+    [Required, StringLength(20, MinimumLength = 6)]
     public string Password { get; set; } = string.Empty;
 
     [Compare("Password", ErrorMessage ="The password do not match.")]

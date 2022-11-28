@@ -64,5 +64,24 @@ namespace BlazorApp.Server.Controllers
             return Ok(response);
         }
 
+        [HttpGet("get-user"), Authorize]
+        public async Task<ActionResult<ServiceResponse<User>>> GetUser()
+        {
+            return await _authService.GetUser();
+        }
+
+        [HttpPost("update-profile"), Authorize]
+        public async Task<ActionResult<ServiceResponse<bool>>> UpdateProfile([FromBody] UpdateProfile profile)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var response = await _authService.UpdateProfile(int.Parse(userId), profile);
+
+            if (!response.Success)
+            {
+                return BadRequest(response);
+            }
+
+            return Ok(response);
+        }
     }
 }

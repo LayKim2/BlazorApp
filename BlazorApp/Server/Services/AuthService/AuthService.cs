@@ -1,4 +1,5 @@
-﻿using BlazorApp.Shared;
+﻿using BlazorApp.Client.Pages.NavMenu;
+using BlazorApp.Shared;
 using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -26,6 +27,16 @@ public class AuthService : IAuthService
     public Task<User> GetUserByEmail(string email)
     {
         return _context.Users.FirstOrDefaultAsync(u => u.Email.Equals(email));
+    }
+
+    public async Task<ServiceResponse<User>> GetUser()
+    {
+        var id = GetUserId();
+        var email = GetUserEmail();
+
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Email.Equals(email) & u.Id.Equals(id));
+
+        return new ServiceResponse<User> { Data = user };
     }
 
     public async Task<ServiceResponse<string>> Login(string email, string password)
@@ -151,5 +162,30 @@ public class AuthService : IAuthService
         await _context.SaveChangesAsync();
 
         return new ServiceResponse<bool> { Data = true, Message = "Password has been changed." };
+    }
+
+    public async Task<ServiceResponse<bool>> UpdateProfile(int userId, UpdateProfile profile)
+    {
+        var email = GetUserEmail();
+
+        var user = await _context.Users.Where(u => u.Id.Equals(userId) && u.Email.Equals(email)).FirstOrDefaultAsync();
+
+        if(user == null)
+        {
+            return new ServiceResponse<bool>
+            {
+                Success = false,
+                Message = "Save failed.",
+            };
+        }
+
+        user.Name = profile.UserName;
+        user.EnglishName = profile.UserEnglishName;
+        user.PhoneNumber = profile.PhoneNumber;
+        user.DateUpdated = DateTime.Now;
+
+        await _context.SaveChangesAsync();
+
+        return new ServiceResponse<bool> { Data = true, Message = "Profile is saved." };
     }
 }
