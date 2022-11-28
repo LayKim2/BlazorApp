@@ -1,10 +1,14 @@
-﻿@inject AuthenticationStateProvider AuthStateProvider
+﻿@using MudBlazor
 @using System.Security.Claims
-@inherits LayoutComponentBase
+
+@inject ILocalStorageService LocalStorage
+@inject AuthenticationStateProvider AuthStateProvider
+@inject NavigationManager NavigationManager
 @inject IAuthService AuthService
-@using MudBlazor
-@attribute [Authorize]
 @inject IJSRuntime JSRuntime
+
+@inherits LayoutComponentBase
+@attribute [Authorize]
 
 <AuthorizeView>
     <Authorized>
@@ -17,12 +21,23 @@
                 </MudToolBar>
                 <MudSpacer />
                     <h3 style="margin-right:20px; padding-top: 5px;">Hello, <i>@userName</i></h3>
-                <UserButton />
+                @*<UserButton />*@
                 @*<MudMenu >
                 <ActivatorContent>
                 <MudAvatar Color="Color.Error">Lay</MudAvatar>
                 </ActivatorContent>
                 </MudMenu>*@
+                <MudMenu OffsetX="true" Dense="true" Class="mt-1 ml-4">
+                    <ActivatorContent>
+                        <UserButton />
+                    </ActivatorContent>
+                    <ChildContent>
+                        <BlazorApp.Client.Shared.Components.UserCard Class="mt-n2"/>
+                        <MudDivider Class="mb-2"/>
+                        <MudListItem Text="Account" Href="admin/profile" Icon="@Icons.Material.Outlined.Person" />
+                        <MudListItem Text="Logout" Icon="@Icons.Material.Filled.Logout" OnClick="Logout"/>
+                    </ChildContent>
+                </MudMenu>
             </MudAppBar>
             <MudDrawer @bind-Open="_drawerOpen" Elevation="25" ClipMode="DrawerClipMode.Always" Style="width:200px;">
                 <BlazorApp.Client.Shared.Components.UserCard></BlazorApp.Client.Shared.Components.UserCard>
@@ -104,6 +119,13 @@
     private async Task GoPortfolio()
     {
         await JSRuntime.InvokeAsync<object>("open", "admin/portfolio", "_blank");
+    }
+
+    private async Task Logout()
+    {
+        await LocalStorage.RemoveItemAsync("authToken");
+        await AuthStateProvider.GetAuthenticationStateAsync();
+        NavigationManager.NavigateTo("");
     }
 }
 
