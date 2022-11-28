@@ -1,4 +1,4 @@
-﻿@page "/admin/profile"
+﻿@page "/admin/account"
 @inject IAuthService AuthService
 @attribute [Authorize]
 @*
@@ -7,11 +7,24 @@
 </AuthorizeView>
 
 <br /><hr /><br />
-
 *@
-<h5><b>Change Password</b></h5>
 
-<EditForm Model="request" OnValidSubmit="ChangePassword">
+
+<BlazorApp.Client.Shared.Components.MainTitle Title="Account" Description="Manage your account" />
+<MudBlazor.MudTabs Elevation="25" Color="MudBlazor.Color.Transparent" Rounded="true" PanelClass="mt-6">
+    <MudBlazor.MudTabPanel Text="Profile">
+        
+    </MudBlazor.MudTabPanel>
+    <MudBlazor.MudTabPanel Text="Security">
+        <Security />
+    </MudBlazor.MudTabPanel>
+</MudBlazor.MudTabs>
+
+
+@*original*@
+@*<h5><b>Change Password</b></h5>*@
+
+@*<EditForm Model="request" OnValidSubmit="ChangePassword">
     <DataAnnotationsValidator />
     <div class="mb-3">
         <label for="password">New Password</label>
@@ -24,17 +37,17 @@
         <ValidationMessage For="@(() => request.ConfirmPassword)" />
     </div>
     <button type="submit" class="btn btn-primary">Apply</button>
-</EditForm>
-@message
+</EditForm>*@
+@*@message*@
 
 @code {
-    UserChangePassword request = new UserChangePassword();
+    //UserChangePassword request = new UserChangePassword();
 
-    string message = string.Empty;
+    //string message = string.Empty;
 
-    private async Task ChangePassword()
-    {
-        var result = await AuthService.ChangePassword(request);
-        message = result.Message;
-    }
+    //private async Task ChangePassword()
+    //{
+    //    var result = await AuthService.ChangePassword(request);
+    //    message = result.Message;
+    //}
 }
