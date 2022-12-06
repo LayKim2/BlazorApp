@@ -59,6 +59,15 @@ public class FileController : ControllerBase
         return Ok(response);
     }
 
+
+    [HttpGet("get-file")]
+    public async Task<IActionResult> GetFile(string url)
+    {
+        BlobObject result = await _fileService.GetFile(url);
+
+        return File(result.Content, result.ContentType);
+    }
+
     #region test for blob function 
 
     [HttpGet("GetBlobFile")]

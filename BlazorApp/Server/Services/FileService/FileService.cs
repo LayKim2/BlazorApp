@@ -55,15 +55,29 @@ public class FileService : IFileService
                         };
                     }
 
-                    // delete original image
-                    blobClient = client.GetBlobClient(uploadBlobFile.Location + user.ImageFileName);
 
-                    await blobClient.DeleteIfExistsAsync();
+                    var originalImageUrl = user.ImageFileName;
 
-                    // update image filename
-                    user.ImageFileName = guidFileName;
+                    if (string.IsNullOrEmpty(originalImageUrl))
+                    {
+                        // update image filename
+                        user.ImageFileName = blobClient.Uri.AbsoluteUri;
+                    }
+                    else
+                    {
+                        var originalfileName = new Uri(originalImageUrl).Segments.LastOrDefault();
 
-                    _context.SaveChanges();
+                        // update image filename
+                        user.ImageFileName = blobClient.Uri.AbsoluteUri;
+
+
+                        // delete original image
+                        blobClient = client.GetBlobClient(uploadBlobFile.Location + originalfileName);
+
+                        await blobClient.DeleteIfExistsAsync();
+                    }
+
+                    await _context.SaveChangesAsync();
 
                 }
 
@@ -77,6 +91,44 @@ public class FileService : IFileService
             Success = false,
             Message = "Image upload failed.",
         };
+    }
+
+    public async Task<BlobObject> GetFile(string url)
+    {
+        var fileName = new Uri(url).Segments.LastOrDefault();
+
+        try
+        {
+            client = _blobServiceClient.GetBlobContainerClient("user");
+
+            var blobClient = client.GetBlobClient("profile/6/" + fileName);
+
+            if (await blobClient.ExistsAsync())
+            {
+                BlobDownloadResult content = await blobClient.DownloadContentAsync();
+
+                var downloadedData = content.Content.ToStream();
+
+                if (ImageExtensions.Contains(Path.GetExtension(fileName.ToUpperInvariant())))
+                {
+                    var extension = Path.GetExtension(fileName);
+
+                    return new BlobObject { Content = downloadedData, ContentType = "image/" + extension.Remove(0, 1) };
+                }
+                else
+                {
+                    return new BlobObject { Content = downloadedData, ContentType = content.Details.ContentType };
+                }
+            }
+            else
+            {
+                return null;
+            }
+        }
+        catch (Exception ex)
+        {
+            throw;
+        }
     }
 
 
@@ -112,6 +164,7 @@ public class FileService : IFileService
             if (await blobClient.ExistsAsync())
             {
                 BlobDownloadResult content = await blobClient.DownloadContentAsync();
+
                 var downloadedData = content.Content.ToStream();
 
                 if (ImageExtensions.Contains(Path.GetExtension(fileName.ToUpperInvariant())))

@@ -6,6 +6,7 @@ public interface IFileService
 {
     Task<ServiceResponse<bool>> UploadFiles(UploadBlobFile uploadBlobFile);
 
+    Task<BlobObject> GetFile(string name);
 
 
     #region test for blob function
