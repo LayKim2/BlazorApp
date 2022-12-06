@@ -19,7 +19,7 @@ public class FileController : ControllerBase
 		_fileService = fileService;
 	}
 
-    [HttpPost("upload-files")]
+    [HttpPost("upload-files"), Authorize]
     public async Task<ActionResult<ServiceResponse<bool>>> UploadFile(List<IFormFile> files)
     {
         var container = string.Empty;
@@ -48,6 +48,7 @@ public class FileController : ControllerBase
 
         UploadBlobFile uploadBlobFile = new()
         {
+            UserID = userId,
             Files = files,
             Container = container,
             Location = location

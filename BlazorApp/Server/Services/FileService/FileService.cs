@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Net;
+using System.Security.Claims;
 
 namespace BlazorApp.Server.Services.FileService;
 
@@ -41,6 +42,30 @@ public class FileService : IFileService
                 var status = await blobClient.UploadAsync(stream);
 
                 // status 가 성공이면, insert / update db logic
+                if (status.GetRawResponse().IsError == false)
+                {
+                    var user = await _context.Users.FindAsync(int.Parse(uploadBlobFile.UserID));
+
+                    if (user == null)
+                    {
+                        return new ServiceResponse<bool>
+                        {
+                            Success = false,
+                            Message = "User not found.",
+                        };
+                    }
+
+                    // delete original image
+                    blobClient = client.GetBlobClient(uploadBlobFile.Location + user.ImageFileName);
+
+                    await blobClient.DeleteIfExistsAsync();
+
+                    // update image filename
+                    user.ImageFileName = guidFileName;
+
+                    _context.SaveChanges();
+
+                }
 
                 return new ServiceResponse<bool> { Data = true, Message = "Image has been changed." };
 
@@ -53,7 +78,6 @@ public class FileService : IFileService
             Message = "Image upload failed.",
         };
     }
-
 
 
     #region test for blob function
