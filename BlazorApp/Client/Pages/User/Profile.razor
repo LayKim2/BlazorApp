@@ -2,7 +2,9 @@
 @using System.Security.Claims
 @inject AuthenticationStateProvider AuthStateProvider
 @inject IAuthService AuthService
+@inject IFileService FileService
 @inject ISnackbar Snackbar
+@inject HttpClient Http
 
 <MudGrid>
     <MudItem xs="12" sm="4" md="3">
@@ -25,7 +27,7 @@
                 <MudText Align="Align.Center">@ProfileModel.Email</MudText>
             </MudCardContent>
             <MudCardActions Class="d-flex justify-center">
-                <InputFile id="fileInput" OnChange="UploadFiles" hidden />
+                <InputFile id="fileInput" OnChange="UploadFiles" accept=".jpg,.jpeg,.png" hidden />
                 <MudButton HtmlTag="label"
                             Variant="MudBlazor.Variant.Text"
                             Color="Color.Primary"
@@ -91,6 +93,11 @@
 
     private IBrowserFile _file;
 
+    private int maxAllowedFiles = int.MaxValue;
+    private long maxFileSize = long.MaxValue;
+    //private List<string> fileNames = new();
+
+    private UploadBlobFile UserImage = new();
 
     protected override async Task OnInitializedAsync()
     {
@@ -139,6 +146,27 @@
         _file = e.File;
 
         if (_file != null) {
+
+            using var content = new MultipartFormDataContent();
+
+            // multiple
+            //foreach(var file in e.GetMultipleFiles(maxAllowedFiles)){
+            //}
+
+            var fileContent = new StreamContent(_file.OpenReadStream(maxFileSize));
+            fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(_file.ContentType);
+            fileContent.Headers.Add("Type", "Profile");
+
+            content.Add(
+                content: fileContent,
+                name: "\"files\"",
+                fileName: _file.Name
+            );
+
+            //var response = await Http.PostAsync("/api/file/upload-files", content);
+            var response = await FileService.UploadBlobFiles(content);
+
+            //var newUploadResult = await response.Content.ReadFromJsonAsync<List<UploadResult>>();
 
         }
     }

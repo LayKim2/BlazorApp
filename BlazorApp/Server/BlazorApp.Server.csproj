@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.14.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="6.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.6" />
@@ -30,8 +31,9 @@
   <!-- DI -->
   <ItemGroup>
     <Using Include="BlazorApp.Server.Services.AuthService" />
-	  <Using Include="BlazorApp.Server.Services.PortfolioService" />
+	<Using Include="BlazorApp.Server.Services.PortfolioService" />
     <Using Include="BlazorApp.Server.Services.UserPortfolioService" />
+	<Using Include="BlazorApp.Server.Services.FileService" />
   </ItemGroup>
   <!-- DI -->
 

@@ -1,3 +1,4 @@
+using Azure.Storage.Blobs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
@@ -19,10 +20,14 @@ builder.Services.AddRazorPages();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Blob
+builder.Services.AddSingleton(x => new BlobServiceClient(builder.Configuration.GetConnectionString("AzureBlobConnectionString")));
+
 // DI
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IPortfolioService, PortfolioService>();
 builder.Services.AddScoped<IUserPortfolioService, UserPortfolioService>();
+builder.Services.AddScoped<IFileService, FileService>();
 
 // auth (Middleware)
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
