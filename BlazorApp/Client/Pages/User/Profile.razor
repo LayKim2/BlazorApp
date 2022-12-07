@@ -11,9 +11,9 @@
         <MudCard Elevation="25">
             <MudCardContent>
                 <div class="d-flex justify-center mb-4">
-                    @if (!string.IsNullOrEmpty(ImageDataUrl))
+                    @if (!string.IsNullOrEmpty(ProfileModel.UserImage))
                     {
-                        <MudAvatar Image="@ImageDataUrl" Style="height:250px; width:250px;"> </MudAvatar>
+                        <MudAvatar Image="@ProfileModel.UserImage" Style="height:250px; width:250px;"> </MudAvatar>
                     }
                     else
                     {
@@ -27,7 +27,7 @@
                 <MudText Align="Align.Center">@ProfileModel.Email</MudText>
             </MudCardContent>
             <MudCardActions Class="d-flex justify-center">
-                <InputFile id="fileInput" OnChange="UploadImage" accept=".jpg,.jpeg,.png" hidden />
+                <InputFile id="fileInput" OnChange="OnFileChange" accept=".jpg,.jpeg,.png" hidden />
                 <MudButton HtmlTag="label"
                             Variant="MudBlazor.Variant.Text"
                             Color="Color.Primary"
@@ -36,7 +36,8 @@
                             for="fileInput">
                         Upload Image
                         </MudButton>
-                @if (!string.IsNullOrEmpty(ImageDataUrl)){
+                @if (!string.IsNullOrEmpty(ProfileModel.UserImage))
+                {
                     <MudButton Variant="MudBlazor.Variant.Text"
                            Color="Color.Error"
                            StartIcon="@Icons.Filled.Delete"
@@ -82,29 +83,18 @@
 </MudGrid>
 
 @code {
-    [Parameter]
-    public string ImageDataUrl { get; set; }
-
-    bool isAuthenticated = false;
-
+    private IBrowserFile _file;
     private char FirstLetterOfName { get; set; }
+    private InputFileChangeEventArgs UploadImageFile {get; set;}
 
     private readonly UpdateProfile ProfileModel = new();
 
-    private IBrowserFile _file;
-
-    private int maxAllowedFiles = int.MaxValue;
-    private long maxFileSize = long.MaxValue;
-    //private List<string> fileNames = new();
-
-    private UploadBlobFile UserImage = new();
-
     protected override async Task OnInitializedAsync()
     {
-        await LoadDataAsync();
+        await LoadProfile();
     }
 
-    private async Task LoadDataAsync()
+    private async Task LoadProfile()
     {
         var user = await AuthService.GetUser();
 
@@ -113,6 +103,7 @@
             ProfileModel.UserEnglishName = user.EnglishName;
             ProfileModel.Email = user.Email;
             ProfileModel.PhoneNumber = user.PhoneNumber;
+            ProfileModel.UserImage = user.ImageFileName;
 
             if (ProfileModel.UserEnglishName.Length > 0){
                 FirstLetterOfName = ProfileModel.UserEnglishName[0];
@@ -122,36 +113,15 @@
                 FirstLetterOfName = ProfileModel.UserName[0];
             }
         }
-
-        //isAuthenticated = await AuthService.IsUserAuthenticated();
-
-        //if (isAuthenticated)
-        //{
-        //    var state = await AuthStateProvider.GetAuthenticationStateAsync();
-        //    var user = state.User;
-
-        //    ProfileModel.UserName = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name).Value;
-        //    ProfileModel.UserEnglishName = string.Empty;
-        //    ProfileModel.Email = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email).Value;
-        //    ProfileModel.PhoneNumber = string.Empty;
-
-        //    if (ProfileModel.UserName.Length > 0)
-        //    {
-        //        FirstLetterOfName = ProfileModel.UserName[0];
-        //    }
-        //}
     }
 
-    private async Task UploadImage(InputFileChangeEventArgs e) {
-        _file = e.File;
+    private async Task UploadImage() {
 
         if (_file != null) {
 
-            using var content = new MultipartFormDataContent();
+            long maxFileSize = long.MaxValue;
 
-            // multiple
-            //foreach(var file in e.GetMultipleFiles(maxAllowedFiles)){
-            //}
+            using var content = new MultipartFormDataContent();
 
             var fileContent = new StreamContent(_file.OpenReadStream(maxFileSize));
             fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(_file.ContentType);
@@ -166,15 +136,16 @@
             var result = await FileService.UploadBlobFiles(content);
 
             if (result.Success){
-                ImageDataUrl = result.Data;
+                ProfileModel.UserImage = result.Data;
 
+                Snackbar.Clear();
                 Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomRight;
-                Snackbar.Add(result.Message, MudBlazor.Severity.Success);
+                Snackbar.Add("Profile has been changed.", MudBlazor.Severity.Success);
             } else {
+                Snackbar.Clear();
                 Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomRight;
                 Snackbar.Add(result.Message, MudBlazor.Severity.Error);
             }
-
         }
     }
 
@@ -183,20 +154,39 @@
     }
 
     private async Task UpdateProfile() {
+
+        // update profile
         var result = await AuthService.UpdateProfile(ProfileModel);
 
-        if (result.Success)
-        {
-            Snackbar.Clear();
-            Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomRight;
-            Snackbar.Add(result.Message, MudBlazor.Severity.Success);
-
-        }
-        else
-        {
+        if (!result.Success){
             Snackbar.Clear();
             Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomRight;
             Snackbar.Add(result.Message, MudBlazor.Severity.Error);
+        } else {
+            if (_file != null) {
+                // update image
+                await UploadImage();
+            } else {
+                Snackbar.Clear();
+                Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomRight;
+                Snackbar.Add("Profile has been changed.", MudBlazor.Severity.Success);
+            }
+            
+        }
+    }
+
+    async Task OnFileChange(InputFileChangeEventArgs e) {
+
+        _file = e.File;
+        var format = "image/png";
+
+        if (_file != null) {
+            var resizeImage = await _file.RequestImageFileAsync(format, 200, 200);
+            var buffer = new byte[resizeImage.Size];
+            await resizeImage.OpenReadStream().ReadAsync(buffer);
+            var imageData = $"data:{format};base64,{Convert.ToBase64String(buffer)}";
+
+            ProfileModel.UserImage = imageData;
         }
     }
 }
