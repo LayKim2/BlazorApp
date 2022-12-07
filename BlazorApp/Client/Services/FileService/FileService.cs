@@ -20,10 +20,10 @@ public class FileService : IFileService
         return (await _authStateProvider.GetAuthenticationStateAsync()).User.Identity.IsAuthenticated;
     }
 
-    public async Task<ServiceResponse<bool>> UploadBlobFiles(MultipartFormDataContent request)
+    public async Task<ServiceResponse<string>> UploadBlobFiles(MultipartFormDataContent request)
     {
         var result = await _http.PostAsync("/api/file/upload-files", request);
 
-        return await result.Content.ReadFromJsonAsync<ServiceResponse<bool>>();
+        return await result.Content.ReadFromJsonAsync<ServiceResponse<string>>();
     }
 }

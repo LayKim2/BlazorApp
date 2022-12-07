@@ -20,7 +20,7 @@ public class FileController : ControllerBase
 	}
 
     [HttpPost("upload-files"), Authorize]
-    public async Task<ActionResult<ServiceResponse<bool>>> UploadFile(List<IFormFile> files)
+    public async Task<ActionResult<ServiceResponse<string>>> UploadFile(List<IFormFile> files)
     {
         var container = string.Empty;
         var location = string.Empty;
@@ -40,7 +40,7 @@ public class FileController : ControllerBase
 
         if(container == string.Empty || userId == null)
         {
-            return new ServiceResponse<bool> {
+            return new ServiceResponse<string> {
                 Success = false,
                 Message = "Image upload failed.",
             };

@@ -23,8 +23,7 @@ public class FileService : IFileService
         _blobServiceClient = blobServiceClient;
     }
 
-    [HttpPost("UploadFiles")]
-    public async Task<ServiceResponse<bool>> UploadFiles(UploadBlobFile uploadBlobFile)
+    public async Task<ServiceResponse<string>> UploadFiles(UploadBlobFile uploadBlobFile)
     {
         foreach (var file in uploadBlobFile.Files)
         {
@@ -48,7 +47,7 @@ public class FileService : IFileService
 
                     if (user == null)
                     {
-                        return new ServiceResponse<bool>
+                        return new ServiceResponse<string>
                         {
                             Success = false,
                             Message = "User not found.",
@@ -57,18 +56,19 @@ public class FileService : IFileService
 
 
                     var originalImageUrl = user.ImageFileName;
+                    var addedstorageUrl = blobClient.Uri.AbsoluteUri??"";
 
                     if (string.IsNullOrEmpty(originalImageUrl))
                     {
                         // update image filename
-                        user.ImageFileName = blobClient.Uri.AbsoluteUri;
+                        user.ImageFileName = addedstorageUrl;
                     }
                     else
                     {
                         var originalfileName = new Uri(originalImageUrl).Segments.LastOrDefault();
 
                         // update image filename
-                        user.ImageFileName = blobClient.Uri.AbsoluteUri;
+                        user.ImageFileName = addedstorageUrl;
 
 
                         // delete original image
@@ -79,14 +79,13 @@ public class FileService : IFileService
 
                     await _context.SaveChangesAsync();
 
+                    return new ServiceResponse<string> { Data = addedstorageUrl, Message = "Image has been changed." };
                 }
-
-                return new ServiceResponse<bool> { Data = true, Message = "Image has been changed." };
 
             }
         }
 
-        return new ServiceResponse<bool>
+        return new ServiceResponse<string>
         {
             Success = false,
             Message = "Image upload failed.",

@@ -4,8 +4,9 @@ namespace BlazorApp.Server.Services.FileService;
 
 public interface IFileService
 {
-    Task<ServiceResponse<bool>> UploadFiles(UploadBlobFile uploadBlobFile);
+    Task<ServiceResponse<string>> UploadFiles(UploadBlobFile uploadBlobFile);
 
+    // not yet
     Task<BlobObject> GetFile(string name);
 
 

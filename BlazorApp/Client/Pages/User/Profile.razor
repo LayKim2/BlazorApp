@@ -27,7 +27,7 @@
                 <MudText Align="Align.Center">@ProfileModel.Email</MudText>
             </MudCardContent>
             <MudCardActions Class="d-flex justify-center">
-                <InputFile id="fileInput" OnChange="UploadFiles" accept=".jpg,.jpeg,.png" hidden />
+                <InputFile id="fileInput" OnChange="UploadImage" accept=".jpg,.jpeg,.png" hidden />
                 <MudButton HtmlTag="label"
                             Variant="MudBlazor.Variant.Text"
                             Color="Color.Primary"
@@ -41,7 +41,7 @@
                            Color="Color.Error"
                            StartIcon="@Icons.Filled.Delete"
                            Size="Size.Small"
-                           OnClick="DeleteAsync">
+                           OnClick="DeleteImage">
                         Delete Image
                     </MudButton>
                 }
@@ -142,7 +142,7 @@
         //}
     }
 
-    private async Task UploadFiles(InputFileChangeEventArgs e) {
+    private async Task UploadImage(InputFileChangeEventArgs e) {
         _file = e.File;
 
         if (_file != null) {
@@ -163,15 +163,22 @@
                 fileName: _file.Name
             );
 
-            //var response = await Http.PostAsync("/api/file/upload-files", content);
-            var response = await FileService.UploadBlobFiles(content);
+            var result = await FileService.UploadBlobFiles(content);
 
-            //var newUploadResult = await response.Content.ReadFromJsonAsync<List<UploadResult>>();
+            if (result.Success){
+                ImageDataUrl = result.Data;
+
+                Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomRight;
+                Snackbar.Add(result.Message, MudBlazor.Severity.Success);
+            } else {
+                Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomRight;
+                Snackbar.Add(result.Message, MudBlazor.Severity.Error);
+            }
 
         }
     }
 
-    private async Task DeleteAsync() {
+    private async Task DeleteImage() {
 
     }
 
