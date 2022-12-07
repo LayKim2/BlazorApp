@@ -1,6 +1,7 @@
 ﻿@inject DialogService DialogService
+@inject IAppointmentService AppointmentService
 
-<RadzenTemplateForm TItem="Appointment" Data="@model" Submit=@OnSubmit>
+<RadzenTemplateForm TItem="Appointment" Data="@model" Submit=@AddAppointment>
     <div class="row" style="margin-bottom: 16px">
         <div class="col-md-3">
             <RadzenLabel Text="Text" />
@@ -50,8 +51,10 @@
         model.End = End;
     }
 
-    void OnSubmit(Appointment model)
+    async void AddAppointment(Appointment model)
     {
+        model = await AppointmentService.AddOrUpdateAppointment(model);
+
         DialogService.Close(model);
     }
 }

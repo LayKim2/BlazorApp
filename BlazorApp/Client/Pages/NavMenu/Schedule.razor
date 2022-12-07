@@ -1,62 +1,23 @@
 ﻿@page "/admin/Schedule"
 @using BlazorApp.Client.Components.Schedule
 @inject Radzen.DialogService DialogService
-@implements IDisposable
 @inject IAppointmentService AppointmentService
 
-@if (AppointmentService.Appointments.Count == 0)
-{
-    <div id="app" style="margin: 0 auto; width: 100vw; height: 100vh">
-        <div style="padding-top: 300px; ">
-            <img src="/images/logo-icon.png" style="width: 150px; grid-area: 1 / 1 / auto / auto;top: 50%;left: 50%;transform: translate(-50%, -50%);position: absolute;">
-            <div style="width: 300px; grid-area: 1 / 1 / auto / auto; top: 50%; left: 50%; transform: translate(-50%, -50%); position: absolute;">
-                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzOTIgMzkyIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2UwNjg0Yjt9LmNscy0ye2ZpbGw6bm9uZTt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPlNwaW5uZXJJY29uPC90aXRsZT48ZyBpZD0iTGF5ZXJfMiIgZGF0YS1uYW1lPSJMYXllciAyIj48ZyBpZD0iU3Bpbm5lciI+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNNDAuMjEsMTI2LjQzYzMuNy03LjMxLDcuNjctMTQuNDQsMTItMjEuMzJsMy4zNi01LjEsMy41Mi01YzEuMjMtMS42MywyLjQxLTMuMjksMy42NS00LjkxczIuNTMtMy4yMSwzLjgyLTQuNzlBMTg1LjIsMTg1LjIsMCwwLDEsODMuNCw2Ny40M2EyMDgsMjA4LDAsMCwxLDE5LTE1LjY2YzMuMzUtMi40MSw2Ljc0LTQuNzgsMTAuMjUtN3M3LjExLTQuMjgsMTAuNzUtNi4zMmM3LjI5LTQsMTQuNzMtOCwyMi41My0xMS40OSwzLjktMS43Miw3Ljg4LTMuMywxMi00LjY0YTEwNC4yMiwxMDQuMjIsMCwwLDEsMTIuNDQtMy4yMyw2Mi40NCw2Mi40NCwwLDAsMSwxMi43OC0xLjM5QTI1LjkyLDI1LjkyLDAsMCwxLDE5NiwyMS40NGE2LjU1LDYuNTUsMCwwLDEsMi4wNSw5LDYuNjYsNi42NiwwLDAsMS0xLjY0LDEuNzhsLS40MS4yOWEyMi4wNywyMi4wNywwLDAsMS01Ljc4LDMsMzAuNDIsMzAuNDIsMCwwLDEtNS42NywxLjYyLDM3LjgyLDM3LjgyLDAsMCwxLTUuNjkuNzFjLTEsMC0xLjkuMTgtMi44NS4yNmwtMi44NS4yNHEtNS43Mi41MS0xMS40OCwxLjFjLTMuODQuNC03LjcxLjgyLTExLjU4LDEuNGExMTIuMzQsMTEyLjM0LDAsMCwwLTIyLjk0LDUuNjFjLTMuNzIsMS4zNS03LjM0LDMtMTAuOTQsNC42NHMtNy4xNCwzLjUxLTEwLjYsNS41MUExNTEuNiwxNTEuNiwwLDAsMCw2OC41Niw4N0M2Ny4yMyw4OC40OCw2Niw5MCw2NC42NCw5MS41NnMtMi41MSwzLjE1LTMuNzUsNC43M2wtMy41NCw0LjljLTEuMTMsMS42Ni0yLjIzLDMuMzUtMy4zMyw1YTEyNywxMjcsMCwwLDAtMTAuOTMsMjEuNDksMS41OCwxLjU4LDAsMSwxLTMtMS4xNVM0MC4xOSwxMjYuNDcsNDAuMjEsMTI2LjQzWiIvPjxyZWN0IGNsYXNzPSJjbHMtMiIgd2lkdGg9IjM5MiIgaGVpZ2h0PSIzOTIiLz48L2c+PC9nPjwvc3ZnPg==" style="animation-name: spin;animation-duration: 800ms;animation-iteration-count: infinite;animation-timing-function: linear;">
-            </div>
-        </div>
-    </div>
-} else {
-    <RadzenScheduler @ref=@scheduler SlotRender=@OnSlotRender style="height: 768px;" TItem="Appointment" Data=@AppointmentService.Appointments StartProperty="Start" EndProperty="End"
-                 TextProperty="Text" SelectedIndex="2"
-                 SlotSelect=@OnSlotSelect AppointmentSelect=@OnAppointmentSelect AppointmentRender=@OnAppointmentRender>
-        <RadzenDayView />
-        <RadzenWeekView />
-        <RadzenMonthView />
-    </RadzenScheduler>
-}
+<RadzenScheduler @ref=@scheduler SlotRender=@OnSlotRender style="height: 768px;" TItem="Appointment" Data=@AppointmentService.Appointments StartProperty="Start" EndProperty="End"
+             TextProperty="Text" SelectedIndex="2"
+             SlotSelect=@OnSlotSelect AppointmentSelect=@OnAppointmentSelect AppointmentRender=@OnAppointmentRender>
+    <RadzenDayView />
+    <RadzenWeekView />
+    <RadzenMonthView />
+</RadzenScheduler>
 
 
 @code {
     RadzenScheduler<Appointment> scheduler;
     Dictionary<DateTime, string> events = new Dictionary<DateTime, string>();
 
-    IList<Appointment> appointments = new List<Appointment>
-    {
-        //new Appointment { Start = DateTime.Today.AddDays(-3), End = DateTime.Today.AddDays(-3), Text = "Birthday" },
-        //new Appointment { Start = DateTime.Today.AddDays(-11), End = DateTime.Today.AddDays(-10), Text = "Day off" },
-        //new Appointment { Start = DateTime.Today.AddDays(-10), End = DateTime.Today.AddDays(-8), Text = "Work from home" },
-        //new Appointment { Start = DateTime.Today.AddHours(10), End = DateTime.Today.AddHours(12), Text = "Online meeting" },
-        //new Appointment { Start = DateTime.Today.AddHours(10), End = DateTime.Today.AddHours(13), Text = "Skype call" },
-        //new Appointment { Start = DateTime.Today.AddHours(14), End = DateTime.Today.AddHours(14).AddMinutes(30), Text = "Dentist appointment" },
-        //new Appointment { Start = DateTime.Today.AddDays(1), End = DateTime.Today.AddDays(12), Text = "Vacation" },
-    };
-
-    //IList<BlazorApp.Shared.Appointment> appointments = new List<Appointment>();
-
     protected override async Task OnInitializedAsync() {
-        var result = await AppointmentService.GetAppointment();
-
-        if(result.Count != 0){
-            foreach(var item in result){
-                AppointmentService.Appointments.Add(new Appointment() { Start = item.Start, End = item.End, Text = item.Text });
-            }
-        }
-
-        AppointmentService.OnChange += StateHasChanged;
-    }
-
-    public void Dispose()
-    {
-        AppointmentService.OnChange -= StateHasChanged;
+        await AppointmentService.GetAppointment();
     }
 
     void OnSlotRender(SchedulerSlotRenderEventArgs args)
@@ -79,9 +40,10 @@
         Appointment data = await DialogService.OpenAsync<AddAppointmentPage>("Add Appointment",
             new Dictionary<string, object> { { "Start", args.Start }, { "End", args.End } });
 
+
         if (data != null)
         {
-            appointments.Add(data);
+            AppointmentService.Appointments.Add(data);
             // Either call the Reload method or reassign the Data property of the Scheduler
             await scheduler.Reload();
         }

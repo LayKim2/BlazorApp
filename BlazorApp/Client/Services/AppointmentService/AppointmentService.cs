@@ -14,11 +14,11 @@ public class AppointmentService : IAppointmentService
     
     public event Action OnChange;
 
-    public async Task<IList<Appointment>> GetAppointment()
+    public async Task GetAppointment()
     {
         var response = await _http.GetFromJsonAsync<ServiceResponse<IList<Appointment>>>("api/appointment");
 
-        return response.Data;
+        Appointments = response.Data;
     }
 
     public async Task<Appointment> AddOrUpdateAppointment(Appointment appointment)
