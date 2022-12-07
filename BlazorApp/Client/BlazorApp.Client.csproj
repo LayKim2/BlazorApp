@@ -36,8 +36,9 @@
   <ItemGroup>
     <Using Include="BlazorApp.Client.Services.AuthService" />
     <Using Include="BlazorApp.Client.Services.PortfolioService" />
-	  <Using Include="BlazorApp.Client.Services.UserPortfolioService" />
-	  <Using Include="BlazorApp.Client.Services.FileService" />
+	<Using Include="BlazorApp.Client.Services.UserPortfolioService" />
+	<Using Include="BlazorApp.Client.Services.FileService" />
+	<Using Include="BlazorApp.Client.Services.AppointmentService" />
   </ItemGroup>
   <!-- ID -->
   

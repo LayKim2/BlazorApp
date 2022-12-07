@@ -34,6 +34,7 @@
 	<Using Include="BlazorApp.Server.Services.PortfolioService" />
     <Using Include="BlazorApp.Server.Services.UserPortfolioService" />
 	<Using Include="BlazorApp.Server.Services.FileService" />
+	<Using Include="BlazorApp.Server.Services.AppointmentService" />
   </ItemGroup>
   <!-- DI -->
 

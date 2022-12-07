@@ -1,39 +1,40 @@
-﻿@inject Radzen.DialogService DialogService
+﻿@inject DialogService DialogService
+@inject IAppointmentService AppointmentService
 
-<RadzenTemplateForm TItem="Appointment" Data="@model" Submit=@OnSubmit>
-<div class="row" style="margin-bottom: 16px">
-    <div class="col-md-3">
-        <RadzenLabel Text="Text" />
+<RadzenTemplateForm TItem="Appointment" Data="@model" Submit=@EditAppointment>
+    <div class="row" style="margin-bottom: 16px">
+        <div class="col-md-3">
+            <RadzenLabel Text="Text" />
+        </div>
+        <div class="col">
+            <RadzenTextBox @bind-Value="@model.Text" Name="Text" />
+            <RadzenRequiredValidator Text="Title is required" Component="Text" />
+        </div>
     </div>
-    <div class="col">
-        <RadzenTextBox Name="Text" />
-        <RadzenRequiredValidator Text="Title is required" Component="Text" />
+    <div class="row" style="margin-bottom: 16px">
+        <div class="col-md-3">
+            <RadzenLabel Text="Start" />
+        </div>
+        <div class="col">
+            <RadzenDatePicker @bind-Value="@model.Start" Name="Start" ShowTime="true" />
+            <RadzenRequiredValidator Text="Start is required" Component="Start" />
+        </div>
     </div>
-</div>
-<div class="row" style="margin-bottom: 16px">
-    <div class="col-md-3">
-        <RadzenLabel Text="Start" />
+    <div class="row" style="margin-bottom: 16px">
+        <div class="col-md-3">
+            <RadzenLabel Text="End" />
+        </div>
+        <div class="col">
+            <RadzenDatePicker Name="End" @bind-Value="@model.End" ShowTime="true" />
+            <RadzenRequiredValidator Component="End" Text="End is required" />
+        </div>
     </div>
-    <div class="col">
-        @*<RadzenDatePicker Name="Start" ShowTime="true" />*@
-        <RadzenRequiredValidator Text="Start is required" Component="Start" />
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col">
+            <RadzenButton ButtonType="ButtonType.Submit" Text="Save" />
+        </div>
     </div>
-</div>
-<div class="row" style="margin-bottom: 16px">
-    <div class="col-md-3">
-        <RadzenLabel Text="End" />
-    </div>
-    <div class="col">
-        @*<RadzenDatePicker Name="End" ShowTime="true" />*@
-        <RadzenRequiredValidator Component="End" Text="End is required" />
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-3"></div>
-    <div class="col">
-        <RadzenButton ButtonType="ButtonType.Submit" Text="Save" />
-    </div>
-</div>
 </RadzenTemplateForm>
 @code {
     [Parameter]
@@ -46,8 +47,10 @@
         model = Appointment;
     }
 
-    void OnSubmit(Appointment model)
+    async void EditAppointment(Appointment model)
     {
+        model = await AppointmentService.AddOrUpdateAppointment(model);
+
         DialogService.Close(model);
     }
 }

@@ -28,6 +28,7 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IPortfolioService, PortfolioService>();
 builder.Services.AddScoped<IUserPortfolioService, UserPortfolioService>();
 builder.Services.AddScoped<IFileService, FileService>();
+builder.Services.AddScoped<IAppointmentService, AppointmentService>();
 
 // auth (Middleware)
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
