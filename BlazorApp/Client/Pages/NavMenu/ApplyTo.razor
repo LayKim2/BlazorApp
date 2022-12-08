@@ -3,11 +3,18 @@
 @using Radzen.Blazor
 @attribute [Authorize]
 @inject HttpClient Http
-
+@using BlazorApp.Client.Components.ApplyTo
+@inject Radzen.DialogService DialogService
 
 <h3>Apply to</h3>
-<br />
-<br />
+<MudBlazor.MudGrid>
+    <MudBlazor.MudItem xs="11"></MudBlazor.MudItem>
+    <MudBlazor.MudItem xs="1">
+        <MudBlazor.MudButton Variant="MudBlazor.Variant.Filled" Color="MudBlazor.Color.Primary" OnClick="AddApply">Add</MudBlazor.MudButton>
+    </MudBlazor.MudItem>
+    <MudBlazor.MudItem xs="12"></MudBlazor.MudItem>
+</MudBlazor.MudGrid>
+
 
 @if (forecasts == null)
 {
@@ -87,6 +94,13 @@ else
         public string? Summary { get; set; }
 
         public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    }
+
+    async Task AddApply(){
+
+        Appointment data = await DialogService.OpenAsync<AddApplyPage>("Add Appointment",
+            new Dictionary<string, object> { });
+
     }
 }
 
